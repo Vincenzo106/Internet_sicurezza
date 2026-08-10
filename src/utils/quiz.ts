@@ -468,7 +468,7 @@ function buildStrategySuggestion(
   const topTopic = mostMissedTopics[0]?.topic;
 
   if (finalScore >= 24) {
-    return `Stai entrando nella fascia buona: per alzare ancora il livello passa a Domande cattive o Sprint 6 luglio e verifica se reggi meglio i tranelli sui topic ${topTopic ?? "più ricorrenti"}.`;
+    return `Stai entrando nella fascia buona: per alzare ancora il livello passa a Domande cattive o Sprint pre-esame e verifica se reggi meglio i tranelli sui topic ${topTopic ?? "più ricorrenti"}.`;
   }
 
   if (wrongCount >= 4 && wrongCount >= unansweredCount) {

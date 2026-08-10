@@ -105,7 +105,7 @@ export function MistakeReview({
 
   return (
     <section className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-      <div className="rounded-[2rem] border border-white/10 bg-slate-950/55 p-6 backdrop-blur sm:p-8">
+      <div className="surface-card p-6 sm:p-8">
         <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-rose-200/75">

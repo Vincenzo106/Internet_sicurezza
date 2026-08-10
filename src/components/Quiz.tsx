@@ -140,6 +140,13 @@ export function Quiz({ session, onBack, onComplete }: QuizProps) {
       ...current,
       [currentQuestion.id]: answer,
     }));
+
+    if (showImmediateFeedback) {
+      setRevealedExplanations((current) => ({
+        ...current,
+        [currentQuestion.id]: true,
+      }));
+    }
   }
 
   function handleMarkUnanswered() {
@@ -151,6 +158,13 @@ export function Quiz({ session, onBack, onComplete }: QuizProps) {
       ...current,
       [currentQuestion.id]: null,
     }));
+
+    if (showImmediateFeedback) {
+      setRevealedExplanations((current) => ({
+        ...current,
+        [currentQuestion.id]: true,
+      }));
+    }
   }
 
   function handleResetQuestion() {
@@ -201,7 +215,7 @@ export function Quiz({ session, onBack, onComplete }: QuizProps) {
     session.mode === "real-exam"
       ? "Esame reale"
       : session.mode === "sprint-july-6"
-        ? "Sprint 6 luglio"
+        ? "Sprint pre-esame"
       : session.mode === "hard-exam"
         ? "Domande cattive"
       : session.mode === "exam"
@@ -212,7 +226,7 @@ export function Quiz({ session, onBack, onComplete }: QuizProps) {
 
   return (
     <section className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-      <div className="rounded-[2rem] border border-white/10 bg-slate-950/55 p-5 backdrop-blur sm:p-7">
+      <div className="surface-card p-5 sm:p-7">
         <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-sky-200/75">
@@ -376,7 +390,7 @@ export function Quiz({ session, onBack, onComplete }: QuizProps) {
 
         {!showImmediateFeedback ? (
           <p className="mt-4 text-sm text-slate-400">
-            Le simulazioni esame, Esame reale, Sprint 6 luglio e Domande cattive non
+            Le simulazioni esame, Esame reale, Sprint pre-esame e Domande cattive non
             mostrano spiegazioni prima della consegna. Se una domanda resta in bianco
             vale 0 punti; se sbagli perdi 0.5.
           </p>

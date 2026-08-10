@@ -49,22 +49,35 @@ function BreakdownList({
   );
 }
 
-function ResultBadge({ label }: { label: string }) {
-  return (
-    <span className="rounded-full border border-white/10 bg-slate-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-200">
-      {label}
-    </span>
-  );
+function ResultBadge({ label, tone }: { label: string; tone?: "emerald" | "amber" | "rose" }) {
+  const toneClass =
+    tone === "emerald"
+      ? "badge badge-emerald"
+      : tone === "amber"
+        ? "badge badge-amber"
+        : tone === "rose"
+          ? "badge badge-rose"
+          : "badge badge-slate";
+
+  return <span className={toneClass}>{label}</span>;
 }
 
 function renderMetaBadges(result: QuestionResult) {
+  const difficultyTone =
+    result.question.difficulty === "facile"
+      ? "emerald"
+      : result.question.difficulty === "difficile"
+        ? "rose"
+        : "amber";
+
   return (
-    <div className="flex flex-wrap gap-2">
-      <ResultBadge label={result.question.category} />
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="badge badge-blue">{result.question.category}</span>
       <ResultBadge label={result.question.topic} />
-      <ResultBadge label={result.question.difficulty} />
-      <ResultBadge label={`probabilità ${result.question.examLikelihood}`} />
-      <ResultBadge label={result.question.sourceType} />
+      <ResultBadge label={result.question.difficulty} tone={difficultyTone} />
+      <span className="text-[11px] uppercase tracking-[0.2em] text-slate-500">
+        probabilità {result.question.examLikelihood} · {result.question.sourceType}
+      </span>
     </div>
   );
 }
@@ -111,7 +124,7 @@ export function ResultPage({
 
   return (
     <section className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-      <div className="rounded-[2rem] border border-white/10 bg-slate-950/55 p-6 backdrop-blur sm:p-8">
+      <div className="surface-card p-6 sm:p-8">
         <div className="grid gap-6 border-b border-white/10 pb-8 xl:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[1.75rem] border border-white/10 bg-[linear-gradient(145deg,rgba(14,24,38,0.95),rgba(8,15,23,0.9))] p-6">
             <p className="text-sm uppercase tracking-[0.28em] text-emerald-200/75">

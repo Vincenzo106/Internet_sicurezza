@@ -119,7 +119,7 @@ function App() {
   function handleStartSprintJulySix() {
     startSession({
       mode: "sprint-july-6",
-      title: "Sprint 6 luglio",
+      title: "Sprint pre-esame",
       description:
         "Ripasso urgente da 20 domande: solo probabilita esame alta o media, 15 Internet + 5 Sicurezza e timer da 25 minuti.",
       questions: getSprintQuestions(questions),

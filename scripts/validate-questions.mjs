@@ -26,6 +26,10 @@ async function loadQuestionData() {
     path.join(projectRoot, "src", "data", "advancedQuestions.ts"),
     "utf8",
   );
+  const securityExtraSource = await readFile(
+    path.join(projectRoot, "src", "data", "securityExtraQuestions.ts"),
+    "utf8",
+  );
   const questionsSource = await readFile(
     path.join(projectRoot, "src", "data", "questions.ts"),
     "utf8",
@@ -34,6 +38,7 @@ async function loadQuestionData() {
   const mergedSource = `
     ${stripModuleSyntax(questionAuditSource)}
     ${stripModuleSyntax(advancedQuestionsSource)}
+    ${stripModuleSyntax(securityExtraSource)}
     ${stripModuleSyntax(questionsSource)}
     (() => ({ questions, hardQuestionIds }))();
   `;

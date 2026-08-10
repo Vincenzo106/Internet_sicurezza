@@ -1,4 +1,5 @@
 import { advancedQuestions, hardQuestionIds } from "./advancedQuestions";
+import { securityExtraQuestions } from "./securityExtraQuestions";
 import type { Question, TopicGroup } from "../types";
 import { applyQuestionAudit, type QuestionAuditOverride } from "./questionAudit";
 
@@ -2681,52 +2682,356 @@ const baseQuestions: BaseQuestion[] = [
 
 const baseQuestionAudits: Record<string, QuestionAuditOverride> = {
   "internet-004": {
-    question:
-      "In una rete IP, quale apparato prende nativamente decisioni di inoltro tra reti diverse guardando il prefisso di destinazione?",
+    question: "In una rete IP, quale apparato prende nativamente decisioni di inoltro tra reti diverse guardando il prefisso di destinazione?",
   },
   "internet-012": {
-    question:
-      "In un lookup DNS standard, quale protocollo di trasporto usa tipicamente il client per la richiesta iniziale?",
+    question: "In un lookup DNS standard, quale protocollo di trasporto usa tipicamente il client per la richiesta iniziale?",
   },
   "internet-014": {
-    question:
-      "Quale protocollo applicativo usa tipicamente un client per sottomettere un messaggio al proprio mail server?",
+    question: "Quale protocollo applicativo usa tipicamente un client per sottomettere un messaggio al proprio mail server?",
   },
   "internet-017": {
-    question:
-      "Nel multiplexing e demultiplexing del livello di trasporto, quale informazione identifica il processo destinatario sull'host di arrivo?",
+    question: "Nel multiplexing e demultiplexing del livello di trasporto, quale informazione identifica il processo destinatario sull'host di arrivo?",
   },
   "internet-043": {
-    question:
-      "Quale protocollo di configurazione assegna dinamicamente un indirizzo IP e altri parametri di rete a un host appena collegato alla LAN?",
+    question: "Quale protocollo di configurazione assegna dinamicamente un indirizzo IP e altri parametri di rete a un host appena collegato alla LAN?",
   },
   "internet-048": {
-    question:
-      "Quale campo identifica univocamente un'interfaccia Ethernet a livello di collegamento dati?",
+    question: "Quale campo identifica univocamente un'interfaccia Ethernet a livello di collegamento dati?",
   },
   "internet-050": {
-    question:
-      "In una LAN IPv4, quale funzione svolge il protocollo ARP quando l'host conosce già l'indirizzo IP di destinazione locale?",
+    question: "In una LAN IPv4, quale funzione svolge il protocollo ARP quando l'host conosce già l'indirizzo IP di destinazione locale?",
+    options: ["Risolvere l’indirizzo MAC corrispondente a un indirizzo IP locale già noto", "Assegnare dinamicamente un indirizzo IP libero all’host che si collega alla LAN", "Verificare se l’indirizzo IP di destinazione appartiene a una subnet remota", "Aggiornare la tabella di routing con il costo minimo verso ogni destinazione"],
+    correctAnswer: "Risolvere l’indirizzo MAC corrispondente a un indirizzo IP locale già noto",
+    whyOthersAreWrong: {
+      "Assegnare dinamicamente un indirizzo IP libero all’host che si collega alla LAN": "L’assegnazione dinamica di un indirizzo IP è compito del DHCP, non di ARP, che risolve IP noti in indirizzi MAC.",
+      "Verificare se l’indirizzo IP di destinazione appartiene a una subnet remota": "Il confronto tra subnet mask e IP di destinazione per capire se la rete è locale o remota è un calcolo fatto dall’host stesso, non da ARP.",
+      "Aggiornare la tabella di routing con il costo minimo verso ogni destinazione": "L’aggiornamento delle tabelle di routing è compito dei protocolli di routing (es. distance vector o link-state), non di ARP.",
+    },
   },
   "internet-059": {
-    question:
-      "Nel collegamento d'accesso, quale funzione appartiene propriamente al modem e non al routing IP?",
+    question: "Nel collegamento d'accesso, quale funzione appartiene propriamente al modem e non al routing IP?",
+    options: ["Modulare il segnale elettrico o ottico per adattarlo al mezzo fisico d’accesso", "Instradare i pacchetti IP tra reti diverse in base alla tabella di routing", "Inoltrare i frame Ethernet tra le porte in base agli indirizzi MAC appresi", "Gestire l’associazione wireless e l’autenticazione dei client radio collegati"],
+    correctAnswer: "Modulare il segnale elettrico o ottico per adattarlo al mezzo fisico d’accesso",
+    whyOthersAreWrong: {
+      "Instradare i pacchetti IP tra reti diverse in base alla tabella di routing": "L’instradamento dei pacchetti tra reti è compito del router, non del modem, che si limita ad adattare il segnale sul mezzo fisico.",
+      "Inoltrare i frame Ethernet tra le porte in base agli indirizzi MAC appresi": "L’inoltro dei frame in base al MAC è una funzione dello switch, non del modem, che opera sul segnale fisico del collegamento d’accesso.",
+      "Gestire l’associazione wireless e l’autenticazione dei client radio collegati": "La gestione dell’associazione e autenticazione radio è tipica dell’access point Wi-Fi, non del modem del collegamento d’accesso.",
+    },
   },
   "security-062": {
-    question:
-      "Quale proprietà definisce correttamente la crittografia simmetrica in uno scenario reale?",
+    question: "Quale proprietà definisce correttamente la crittografia simmetrica in uno scenario reale?",
+    options: ["La medesima chiave segreta serve sia per cifrare sia per decifrare il messaggio", "Si usa sempre una coppia distinta di chiavi, una pubblica e una privata", "La chiave usata per cifrare viene rigenerata automaticamente ad ogni bit trasmesso", "Il destinatario non deve mai conoscere la chiave usata dal mittente"],
+    correctAnswer: "La medesima chiave segreta serve sia per cifrare sia per decifrare il messaggio",
+    whyOthersAreWrong: {
+      "Si usa sempre una coppia distinta di chiavi, una pubblica e una privata": "L’uso di una coppia di chiavi pubblica/privata distinte è caratteristico della crittografia asimmetrica, non di quella simmetrica.",
+      "La chiave usata per cifrare viene rigenerata automaticamente ad ogni bit trasmesso": "La chiave in un cifrario simmetrico non si rigenera automaticamente per ogni bit: resta la stessa per l’intera operazione, salvo eventuali chiavi di sessione stabilite a priori.",
+      "Il destinatario non deve mai conoscere la chiave usata dal mittente": "Nella crittografia simmetrica il destinatario deve conoscere esattamente la stessa chiave segreta usata dal mittente per poter decifrare.",
+    },
   },
   "security-064": {
-    question:
-      "Quale affermazione coglie il tratto distintivo della crittografia asimmetrica rispetto a quella simmetrica?",
+    question: "Quale affermazione coglie il tratto distintivo della crittografia asimmetrica rispetto a quella simmetrica?",
   },
   "security-069": {
-    question:
-      "Qual è lo scopo principale di una funzione hash crittografica quando viene usata per verificare l'integrità dei dati?",
+    question: "Qual è lo scopo principale di una funzione hash crittografica quando viene usata per verificare l'integrità dei dati?",
+    options: ["Produrre un digest compatto e a lunghezza fissa per verificare l’integrità dei dati", "Cifrare in modo reversibile un messaggio utilizzando una chiave segreta condivisa", "Comprimere senza perdita i dati per ridurne le dimensioni di archiviazione", "Generare una coppia di chiavi asimmetriche da usare per la comunicazione"],
+    correctAnswer: "Produrre un digest compatto e a lunghezza fissa per verificare l’integrità dei dati",
+    whyOthersAreWrong: {
+      "Cifrare in modo reversibile un messaggio utilizzando una chiave segreta condivisa": "Una funzione hash non è una cifratura reversibile e in genere non richiede alcuna chiave: il digest non può essere invertito per riottenere il messaggio.",
+      "Comprimere senza perdita i dati per ridurne le dimensioni di archiviazione": "L’obiettivo dell’hash crittografico non è ridurre la dimensione dei dati per l’archiviazione, ma produrre un’impronta che ne verifichi l’integrità.",
+      "Generare una coppia di chiavi asimmetriche da usare per la comunicazione": "La generazione di coppie di chiavi asimmetriche appartiene alla crittografia a chiave pubblica, non alle funzioni hash.",
+    },
   },
   "security-079": {
-    question:
-      "Quale funzione svolge principalmente una VPN in un contesto di accesso remoto o collegamento site-to-site?",
+    question: "Quale funzione svolge principalmente una VPN in un contesto di accesso remoto o collegamento site-to-site?",
+  },
+  "internet-009": {
+    options: ["HTTPS incapsula HTTP sopra TLS aggiungendo confidenzialità, integrità e autenticazione del server", "HTTPS usa semplicemente una porta diversa (443) senza introdurre alcun meccanismo crittografico aggiuntivo", "HTTPS comprime i messaggi HTTP per ridurre il tempo di trasferimento, senza toccare la sicurezza", "HTTPS richiede che il client, non il server, presenti un certificato digitale per instaurare la connessione"],
+    correctAnswer: "HTTPS incapsula HTTP sopra TLS aggiungendo confidenzialità, integrità e autenticazione del server",
+    whyOthersAreWrong: {
+      "HTTPS usa semplicemente una porta diversa (443) senza introdurre alcun meccanismo crittografico aggiuntivo": "In realtà la porta 443 è solo una convenzione: la sicurezza di HTTPS deriva dal livello TLS sottostante, non dal numero di porta.",
+      "HTTPS comprime i messaggi HTTP per ridurre il tempo di trasferimento, senza toccare la sicurezza": "HTTPS non introduce compressione: il suo scopo è cifrare e autenticare la comunicazione, non ottimizzare la dimensione dei dati.",
+      "HTTPS richiede che il client, non il server, presenti un certificato digitale per instaurare la connessione": "Nel modello classico è il server a presentare il certificato durante l’handshake; l’autenticazione del client è opzionale e non la norma.",
+    },
+  },
+  "internet-047": {
+    options: ["Il CRC/FCS, usato per rilevare errori di trasmissione nel frame", "Il preambolo, usato per la sincronizzazione bit del ricevitore", "L’indirizzo MAC di destinazione, ripetuto per ridondanza", "Il numero di sequenza, usato per riordinare i frame ricevuti"],
+    correctAnswer: "Il CRC/FCS, usato per rilevare errori di trasmissione nel frame",
+    whyOthersAreWrong: {
+      "Il preambolo, usato per la sincronizzazione bit del ricevitore": "Il preambolo serve a sincronizzare il ricevitore con il clock del trasmettitore, ma si trova all’inizio del frame, non nel trailer.",
+      "L’indirizzo MAC di destinazione, ripetuto per ridondanza": "L’indirizzo MAC di destinazione compare una sola volta, nell’header del frame, non ripetuto nel trailer.",
+      "Il numero di sequenza, usato per riordinare i frame ricevuti": "Ethernet non gestisce un numero di sequenza a livello di frame: il riordino è compito eventualmente dei livelli superiori.",
+    },
+  },
+  "internet-041": {
+    options: ["Far condividere a più host privati un solo IP pubblico, distinguendo i flussi tramite le porte", "Assegnare a ogni host della LAN un indirizzo IP pubblico differente in modo dinamico", "Tradurre gli indirizzi MAC dei client della LAN in altrettanti indirizzi IP pubblici instradabili", "Mantenere fissa la corrispondenza tra porta privata e porta pubblica per ogni nuova connessione"],
+    correctAnswer: "Far condividere a più host privati un solo IP pubblico, distinguendo i flussi tramite le porte",
+    whyOthersAreWrong: {
+      "Assegnare a ogni host della LAN un indirizzo IP pubblico differente in modo dinamico": "È l’opposto del NAT overload: qui un solo IP pubblico è condiviso da più host, non assegnato individualmente a ciascuno.",
+      "Tradurre gli indirizzi MAC dei client della LAN in altrettanti indirizzi IP pubblici instradabili": "NAT traduce indirizzi IP privati in un IP pubblico (livello 3), non indirizzi MAC (livello 2) in indirizzi IP.",
+      "Mantenere fissa la corrispondenza tra porta privata e porta pubblica per ogni nuova connessione": "Nel NAT overload la corrispondenza porta privata/porta pubblica viene creata dinamicamente per ogni nuova connessione, non mantenuta fissa.",
+    },
+  },
+  "internet-013": {
+    options: ["Il record CNAME, che definisce un alias canonico per un nome host", "Il record MX, che indica il server di posta responsabile del dominio", "Il record NS, che indica i name server autoritativi della zona", "Il record PTR, usato per la risoluzione inversa da indirizzo IP a nome"],
+    correctAnswer: "Il record CNAME, che definisce un alias canonico per un nome host",
+    whyOthersAreWrong: {
+      "Il record MX, che indica il server di posta responsabile del dominio": "MX indica il server di posta (mail exchanger) per il dominio, non un alias canonico per un host.",
+      "Il record NS, che indica i name server autoritativi della zona": "NS elenca i name server autoritativi per la zona, non un alias per un nome host.",
+      "Il record PTR, usato per la risoluzione inversa da indirizzo IP a nome": "PTR si usa per la risoluzione inversa (da IP a nome), non per definire un alias canonico.",
+    },
+  },
+  "internet-020": {
+    options: ["Numeri di sequenza, ACK, timer di ritrasmissione e checksum end-to-end", "Slow start, congestion avoidance, fast retransmit e fast recovery", "Three-way handshake, bit FIN/RST e opzione di window scaling negoziata", "Algoritmo di Nagle, ACK ritardati, keep-alive e puntatore urgente"],
+    correctAnswer: "Numeri di sequenza, ACK, timer di ritrasmissione e checksum end-to-end",
+    whyOthersAreWrong: {
+      "Slow start, congestion avoidance, fast retransmit e fast recovery": "Questi sono meccanismi di controllo della congestione, non gli strumenti che garantiscono la consegna affidabile dei dati.",
+      "Three-way handshake, bit FIN/RST e opzione di window scaling negoziata": "Handshake, flag di controllo e window scaling servono a gestire la connessione e la negoziazione, non a garantire l’affidabilità della consegna dati.",
+      "Algoritmo di Nagle, ACK ritardati, keep-alive e puntatore urgente": "Sono ottimizzazioni e funzionalità accessorie del TCP, non i meccanismi fondamentali che assicurano affidabilità.",
+    },
+  },
+  "internet-037": {
+    options: ["Il forwarding decide l’interfaccia d’uscita per un singolo pacchetto; il routing costruisce le informazioni per quella decisione", "Il forwarding calcola i percorsi con algoritmi come Dijkstra; il routing applica solo la tabella già calcolata", "Il forwarding riguarda esclusivamente i pacchetti IPv6, mentre il routing riguarda esclusivamente i pacchetti IPv4", "Il forwarding avviene tra sistemi autonomi diversi, mentre il routing avviene solo all’interno dello stesso AS"],
+    correctAnswer: "Il forwarding decide l’interfaccia d’uscita per un singolo pacchetto; il routing costruisce le informazioni per quella decisione",
+    whyOthersAreWrong: {
+      "Il forwarding calcola i percorsi con algoritmi come Dijkstra; il routing applica solo la tabella già calcolata": "È il contrario: gli algoritmi di routing (come quelli link-state) calcolano i percorsi, mentre il forwarding si limita ad applicare la tabella già costruita a ciascun pacchetto.",
+      "Il forwarding riguarda esclusivamente i pacchetti IPv6, mentre il routing riguarda esclusivamente i pacchetti IPv4": "La distinzione forwarding/routing non dipende dalla versione del protocollo IP: entrambe le funzioni esistono sia in IPv4 sia in IPv6.",
+      "Il forwarding avviene tra sistemi autonomi diversi, mentre il routing avviene solo all’interno dello stesso AS": "Il forwarding avviene a ogni hop, sia dentro sia tra sistemi autonomi; non è limitato all’attraversamento dei confini tra AS.",
+    },
+  },
+  "internet-060": {
+    options: ["Permettere al server di mantenere uno stato applicativo tra richieste HTTP altrimenti stateless", "Ridurre il numero di round trip TCP necessari per stabilire ogni nuova connessione HTTP", "Comprimere il corpo delle risposte HTTP per velocizzare il trasferimento dei dati", "Garantire che ogni richiesta GET venga automaticamente messa in cache dal proxy HTTP"],
+    correctAnswer: "Permettere al server di mantenere uno stato applicativo tra richieste HTTP altrimenti stateless",
+    whyOthersAreWrong: {
+      "Ridurre il numero di round trip TCP necessari per stabilire ogni nuova connessione HTTP": "I cookie non intervengono sull’instaurazione della connessione TCP: il loro scopo è mantenere lo stato applicativo tra richieste.",
+      "Comprimere il corpo delle risposte HTTP per velocizzare il trasferimento dei dati": "La compressione del corpo della risposta è gestita da meccanismi HTTP separati (es. Content-Encoding), non dai cookie.",
+      "Garantire che ogni richiesta GET venga automaticamente messa in cache dal proxy HTTP": "Il caching delle risposte è un meccanismo distinto (header di cache-control, GET condizionale), non una funzione dei cookie.",
+    },
+  },
+  "internet-010": {
+    options: ["Per verificare se la copia in cache è ancora valida, evitando di riscaricare l’intero oggetto", "Per forzare il server a restituire sempre una risposta 404 se l’oggetto non esiste più", "Per negoziare automaticamente la versione del protocollo HTTP da usare nella connessione", "Per suddividere il download dell’oggetto in più richieste parallele al server"],
+    correctAnswer: "Per verificare se la copia in cache è ancora valida, evitando di riscaricare l’intero oggetto",
+    whyOthersAreWrong: {
+      "Per forzare il server a restituire sempre una risposta 404 se l’oggetto non esiste più": "Il GET condizionale restituisce 304 Not Modified se la cache è valida, non uno stato di errore come 404.",
+      "Per negoziare automaticamente la versione del protocollo HTTP da usare nella connessione": "La negoziazione della versione HTTP avviene in fase di connessione/handshake applicativo, non tramite il GET condizionale.",
+      "Per suddividere il download dell’oggetto in più richieste parallele al server": "Il download parallelo a più richieste è una tecnica diversa (es. range request), non lo scopo del GET condizionale.",
+    },
+  },
+  "internet-018": {
+    options: ["La quaterna IP sorgente, porta sorgente, IP destinazione, porta destinazione", "La sola coppia di indirizzi IP sorgente e destinazione, senza le porte", "Il solo numero di sequenza iniziale (ISN) scelto durante l’handshake", "L’indirizzo MAC del client abbinato alla porta di ascolto del server"],
+    correctAnswer: "La quaterna IP sorgente, porta sorgente, IP destinazione, porta destinazione",
+    whyOthersAreWrong: {
+      "La sola coppia di indirizzi IP sorgente e destinazione, senza le porte": "Gli indirizzi IP da soli non bastano: più connessioni tra la stessa coppia di host si distinguono solo aggiungendo le porte.",
+      "Il solo numero di sequenza iniziale (ISN) scelto durante l’handshake": "Il numero di sequenza iniziale identifica il flusso di byte scambiato, non la socket in sé, che è definita dalla quaterna di indirizzi e porte.",
+      "L’indirizzo MAC del client abbinato alla porta di ascolto del server": "Una socket TCP end-to-end è definita da indirizzi IP e porte, non da indirizzi MAC, che valgono solo localmente sul link.",
+    },
+  },
+  "internet-015": {
+    options: ["IMAP mantiene più stato sul server, favorendo la sincronizzazione tra più dispositivi", "POP3 replica automaticamente i messaggi su più server per garantire ridondanza", "IMAP utilizza il protocollo UDP per velocizzare il download iniziale della mailbox", "POP3 richiede sempre l’uso di TLS implicito sulla porta 995 per funzionare"],
+    correctAnswer: "IMAP mantiene più stato sul server, favorendo la sincronizzazione tra più dispositivi",
+    whyOthersAreWrong: {
+      "POP3 replica automaticamente i messaggi su più server per garantire ridondanza": "POP3 non replica su più server: tipicamente scarica i messaggi su un singolo client, senza gestire ridondanza server-side.",
+      "IMAP utilizza il protocollo UDP per velocizzare il download iniziale della mailbox": "IMAP, come POP3, si appoggia su TCP per garantire una consegna affidabile della sessione, non su UDP.",
+      "POP3 richiede sempre l’uso di TLS implicito sulla porta 995 per funzionare": "TLS può essere usato con POP3 (es. porta 995) ma non è un requisito obbligatorio del protocollo di base.",
+    },
+  },
+  "internet-036": {
+    options: ["Inviare pacchetti con TTL crescente e osservare i messaggi ICMP time exceeded dei router", "Inviare richieste DNS ricorsive a ciascun router lungo il percorso verso la destinazione", "Misurare il round trip time completando un handshake TCP con ciascun hop intermedio", "Interrogare direttamente la tabella BGP di ogni router per ricostruire il percorso"],
+    correctAnswer: "Inviare pacchetti con TTL crescente e osservare i messaggi ICMP time exceeded dei router",
+    whyOthersAreWrong: {
+      "Inviare richieste DNS ricorsive a ciascun router lungo il percorso verso la destinazione": "Traceroute non interroga il DNS per il percorso: sfrutta invece la scadenza del TTL per far generare messaggi ICMP dai router intermedi.",
+      "Misurare il round trip time completando un handshake TCP con ciascun hop intermedio": "Traceroute non richiede un handshake TCP completo con ogni hop: si basa su pacchetti con TTL crescente e sulle risposte ICMP generate quando il TTL scade.",
+      "Interrogare direttamente la tabella BGP di ogni router per ricostruire il percorso": "I router intermedi non espongono la propria tabella BGP a chi esegue il traceroute: il percorso emerge dai messaggi ICMP restituiti.",
+    },
+  },
+  "internet-033": {
+    options: ["Confronta la propria subnet mask con l’IP di destinazione per verificare se la rete coincide", "Interroga il server DHCP a ogni invio per sapere se il destinatario è nella LAN locale", "Controlla se il TTL residuo nel pacchetto di destinazione è ancora maggiore di zero", "Verifica se l’indirizzo MAC di destinazione inizia con lo stesso prefisso del proprio"],
+    correctAnswer: "Confronta la propria subnet mask con l’IP di destinazione per verificare se la rete coincide",
+    whyOthersAreWrong: {
+      "Interroga il server DHCP a ogni invio per sapere se il destinatario è nella LAN locale": "Il DHCP assegna la configurazione IP una tantum all’avvio, non viene interrogato per ogni pacchetto da inviare.",
+      "Controlla se il TTL residuo nel pacchetto di destinazione è ancora maggiore di zero": "Il TTL serve a limitare il numero di hop attraversati dal pacchetto, non a stabilire se la destinazione è locale o remota.",
+      "Verifica se l’indirizzo MAC di destinazione inizia con lo stesso prefisso del proprio": "L’indirizzo MAC non ha alcun prefisso legato alla subnet IP: è la subnet mask applicata all’IP a determinare se la rete è locale.",
+    },
+  },
+  "internet-029": {
+    options: ["Servizio con gestione attiva della congestione end-to-end", "Servizio privo di connessione, senza fase di setup preliminare", "Servizio a consegna best effort, senza garanzie di qualità", "Servizio inaffidabile, senza garanzie di consegna dei pacchetti"],
+    correctAnswer: "Servizio con gestione attiva della congestione end-to-end",
+    whyOthersAreWrong: {
+      "Servizio privo di connessione, senza fase di setup preliminare": "IP è effettivamente connectionless: non prevede una fase di apertura di connessione prima di inviare i datagrammi, quindi questa proprietà appartiene al servizio IP.",
+      "Servizio a consegna best effort, senza garanzie di qualità": "IP è realmente un servizio best effort: la rete si limita a provare a consegnare i pacchetti, senza garanzie forti, quindi questa proprietà è propria di IP.",
+      "Servizio inaffidabile, senza garanzie di consegna dei pacchetti": "IP è realmente inaffidabile: non garantisce consegna, ordine o assenza di duplicati, quindi anche questa proprietà appartiene al servizio IP.",
+    },
+  },
+  "internet-023": {
+    options: ["Permette ritrasmissioni selettive dei soli pacchetti effettivamente persi o corrotti", "Ritrasmette sempre l’intera finestra a partire dal primo pacchetto non riscontrato", "Usa una finestra di trasmissione di dimensione fissata a un solo pacchetto per volta", "Richiede che il ricevente scarti sempre i pacchetti fuori sequenza ricevuti in anticipo"],
+    correctAnswer: "Permette ritrasmissioni selettive dei soli pacchetti effettivamente persi o corrotti",
+    whyOthersAreWrong: {
+      "Ritrasmette sempre l’intera finestra a partire dal primo pacchetto non riscontrato": "Questo è il comportamento di Go-Back-N, che ritrasmette l’intera finestra; Selective Repeat ritrasmette solo i singoli pacchetti persi.",
+      "Usa una finestra di trasmissione di dimensione fissata a un solo pacchetto per volta": "Una finestra di un solo pacchetto per volta descrive lo stop-and-wait, non Selective Repeat, che usa una finestra scorrevole più ampia.",
+      "Richiede che il ricevente scarti sempre i pacchetti fuori sequenza ricevuti in anticipo": "In Selective Repeat il ricevente bufferizza i pacchetti fuori sequenza correttamente ricevuti, non li scarta come avviene in Go-Back-N.",
+    },
+  },
+  "internet-039": {
+    options: ["Scambio iterativo di aggiornamenti tra router vicini in base al costo di ogni destinazione", "Diffusione dell’intera topologia di rete a tutti i router tramite flooding periodico", "Elezione di un router designato che calcola centralmente tutte le rotte della rete", "Scambio di certificati digitali tra i router per autenticare ogni rotta annunciata"],
+    correctAnswer: "Scambio iterativo di aggiornamenti tra router vicini in base al costo di ogni destinazione",
+    whyOthersAreWrong: {
+      "Diffusione dell’intera topologia di rete a tutti i router tramite flooding periodico": "Il flooding dell’intera topologia a tutti i router è tipico dei protocolli link-state (es. OSPF), non del distance vector, che scambia solo informazioni con i vicini diretti.",
+      "Elezione di un router designato che calcola centralmente tutte le rotte della rete": "Il distance vector è un algoritmo distribuito senza un router centrale che calcola tutte le rotte: ogni router calcola le proprie basandosi sugli scambi con i vicini.",
+      "Scambio di certificati digitali tra i router per autenticare ogni rotta annunciata": "Il distance vector non prevede autenticazione tramite certificati digitali: si basa sullo scambio di vettori di costo tra router adiacenti.",
+    },
+  },
+  "internet-046": {
+    options: ["Framing dei dati e consegna hop-by-hop tra nodi adiacenti sullo stesso link", "Apertura e chiusura della connessione end-to-end tramite handshake a tre vie", "Controllo di flusso end-to-end basato sulla finestra ricevente annunciata", "Numerazione dei segmenti e ritrasmissione in caso di perdita end-to-end"],
+    correctAnswer: "Framing dei dati e consegna hop-by-hop tra nodi adiacenti sullo stesso link",
+    whyOthersAreWrong: {
+      "Apertura e chiusura della connessione end-to-end tramite handshake a tre vie": "L’apertura e chiusura della connessione con handshake a tre vie è una funzione del TCP a livello di trasporto, non del livello di collegamento.",
+      "Controllo di flusso end-to-end basato sulla finestra ricevente annunciata": "Il controllo di flusso basato sulla finestra ricevente è un meccanismo del livello di trasporto (TCP), non del livello di collegamento.",
+      "Numerazione dei segmenti e ritrasmissione in caso di perdita end-to-end": "La numerazione dei segmenti e la ritrasmissione end-to-end sono compiti del livello di trasporto, non della consegna hop-by-hop del livello di collegamento.",
+    },
+  },
+  "internet-003": {
+    options: ["Il tempo necessario al segnale per attraversare fisicamente il mezzo trasmissivo", "Il tempo necessario per inserire tutti i bit del pacchetto sul collegamento in uscita", "Il tempo che il router impiega per elaborare l’header e decidere il next hop", "Il tempo medio che un pacchetto trascorre in coda in attesa di trasmissione"],
+    correctAnswer: "Il tempo necessario al segnale per attraversare fisicamente il mezzo trasmissivo",
+    whyOthersAreWrong: {
+      "Il tempo necessario per inserire tutti i bit del pacchetto sul collegamento in uscita": "Questo descrive il ritardo di trasmissione (tempo per immettere i bit sul link), non il ritardo di propagazione del segnale sul mezzo.",
+      "Il tempo che il router impiega per elaborare l’header e decidere il next hop": "Questo descrive il ritardo di elaborazione (processing delay) del router, non il tempo di propagazione del segnale.",
+      "Il tempo medio che un pacchetto trascorre in coda in attesa di trasmissione": "Questo descrive il ritardo di accodamento (queuing delay), non il tempo di propagazione fisica del segnale.",
+    },
+  },
+  "internet-007": {
+    options: ["La capacità complessiva del sistema cresce aggiungendo peer che contribuiscono risorse", "Il sistema garantisce sempre latenza costante indipendentemente dal numero di peer", "Ogni peer richiede una connessione permanente e dedicata al server centrale", "La rete elimina completamente il bisogno di un meccanismo di indicizzazione dei contenuti"],
+    correctAnswer: "La capacità complessiva del sistema cresce aggiungendo peer che contribuiscono risorse",
+    whyOthersAreWrong: {
+      "Il sistema garantisce sempre latenza costante indipendentemente dal numero di peer": "Anche nei sistemi P2P la latenza dipende da fattori come topologia, distanza tra i peer e congestione: non è garantita costante.",
+      "Ogni peer richiede una connessione permanente e dedicata al server centrale": "Questo descrive proprio il modello client-server, l’opposto del P2P, dove i peer comunicano tra loro senza dipendere da un server centrale sempre connesso.",
+      "La rete elimina completamente il bisogno di un meccanismo di indicizzazione dei contenuti": "Molti sistemi P2P necessitano comunque di un meccanismo di indicizzazione o ricerca dei contenuti (centralizzato o distribuito), che non scompare automaticamente.",
+    },
+  },
+  "internet-001": {
+    options: ["Un insieme di reti eterogenee interconnesse che comunicano tramite protocolli condivisi", "Un unico grande computer centrale distribuito fisicamente presso tutti gli ISP", "Una rete privata riservata ai soli provider per il routing interno tra loro", "Un insieme di pagine web statiche raggiungibili unicamente tramite browser"],
+    correctAnswer: "Un insieme di reti eterogenee interconnesse che comunicano tramite protocolli condivisi",
+    whyOthersAreWrong: {
+      "Un unico grande computer centrale distribuito fisicamente presso tutti gli ISP": "Internet non è un singolo elaboratore centralizzato: è un insieme distribuito di reti e host indipendenti che cooperano tramite protocolli standard.",
+      "Una rete privata riservata ai soli provider per il routing interno tra loro": "Internet non è limitata al traffico interno tra provider: include anche host finali, reti aziendali e domestiche pubbliche e private.",
+      "Un insieme di pagine web statiche raggiungibili unicamente tramite browser": "Il Web (pagine e browser) è solo una delle applicazioni che girano su Internet, non una definizione di Internet stessa.",
+    },
+  },
+  "internet-052": {
+    options: ["Osserva l’indirizzo MAC sorgente dei frame ricevuti e lo associa alla porta d’ingresso", "Interroga periodicamente tutte le porte inviando richieste ARP di broadcast agli host", "Copia la tabella di forwarding da un router adiacente via protocollo di routing", "Assegna un indirizzo IP a ciascuna porta appena rileva un nuovo host collegato"],
+    correctAnswer: "Osserva l’indirizzo MAC sorgente dei frame ricevuti e lo associa alla porta d’ingresso",
+    whyOthersAreWrong: {
+      "Interroga periodicamente tutte le porte inviando richieste ARP di broadcast agli host": "Lo switch non interroga attivamente le porte con ARP: apprende passivamente osservando il MAC sorgente del traffico che riceve.",
+      "Copia la tabella di forwarding da un router adiacente via protocollo di routing": "Uno switch di livello 2 non scambia tabelle di forwarding con i router: costruisce la propria tabella osservando autonomamente il traffico.",
+      "Assegna un indirizzo IP a ciascuna porta appena rileva un nuovo host collegato": "Lo switch non assegna indirizzi IP alle porte: lavora sugli indirizzi MAC per costruire la tabella di inoltro dei frame.",
+    },
+  },
+  "security-083": {
+    options: ["Un tentativo di ingannare l’utente per farsi consegnare credenziali fingendo un’identità affidabile", "Un attacco che intercetta passivamente il traffico di rete cifrato senza mai contattare la vittima", "Un attacco che sfrutta un buffer overflow per eseguire codice arbitrario sul server remoto", "Un attacco che inonda un server di richieste per esaurire tutte le sue risorse disponibili"],
+    correctAnswer: "Un tentativo di ingannare l’utente per farsi consegnare credenziali fingendo un’identità affidabile",
+    whyOthersAreWrong: {
+      "Un attacco che intercetta passivamente il traffico di rete cifrato senza mai contattare la vittima": "Il phishing è un attacco attivo di social engineering che coinvolge direttamente la vittima, non un’intercettazione passiva del traffico.",
+      "Un attacco che sfrutta un buffer overflow per eseguire codice arbitrario sul server remoto": "Lo sfruttamento di un buffer overflow è un attacco tecnico contro il software, diverso dall’inganno psicologico tipico del phishing.",
+      "Un attacco che inonda un server di richieste per esaurire tutte le sue risorse disponibili": "Questo descrive un attacco di tipo denial-of-service, che mira a saturare risorse, non a carpire credenziali con l’inganno.",
+    },
+  },
+  "security-063": {
+    options: ["Perché sono nettamente più efficienti della crittografia asimmetrica nel cifrare grandi volumi di dati", "Perché offrono un livello di sicurezza matematicamente superiore a quello della crittografia asimmetrica", "Perché permettono di eliminare completamente la necessità di uno scambio di chiavi tra client e server", "Perché generano automaticamente il certificato digitale usato durante il TLS handshake"],
+    correctAnswer: "Perché sono nettamente più efficienti della crittografia asimmetrica nel cifrare grandi volumi di dati",
+    whyOthersAreWrong: {
+      "Perché offrono un livello di sicurezza matematicamente superiore a quello della crittografia asimmetrica": "La sicurezza non è 'superiore' in senso assoluto: simmetrica e asimmetrica offrono garanzie diverse; il motivo dell’uso in sessione è l’efficienza computazionale, non un livello di sicurezza maggiore.",
+      "Perché permettono di eliminare completamente la necessità di uno scambio di chiavi tra client e server": "La crittografia simmetrica richiede comunque uno scambio (o accordo) sicuro della chiave di sessione, tipicamente ottenuto tramite l’asimmetrica durante l’handshake.",
+      "Perché generano automaticamente il certificato digitale usato durante il TLS handshake": "Il certificato digitale è generato ed emesso dalla CA, non dall’algoritmo di cifratura simmetrica usato per il traffico.",
+    },
+  },
+  "security-078": {
+    options: ["Permettere all’utente di ottenere ticket di servizio successivi senza reinserire la password", "Cifrare in modo permanente l’intero disco del client usando la chiave di sessione ottenuta", "Generare la coppia di chiavi pubblica e privata usata dal servizio richiesto dall’utente", "Registrare nel server DNS l’indirizzo IP autoritativo del Key Distribution Center"],
+    correctAnswer: "Permettere all’utente di ottenere ticket di servizio successivi senza reinserire la password",
+    whyOthersAreWrong: {
+      "Cifrare in modo permanente l’intero disco del client usando la chiave di sessione ottenuta": "Kerberos non cifra il disco del client: il TGT serve solo per ottenere ticket di servizio senza ripetere l’autenticazione con password.",
+      "Generare la coppia di chiavi pubblica e privata usata dal servizio richiesto dall’utente": "Kerberos è basato su crittografia simmetrica con chiavi condivise con il KDC, non su una coppia di chiavi pubblica/privata generata dal TGT.",
+      "Registrare nel server DNS l’indirizzo IP autoritativo del Key Distribution Center": "L’indirizzo del KDC è configurato o scoperto separatamente (es. tramite DNS o configurazione statica), non è il ruolo funzionale del TGT.",
+    },
+  },
+  "security-067": {
+    options: ["Permettere a due parti di concordare una chiave condivisa su un canale insicuro", "Firmare digitalmente messaggi garantendo un non ripudio verificabile da terzi", "Emettere certificati digitali X.509 per conto di un’autorità di certificazione", "Cifrare direttamente grandi volumi di dati al posto degli algoritmi simmetrici"],
+    correctAnswer: "Permettere a due parti di concordare una chiave condivisa su un canale insicuro",
+    whyOthersAreWrong: {
+      "Firmare digitalmente messaggi garantendo un non ripudio verificabile da terzi": "La firma digitale con non ripudio è tipica di algoritmi come RSA o ECDSA, non lo scopo primario di Diffie-Hellman, che serve a concordare una chiave.",
+      "Emettere certificati digitali X.509 per conto di un’autorità di certificazione": "L’emissione di certificati è compito di una CA nella PKI, non del protocollo Diffie-Hellman, che riguarda l’accordo su una chiave.",
+      "Cifrare direttamente grandi volumi di dati al posto degli algoritmi simmetrici": "Diffie-Hellman non cifra direttamente i dati applicativi: produce una chiave condivisa che poi viene usata, tipicamente, da un algoritmo simmetrico.",
+    },
+  },
+  "security-071": {
+    options: ["L’impiego di una chiave segreta condivisa che rafforza autenticità e integrità del messaggio", "La possibilità di ricostruire il messaggio originale a partire dal digest calcolato", "La capacità di cifrare l’intero messaggio in modo da renderlo illeggibile a terzi", "L’eliminazione della necessità di scambiare in anticipo un segreto condiviso"],
+    correctAnswer: "L’impiego di una chiave segreta condivisa che rafforza autenticità e integrità del messaggio",
+    whyOthersAreWrong: {
+      "La possibilità di ricostruire il messaggio originale a partire dal digest calcolato": "Né l’hash né l’HMAC sono invertibili: dal digest non si può ricostruire il messaggio originale, che non è la loro funzione.",
+      "La capacità di cifrare l’intero messaggio in modo da renderlo illeggibile a terzi": "HMAC non cifra il messaggio: produce un codice di autenticazione, il testo resta in chiaro salvo cifratura separata.",
+      "L’eliminazione della necessità di scambiare in anticipo un segreto condiviso": "HMAC richiede proprio una chiave segreta condivisa in anticipo tra le parti: non elimina questo requisito, lo sfrutta.",
+    },
+  },
+  "security-084": {
+    options: ["Per rendere inefficaci gli attacchi con tabelle precomputate e gli hash uguali tra utenti", "Per permettere all’amministratore di recuperare la password originale se smarrita", "Per velocizzare il calcolo dell’hash della password durante ogni login dell’utente", "Per comprimere la lunghezza del digest della password memorizzato nel database"],
+    correctAnswer: "Per rendere inefficaci gli attacchi con tabelle precomputate e gli hash uguali tra utenti",
+    whyOthersAreWrong: {
+      "Per permettere all’amministratore di recuperare la password originale se smarrita": "Un sistema ben progettato non deve permettere di recuperare la password in chiaro: l’hash resta non invertibile anche con il salt.",
+      "Per velocizzare il calcolo dell’hash della password durante ogni login dell’utente": "Il salt non velocizza il calcolo: l’obiettivo di tecniche correlate (es. costo computazionale elevato) è semmai rallentare gli attacchi, non il login legittimo.",
+      "Per comprimere la lunghezza del digest della password memorizzato nel database": "Il salt non comprime nulla: viene concatenato alla password prima dell’hash e in genere aumenta, non riduce, i dati memorizzati.",
+    },
+  },
+  "security-073": {
+    options: ["L’associazione firmata da una CA fidata tra un’identità e la relativa chiave pubblica", "La chiave privata del server, cifrata e allegata al certificato per sicurezza", "L’elenco completo delle porte TCP che il server è autorizzato ad aprire", "La cronologia di tutte le connessioni TLS precedenti effettuate dal client"],
+    correctAnswer: "L’associazione firmata da una CA fidata tra un’identità e la relativa chiave pubblica",
+    whyOthersAreWrong: {
+      "La chiave privata del server, cifrata e allegata al certificato per sicurezza": "Un certificato X.509 contiene la chiave pubblica, non la chiave privata: quest’ultima deve restare segreta e non viene mai distribuita nel certificato.",
+      "L’elenco completo delle porte TCP che il server è autorizzato ad aprire": "Le porte autorizzate sono una configurazione del firewall o del servizio, non un contenuto del certificato digitale.",
+      "La cronologia di tutte le connessioni TLS precedenti effettuate dal client": "Il certificato non registra lo storico delle connessioni: attesta staticamente l’identità e la chiave pubblica del titolare.",
+    },
+  },
+  "security-081": {
+    options: ["Un intero pacchetto IP originale viene incapsulato e protetto dentro un nuovo pacchetto IP", "Viene protetto solo il payload di trasporto, mantenendo invisibile l’header IP originale", "Vengono scambiate le chiavi di sessione senza incapsulare alcun pacchetto aggiuntivo", "Viene autenticato solo l’header IP originale, lasciando sempre il payload in chiaro"],
+    correctAnswer: "Un intero pacchetto IP originale viene incapsulato e protetto dentro un nuovo pacchetto IP",
+    whyOthersAreWrong: {
+      "Viene protetto solo il payload di trasporto, mantenendo invisibile l’header IP originale": "Questo si avvicina piuttosto alla modalità transport, dove è protetto solo il payload; nel tunnel mode è l’intero pacchetto IP originale, header incluso, a essere incapsulato.",
+      "Vengono scambiate le chiavi di sessione senza incapsulare alcun pacchetto aggiuntivo": "Lo scambio delle chiavi di sessione è gestito da IKE, un processo separato: la modalità tunnel riguarda invece come viene incapsulato il pacchetto IP protetto.",
+      "Viene autenticato solo l’header IP originale, lasciando sempre il payload in chiaro": "IPsec in modalità tunnel (con ESP) può cifrare anche il payload, non limitarsi ad autenticare il solo header lasciando i dati in chiaro.",
+    },
+  },
+  "security-072": {
+    options: ["Integrità del messaggio, autenticità dell’origine e supporto al non ripudio", "Riservatezza totale del contenuto e anonimato assoluto del mittente", "Disponibilità del servizio e bilanciamento del carico tra i server", "Compressione dei dati e riduzione della latenza di trasmissione"],
+    correctAnswer: "Integrità del messaggio, autenticità dell’origine e supporto al non ripudio",
+    whyOthersAreWrong: {
+      "Riservatezza totale del contenuto e anonimato assoluto del mittente": "La firma digitale non garantisce di per sé riservatezza né anonimato: anzi, lega esplicitamente il messaggio a un firmatario identificabile.",
+      "Disponibilità del servizio e bilanciamento del carico tra i server": "Disponibilità e bilanciamento del carico riguardano l’affidabilità dei sistemi, non le proprietà crittografiche di una firma digitale.",
+      "Compressione dei dati e riduzione della latenza di trasmissione": "La firma digitale non si occupa di compressione o di prestazioni di trasmissione: riguarda l’autenticazione e l’integrità del contenuto firmato.",
+    },
+  },
+  "security-065": {
+    options: ["Sulla difficoltà di fattorizzare il prodotto di due grandi numeri primi", "Sulla difficoltà di calcolare il logaritmo discreto in un campo finito", "Sulla difficoltà di invertire una funzione hash crittografica come SHA-256", "Sulla difficoltà di trovare collisioni in un cifrario a blocchi simmetrico"],
+    correctAnswer: "Sulla difficoltà di fattorizzare il prodotto di due grandi numeri primi",
+    whyOthersAreWrong: {
+      "Sulla difficoltà di calcolare il logaritmo discreto in un campo finito": "Il problema del logaritmo discreto è alla base di Diffie-Hellman e di ElGamal, non della sicurezza classica dell’RSA, che si fonda sulla fattorizzazione.",
+      "Sulla difficoltà di invertire una funzione hash crittografica come SHA-256": "L’inversione di una funzione hash è un problema diverso, legato alla resistenza alla preimmagine, non al fondamento matematico dell’RSA.",
+      "Sulla difficoltà di trovare collisioni in un cifrario a blocchi simmetrico": "La ricerca di collisioni riguarda i cifrari simmetrici e le funzioni hash, non il problema di fattorizzazione su cui si basa l’RSA.",
+    },
+  },
+  "security-075": {
+    options: ["Durante il TLS handshake, verificando certificato del server e catena di fiducia", "Dopo la chiusura della connessione, confrontando i log salvati dal client", "Durante la risoluzione DNS del nome host, tramite un record TXT dedicato", "All’apertura della connessione TCP, tramite un campo speciale dell’header IP"],
+    correctAnswer: "Durante il TLS handshake, verificando certificato del server e catena di fiducia",
+    whyOthersAreWrong: {
+      "Dopo la chiusura della connessione, confrontando i log salvati dal client": "Verificare l’identità dopo la chiusura della connessione sarebbe inutile: il controllo avviene prima, durante l’handshake TLS, non a posteriori sui log.",
+      "Durante la risoluzione DNS del nome host, tramite un record TXT dedicato": "Il DNS risolve nomi in indirizzi IP e non effettua l’autenticazione del server: quella avviene tramite il certificato durante l’handshake TLS.",
+      "All’apertura della connessione TCP, tramite un campo speciale dell’header IP": "Né TCP né l’header IP trasportano informazioni di identità del server applicativo: l’autenticazione avviene a livello TLS, sopra il trasporto.",
+    },
+  },
+  "security-074": {
+    options: ["Firmare digitalmente certificati che legano una chiave pubblica a un’identità verificata", "Distribuire dinamicamente indirizzi IP a tutti i client della rete interna", "Instradare il traffico cifrato tra sistemi autonomi diversi su Internet", "Calcolare direttamente la chiave di sessione condivisa usata durante l’handshake TLS"],
+    correctAnswer: "Firmare digitalmente certificati che legano una chiave pubblica a un’identità verificata",
+    whyOthersAreWrong: {
+      "Distribuire dinamicamente indirizzi IP a tutti i client della rete interna": "La distribuzione di indirizzi IP è compito del DHCP, non della Certification Authority, che si occupa di firmare certificati.",
+      "Instradare il traffico cifrato tra sistemi autonomi diversi su Internet": "L’instradamento del traffico tra sistemi autonomi è un compito dei router e dei protocolli di routing (es. BGP), non della CA.",
+      "Calcolare direttamente la chiave di sessione condivisa usata durante l’handshake TLS": "La chiave di sessione TLS viene concordata tra client e server durante l’handshake (es. tramite Diffie-Hellman), non calcolata dalla CA.",
+    },
   },
 };
 
@@ -2734,6 +3039,10 @@ const auditedBaseQuestions: Question[] = baseQuestions.map((question) =>
   applyQuestionAudit(question, baseQuestionAudits[question.id]),
 );
 
-export const questions: Question[] = [...auditedBaseQuestions, ...advancedQuestions];
+export const questions: Question[] = [
+  ...auditedBaseQuestions,
+  ...advancedQuestions,
+  ...securityExtraQuestions,
+];
 
 export { hardQuestionIds };
