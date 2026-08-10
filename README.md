@@ -67,8 +67,9 @@ npm run lint
 
 ## Dove modificare le domande
 
-- [src/data/questions.ts](./src/data/questions.ts)
-- [src/data/advancedQuestions.ts](./src/data/advancedQuestions.ts)
+- [src/data/questions.ts](./src/data/questions.ts) — banca dati base
+- [src/data/advancedQuestions.ts](./src/data/advancedQuestions.ts) — set "Domande cattive"
+- [src/data/securityExtraQuestions.ts](./src/data/securityExtraQuestions.ts) — domande extra di Sicurezza
 
 ## Dati locali e progressi
 

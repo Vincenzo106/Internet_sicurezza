@@ -36,6 +36,14 @@ export function QuestionCard({
   const answered = typeof selectedAnswer === "string";
   const answeredCorrectly = selectedAnswer === question.correctAnswer;
   const hasDecision = answerStatus !== "pending";
+  const optionLetters = ["A", "B", "C", "D"];
+
+  const difficultyBadgeClass =
+    question.difficulty === "facile"
+      ? "badge badge-emerald"
+      : question.difficulty === "difficile"
+        ? "badge badge-rose"
+        : "badge badge-amber";
 
   function renderAnswerState() {
     if (answerStatus === "answered" && answered) {
@@ -66,28 +74,25 @@ export function QuestionCard({
   }
 
   return (
-    <article className="question-surface animate-[card-enter_220ms_ease-out] rounded-[2rem] border border-white/10 bg-slate-950/55 p-5 backdrop-blur sm:p-7">
+    <article className="question-surface animate-[card-enter_220ms_ease-out] surface-card p-5 sm:p-7">
       <div className="flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
             Domanda {current}/{total}
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="badge badge-blue">{question.category}</span>
-            <span className="badge badge-amber">{question.topic}</span>
-            <span className="badge badge-slate">{question.difficulty}</span>
-            <span className="badge border-emerald-300/25 bg-emerald-400/10 text-emerald-100">
-              probabilità {question.examLikelihood}
-            </span>
-            <span className="badge border-fuchsia-300/25 bg-fuchsia-400/10 text-fuchsia-100">
-              {question.sourceType}
-            </span>
+            <span className="badge badge-slate">{question.topic}</span>
+            <span className={difficultyBadgeClass}>{question.difficulty}</span>
             {questionInsight?.isCritical ? (
               <span className="badge border-rose-300/30 bg-rose-400/12 text-rose-100">
                 domanda critica
               </span>
             ) : null}
           </div>
+          <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-slate-500">
+            probabilità esame {question.examLikelihood} · {question.sourceType}
+          </p>
         </div>
         <div className="min-w-[180px]">
           <div className="h-2 overflow-hidden rounded-full bg-slate-800">
@@ -99,31 +104,35 @@ export function QuestionCard({
         </div>
       </div>
 
-      <h2 className="mt-6 text-2xl font-semibold leading-10 text-white">
+      <h2 className="mt-6 text-2xl font-semibold leading-10 text-white sm:text-[1.7rem]">
         {question.question}
       </h2>
 
       {renderAnswerState()}
 
       <div className="mt-6 space-y-3">
-        {question.options.map((option) => {
+        {question.options.map((option, index) => {
           const isSelected = selectedAnswer === option;
           const isCorrectOption = question.correctAnswer === option;
           const baseClasses =
-            "w-full rounded-[1.35rem] border px-5 py-4 text-left text-base leading-7 transition duration-200";
+            "flex w-full items-center gap-4 rounded-[1.35rem] border px-5 py-4 text-left text-base leading-7 transition duration-200";
 
           let visualState =
             "border-white/10 bg-slate-900/70 text-slate-200 hover:border-sky-300/30 hover:bg-slate-900";
+          let letterState = "option-letter";
 
           if (showFeedback && isCorrectOption) {
             visualState =
               "border-emerald-300/35 bg-emerald-400/12 text-emerald-50 shadow-[0_0_0_1px_rgba(110,231,183,0.12)]";
+            letterState = "option-letter border-emerald-300/40 bg-emerald-400/15 text-emerald-100";
           } else if (showFeedback && isSelected && !isCorrectOption) {
             visualState =
               "border-rose-300/35 bg-rose-400/12 text-rose-50 shadow-[0_0_0_1px_rgba(251,113,133,0.12)]";
+            letterState = "option-letter border-rose-300/40 bg-rose-400/15 text-rose-100";
           } else if (isSelected) {
             visualState =
               "border-sky-300/35 bg-sky-400/10 text-white shadow-[0_0_0_1px_rgba(125,211,252,0.12)]";
+            letterState = "option-letter border-sky-300/40 bg-sky-400/15 text-sky-100";
           }
 
           return (
@@ -134,7 +143,8 @@ export function QuestionCard({
               onClick={() => onSelectAnswer(option)}
               type="button"
             >
-              {option}
+              <span className={letterState}>{optionLetters[index]}</span>
+              <span className="flex-1">{option}</span>
             </button>
           );
         })}
@@ -191,7 +201,7 @@ export function QuestionCard({
       ) : null}
 
       {showExplanation ? (
-        <div className="mt-6 grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="mt-6 grid animate-[reveal-pop_220ms_ease-out] gap-4 xl:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-[1.35rem] border border-white/10 bg-slate-900/60 p-5">
             <p className="text-xs uppercase tracking-[0.26em] text-sky-200/75">
               Spiegazione stile notebook

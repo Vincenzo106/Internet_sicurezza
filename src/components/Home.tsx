@@ -20,6 +20,13 @@ type HomeProps = {
 
 const realExamMinuteOptions = [20, 30, 45, 60];
 
+type ModeCard = {
+  title: string;
+  description: string;
+  variant: "primary" | "secondary";
+  onClick: () => void;
+};
+
 export function Home({
   quizCount,
   averageScore,
@@ -37,9 +44,48 @@ export function Home({
 }: HomeProps) {
   const [realExamMinutes, setRealExamMinutes] = useState(30);
 
+  const modeCards: ModeCard[] = [
+    {
+      title: "Simulazione classica",
+      description: "20 domande, 15 Internet + 5 Sicurezza, come il vero scritto.",
+      variant: "primary",
+      onClick: onStartExam,
+    },
+    {
+      title: "Esame reale",
+      description: `Timer da ${realExamMinutes} min con consegna automatica allo scadere.`,
+      variant: "primary",
+      onClick: () => onStartRealExam(realExamMinutes),
+    },
+    {
+      title: "Sprint pre-esame",
+      description: "20 domande solo ad alta/media probabilità, 25 minuti, per ripasso urgente.",
+      variant: "primary",
+      onClick: onStartSprintJulySix,
+    },
+    {
+      title: "Domande cattive",
+      description: "Distrattori più tosti e tranelli da scritto vero.",
+      variant: "secondary",
+      onClick: onStartHardExam,
+    },
+    {
+      title: "Allenamento per argomento",
+      description: "Scegli topic, difficoltà e quantità, con feedback immediato.",
+      variant: "secondary",
+      onClick: onOpenTraining,
+    },
+    {
+      title: "Ripasso intelligente",
+      description: "Rifai solo le domande che sbagli più spesso, in ordine di priorità.",
+      variant: "secondary",
+      onClick: onOpenMistakes,
+    },
+  ];
+
   return (
     <section className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-      <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(14,24,38,0.92),rgba(8,15,23,0.88))] p-6 shadow-[0_30px_120px_rgba(2,8,23,0.45)] backdrop-blur sm:p-8">
+      <div className="surface-card bg-[linear-gradient(135deg,rgba(14,24,38,0.92),rgba(8,15,23,0.88))] p-6 sm:p-8">
         <div className="grid gap-10 lg:grid-cols-[1.25fr_0.9fr]">
           <div>
             <p className="inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-200">
@@ -55,32 +101,29 @@ export function Home({
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              <button className="action-primary" onClick={onStartExam} type="button">
-                Simulazione classica
-              </button>
-              <button
-                className="action-primary"
-                onClick={() => onStartRealExam(realExamMinutes)}
-                type="button"
-              >
-                Esame reale
-              </button>
-              <button
-                className="action-primary"
-                onClick={onStartSprintJulySix}
-                type="button"
-              >
-                Sprint 6 luglio
-              </button>
-              <button className="action-secondary" onClick={onStartHardExam} type="button">
-                Domande cattive
-              </button>
-              <button className="action-secondary" onClick={onOpenTraining} type="button">
-                Allenamento per argomento
-              </button>
-              <button className="action-secondary" onClick={onOpenMistakes} type="button">
-                Ripasso intelligente
-              </button>
+              {modeCards.map((mode) => (
+                <button
+                  className={
+                    mode.variant === "primary"
+                      ? "action-primary flex flex-col items-start gap-1 text-left"
+                      : "action-secondary flex flex-col items-start gap-1 text-left"
+                  }
+                  key={mode.title}
+                  onClick={mode.onClick}
+                  type="button"
+                >
+                  <span className="text-sm font-semibold">{mode.title}</span>
+                  <span
+                    className={
+                      mode.variant === "primary"
+                        ? "text-xs font-normal normal-case text-slate-950/70"
+                        : "text-xs font-normal normal-case text-slate-400"
+                    }
+                  >
+                    {mode.description}
+                  </span>
+                </button>
+              ))}
             </div>
 
             <div className="mt-8 rounded-[1.5rem] border border-cyan-300/12 bg-slate-950/45 p-5">
