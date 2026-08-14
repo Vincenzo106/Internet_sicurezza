@@ -39,16 +39,23 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # Se Pages era gia' attivo in modalita' "deploy da branch", continuerebbe a
-      # pubblicare la radice del repository ignorando l'artefatto di questo
-      # workflow. Qui la sorgente viene forzata su "GitHub Actions".
-      - name: Imposta la sorgente di Pages su GitHub Actions
-        continue-on-error: true
+      # Se Pages e' attivo in modalita' "deploy da branch" continua a pubblicare
+      # la radice del repository, ignorando l'artefatto di questo workflow.
+      # Proviamo a spostare la sorgente su "GitHub Actions": il token del
+      # workflow spesso non ha i permessi per farlo, quindi in caso di errore
+      # non blocchiamo il deploy ma lasciamo un messaggio leggibile nel log.
+      - name: Verifica che la sorgente di Pages sia GitHub Actions
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow \
-            || gh api -X POST "repos/${{ github.repository }}/pages" -f build_type=workflow
+          if gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow >/dev/null 2>&1; then
+            echo "Sorgente di Pages impostata su GitHub Actions."
+          else
+            echo "::warning::Non e' stato possibile impostare la sorgente di Pages via API."
+            echo "Se il sito online non mostra la versione aggiornata, apri:"
+            echo "  Settings > Pages > Build and deployment > Source"
+            echo "e seleziona 'GitHub Actions' al posto di 'Deploy from a branch'."
+          fi
 
       - name: Configurazione GitHub Pages
         id: pages
