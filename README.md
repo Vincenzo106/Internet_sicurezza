@@ -65,6 +65,38 @@ Lint:
 npm run lint
 ```
 
+## Sito online
+
+L'applicazione è pubblicata su GitHub Pages ed è utilizzabile da qualsiasi browser, su PC, tablet e smartphone:
+
+```text
+https://vincenzo106.github.io/Internet_sicurezza/
+```
+
+Non serve installare nulla: basta aprire il link. Su smartphone puoi aggiungerla alla schermata Home dal menu del browser per averla come un'app.
+
+### Come si aggiorna il sito
+
+Il deployment è automatico. Ogni push sul branch `main` fa partire il workflow [.github/workflows/deploy.yml](./.github/workflows/deploy.yml), che valida le domande, esegue lint e build e ripubblica il sito:
+
+```bash
+git add .
+git commit -m "Aggiorna domande"
+git push
+```
+
+Dopo un paio di minuti il sito online è aggiornato. Lo stato del deploy si vede nella tab `Actions` del repository. È anche possibile lanciare il deploy manualmente da `Actions` con il pulsante `Run workflow`.
+
+### Nota sul percorso base
+
+Su GitHub Pages il sito è servito da una sottocartella (`/Internet_sicurezza/`), non dalla radice del dominio. Per questo [vite.config.ts](./vite.config.ts) legge la variabile d'ambiente `VITE_BASE_PATH`, che il workflow imposta automaticamente. In locale la variabile non è impostata e il percorso base resta `/`, quindi `npm run dev` funziona come sempre.
+
+Se rinomini il repository o lo forki, non devi cambiare nulla: il percorso viene ricavato in automatico dal nome del repository.
+
+## Dati salvati nel browser
+
+Storico, errori e statistiche vivono nel `localStorage` del browser che stai usando. Questo significa che i progressi fatti sul telefono non compaiono sul PC e viceversa: ogni dispositivo ha il proprio archivio.
+
 ## Dove modificare le domande
 
 - [src/data/questions.ts](./src/data/questions.ts) — banca dati base

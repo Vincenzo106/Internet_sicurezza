@@ -31,3 +31,6 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Configurazioni locali degli strumenti di sviluppo
+.claude/
