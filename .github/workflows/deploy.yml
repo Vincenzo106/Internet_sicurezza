@@ -1,0 +1,70 @@
+name: Deploy su GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Permette di lanciare il deploy a mano dalla tab "Actions" di GitHub.
+  workflow_dispatch:
+
+# Permessi minimi necessari a pubblicare il sito.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Se arrivano piu' push ravvicinati, completa il deploy in corso e accoda solo l'ultimo.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installazione dipendenze
+        run: npm ci
+
+      - name: Validazione banca dati domande
+        run: npm run validate:questions
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Configurazione GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # Abilita Pages sul repository al primo run, senza doverlo fare a mano.
+          enablement: true
+
+      - name: Build di produzione
+        # base_path viene da configure-pages: e' "/<nome-repo>" e resta corretto
+        # anche se il repository viene rinominato o forkato.
+        run: npm run build
+        env:
+          VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      - name: Upload dell'artefatto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Pubblicazione su GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

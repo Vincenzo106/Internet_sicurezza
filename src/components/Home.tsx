@@ -153,8 +153,8 @@ export function Home({
                       <button
                         className={
                           selected
-                            ? "rounded-full border border-cyan-300/35 bg-cyan-300/15 px-4 py-2 text-sm font-semibold text-cyan-50"
-                            : "rounded-full border border-white/10 bg-slate-900/65 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:text-white"
+                            ? "min-h-11 rounded-full border border-cyan-300/35 bg-cyan-300/15 px-4 py-2 text-sm font-semibold text-cyan-50"
+                            : "min-h-11 rounded-full border border-white/10 bg-slate-900/65 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:text-white"
                         }
                         key={minutes}
                         onClick={() => setRealExamMinutes(minutes)}

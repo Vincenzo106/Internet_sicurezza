@@ -303,7 +303,7 @@ export function Quiz({ session, onBack, onComplete }: QuizProps) {
 
             return (
               <button
-                className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold ${
+                className={`flex h-11 w-11 items-center justify-center rounded-full border text-sm font-semibold ${
                   isCurrent
                     ? `ring-2 ring-sky-300/35 ${visualState}`
                     : visualState
