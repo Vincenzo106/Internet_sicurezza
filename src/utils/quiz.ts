@@ -132,6 +132,22 @@ export function getSprintQuestions(allQuestions: Question[]): Question[] {
   );
 }
 
+/**
+ * Solo le domande trascritte dal simulatore storico: sono quelle realmente
+ * uscite, quindi la prova piu' vicina allo scritto vero. Il pool storico e'
+ * quasi tutto Internet, per cui qui non si applica il blueprint 15+5.
+ */
+export function getHistoricalExamQuestions(
+  allQuestions: Question[],
+  count: number = EXAM_TOTAL_QUESTIONS,
+): Question[] {
+  return shuffleArray(
+    allQuestions.filter((question) => question.sourceType === "storica"),
+  )
+    .slice(0, count)
+    .map(randomizeOptions);
+}
+
 export function getQuestionsByTopic(
   allQuestions: Question[],
   topics: string[],

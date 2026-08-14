@@ -18,6 +18,7 @@ import type {
 import {
   getExamQuestions,
   getHardExamQuestions,
+  getHistoricalExamQuestions,
   getQuestionsByIds,
   getQuestionsByTopic,
   getSmartMistakeQuestions,
@@ -128,6 +129,20 @@ function App() {
         autoSubmitOnTimeout: true,
         requireAllAnswers: false,
         timeLimitSeconds: 25 * 60,
+      },
+    });
+  }
+
+  function handleStartHistoricalExam() {
+    startSession({
+      mode: "exam",
+      title: "Solo domande gia uscite",
+      description:
+        "Solo domande trascritte dal simulatore d'esame storico: e la prova piu vicina allo scritto vero, senza spiegazioni prima della consegna.",
+      questions: getHistoricalExamQuestions(questions),
+      config: {
+        allowSkip: true,
+        requireAllAnswers: false,
       },
     });
   }
@@ -303,6 +318,7 @@ function App() {
           onClearQuizHistory={handleClearQuizHistory}
           onStartExam={handleStartExam}
           onStartHardExam={handleStartHardExam}
+          onStartHistoricalExam={handleStartHistoricalExam}
           onStartRealExam={handleStartRealExam}
           onStartSprintJulySix={handleStartSprintJulySix}
           quizCount={history.length}

@@ -1,0 +1,362 @@
+[
+  {
+    "originalNumber": 1,
+    "id": "hist-001",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti flag nell'intestazione TCP è richiesto, in condizioni normali, per chiudere una connessione?",
+    "options": ["FIN", "PSH", "RST", "URG"],
+    "correctAnswer": "FIN",
+    "explanation": "In condizioni operative normali la chiusura di una connessione TCP è un processo controllato. Il flag FIN indica che il mittente ha terminato l'invio dei dati ma resta in ascolto; poiché TCP è full-duplex, la chiusura completa richiede che entrambe le parti inviino il proprio FIN e ricevano il relativo ACK, con una procedura a quattro vie. Questo garantisce che tutti i dati in transito vengano consegnati e confermati prima della chiusura definitiva.",
+    "whyOthersAreWrong": {
+      "PSH": "Il flag PSH (Push) forza l'invio immediato dei dati bufferizzati all'applicazione, non ha alcun ruolo nella chiusura della connessione.",
+      "RST": "RST abbatte la connessione istantaneamente (abortive release) in caso di errori gravi o porte non in ascolto, perdendo i dati in transito: non è la chiusura ordinata richiesta in condizioni normali.",
+      "URG": "URG segnala la presenza di dati urgenti da consegnare con priorità, non riguarda la terminazione della connessione."
+    },
+    "conceptToReview": "Chiusura ordinata di una connessione TCP e differenza tra FIN e RST.",
+    "miniSummary": "FIN chiude in modo pulito con handshake a quattro vie; RST interrompe brutalmente perdendo i dati in transito.",
+    "memoryTrick": "FIN = 'fine educata', RST = 'strappo della spina'. In condizioni normali si esce dalla porta, non dalla finestra.",
+    "similarExamQuestion": "Quanti segmenti sono necessari per la chiusura completa di una connessione TCP full-duplex?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 2,
+    "id": "hist-002",
+    "category": "Internet",
+    "topic": "MAC address",
+    "difficulty": "facile",
+    "question": "Come viene identificato univocamente un dispositivo ethernet a livello data link?",
+    "options": [
+      "IP address",
+      "TCP port number e IP address",
+      "UDP port number",
+      "MAC address"
+    ],
+    "correctAnswer": "MAC address",
+    "explanation": "Il livello di collegamento dati si occupa del trasferimento dei frame tra nodi adiacenti sullo stesso segmento di rete, e l'indirizzo usato a questo scopo è il MAC address. Si tratta di un identificativo fisico di 48 bit assegnato alla scheda di rete, rappresentato in esadecimale: i primi 24 bit costituiscono l'OUI del produttore, gli ultimi 24 identificano la specifica scheda.",
+    "whyOthersAreWrong": {
+      "IP address": "L'indirizzo IP identifica il dispositivo a livello di rete ed è necessario per l'instradamento tra reti diverse, non per la consegna diretta sul segmento Ethernet.",
+      "TCP port number e IP address": "La coppia porta più indirizzo IP identifica un processo applicativo a livello di trasporto, non il dispositivo hardware a livello data link.",
+      "UDP port number": "Le porte UDP identificano un servizio a livello di trasporto e non hanno alcun ruolo nell'indirizzamento di livello 2."
+    },
+    "conceptToReview": "Indirizzamento del livello 2 e struttura a 48 bit del MAC address.",
+    "miniSummary": "Sul cavo si consegna per MAC, tra reti si instrada per IP, ai processi si consegna per porta.",
+    "memoryTrick": "Associa sempre il livello all'indirizzo: L2 = MAC, L3 = IP, L4 = porta. Se la domanda dice 'data link', la risposta è MAC.",
+    "similarExamQuestion": "Quanti bit compone un indirizzo MAC e come sono suddivisi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 3,
+    "id": "hist-003",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quale delle seguenti caratteristiche NON descrive il servizio a livello di rete (IP)?",
+    "options": ["Congestion managed", "Connectionless", "Best effort", "Unreliable"],
+    "correctAnswer": "Congestion managed",
+    "explanation": "Il servizio offerto dal livello di rete IP è definito best effort, connectionless e unreliable. Il protocollo IP non gestisce la congestione: non possiede meccanismi nativi per dire al mittente di rallentare, e questa responsabilità è delegata interamente al livello di trasporto, in particolare a TCP, che rileva la perdita di pacchetti come segnale di congestione e riduce la finestra di trasmissione.",
+    "whyOthersAreWrong": {
+      "Connectionless": "È vera per IP: non esiste una fase di setup della connessione e ogni pacchetto è trattato indipendentemente, quindi non è la caratteristica cercata.",
+      "Best effort": "È vera per IP: la rete fa del suo meglio per consegnare i pacchetti senza offrire garanzie, quindi non è la caratteristica cercata.",
+      "Unreliable": "È vera per IP: non ci sono garanzie su consegna, ordine di arrivo o integrità, quindi non è la caratteristica cercata."
+    },
+    "conceptToReview": "Proprietà del servizio IP e divisione dei compiti con il livello di trasporto.",
+    "miniSummary": "IP è best effort, connectionless e inaffidabile; la congestione la gestisce TCP, non IP.",
+    "memoryTrick": "Nelle domande al negativo cerca l'unica proprietà che 'promette troppo': IP non promette nulla.",
+    "similarExamQuestion": "Quale livello dello stack si occupa realmente del controllo di congestione?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 4,
+    "id": "hist-004",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Quale campo dell'intestazione TCP, posizionato subito dopo i flag e prima del checksum, comunica al mittente quanto spazio libero è rimasto nel buffer di ricezione?",
+    "options": [
+      "Checksum",
+      "Puntatore ai dati urgenti",
+      "Numero di sequenza",
+      "Finestra di ricezione"
+    ],
+    "correctAnswer": "Finestra di ricezione",
+    "explanation": "Il campo Finestra di ricezione (Receive Window) è un campo a 16 bit fondamentale per il meccanismo di controllo di flusso. Serve al ricevitore per comunicare al mittente quanto spazio libero ha nel proprio buffer di ricezione: il mittente non può inviare più dati non riscontrati di quanti indicati in questo valore, evitando così di mandare in overflow il buffer del destinatario.",
+    "whyOthersAreWrong": {
+      "Checksum": "Il checksum serve a rilevare errori sui bit del segmento e si trova dopo la finestra di ricezione nell'header TCP.",
+      "Puntatore ai dati urgenti": "L'Urgent Pointer indica la posizione dei dati prioritari nel segmento e ha senso solo con il flag URG attivo.",
+      "Numero di sequenza": "Il numero di sequenza identifica la posizione dei byte nel flusso e si trova nella parte iniziale dell'header, non dopo i flag."
+    },
+    "conceptToReview": "Posizione e funzione del campo Window Size nell'header TCP.",
+    "miniSummary": "La receive window è la dichiarazione di capienza del ricevitore: è il cuore del flow control.",
+    "memoryTrick": "Flow control = 'quanto ci sta nel tuo buffer', ed è il ricevitore a dirlo dentro l'header.",
+    "similarExamQuestion": "Cosa accade al mittente TCP quando la finestra di ricezione annunciata scende a zero?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 5,
+    "id": "hist-005",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "Quale dei seguenti meccanismi del protocollo TCP non serve per garantire l'affidabilità?",
+    "options": [
+      "Valori della porta sorgente e destinazione",
+      "Sliding window",
+      "Acknowledgments",
+      "Numero di sequenza"
+    ],
+    "correctAnswer": "Valori della porta sorgente e destinazione",
+    "explanation": "I numeri di porta servono unicamente per il multiplexing e demultiplexing: permettono di indirizzare i dati verso la corretta applicazione all'interno dell'host, ma non giocano alcun ruolo nel garantire che i dati arrivino corretti o in ordine. L'affidabilità è costruita invece su numeri di sequenza, riscontri e finestra scorrevole.",
+    "whyOthersAreWrong": {
+      "Sliding window": "La finestra scorrevole gestisce il controllo di flusso e il pipelining, contribuendo direttamente al trasferimento affidabile ed efficiente.",
+      "Acknowledgments": "Gli ACK confermano al mittente che i dati sono arrivati correttamente e innescano le ritrasmissioni in caso di assenza: sono un pilastro dell'affidabilità.",
+      "Numero di sequenza": "I numeri di sequenza permettono di riordinare i pacchetti fuori sequenza e di rilevare duplicati o perdite."
+    },
+    "conceptToReview": "Distinzione tra multiplexing e meccanismi di affidabilità in TCP.",
+    "miniSummary": "Le porte dicono 'a chi', non 'se è arrivato bene': l'affidabilità la fanno sequenze, ACK e finestra.",
+    "memoryTrick": "Chiediti: se togliessi questo campo, i dati arriverebbero comunque corretti? Le porte servono all'indirizzo, non all'integrità.",
+    "similarExamQuestion": "Quale funzione svolgono i numeri di porta nel livello di trasporto?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 6,
+    "id": "hist-006",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Dato l'indirizzo IP 151.97.6.4/24, indicare l'indirizzo di rete.",
+    "options": ["151.97.0.0", "151.97.6.0", "151.97.6.255", "151.0.0.0"],
+    "correctAnswer": "151.97.6.0",
+    "explanation": "Il suffisso /24 indica che i primi 24 bit, cioè i primi tre ottetti, identificano la rete, mentre gli ultimi 8 bit identificano l'host. Per ottenere l'indirizzo di rete si mantengono invariati i bit della parte di rete e si azzerano tutti i bit della parte host: 151.97.6 resta invariato e l'ultimo ottetto diventa 0, quindi 151.97.6.0.",
+    "whyOthersAreWrong": {
+      "151.97.0.0": "Corrisponderebbe a una maschera /16, cioè azzererebbe anche il terzo ottetto che invece appartiene alla parte di rete con /24.",
+      "151.97.6.255": "Con la parte host tutta a 1 questo è l'indirizzo di broadcast della sottorete, non l'indirizzo di rete.",
+      "151.0.0.0": "Corrisponderebbe a una maschera /8, azzerando due ottetti che con /24 fanno parte del prefisso di rete."
+    },
+    "conceptToReview": "Calcolo dell'indirizzo di rete tramite AND logico con la subnet mask.",
+    "miniSummary": "Indirizzo di rete = bit host a zero; indirizzo di broadcast = bit host a uno.",
+    "memoryTrick": "/24 significa 255.255.255.0: tieni i primi tre numeri e metti 0 nell'ultimo.",
+    "similarExamQuestion": "Dato 192.168.10.77/26, qual è l'indirizzo di rete della sottorete di appartenenza?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 7,
+    "id": "hist-007",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "facile",
+    "question": "Quanti byte aggiunge al messaggio una intestazione TCP in assenza di opzioni?",
+    "options": ["8", "64", "16", "20"],
+    "correctAnswer": "20",
+    "explanation": "L'intestazione TCP ha lunghezza variabile ma i primi 20 byte sono obbligatori per ogni segmento e contengono i campi essenziali: porte (4 byte), numero di sequenza (4 byte), numero di riscontro (4 byte), header length e flag (2 byte), window size (2 byte), checksum (2 byte) e urgent pointer (2 byte). Le opzioni, quando presenti, possono estendere l'header fino a un massimo di 60 byte.",
+    "whyOthersAreWrong": {
+      "8": "8 byte è la dimensione fissa dell'intestazione UDP, molto più leggera di quella TCP.",
+      "64": "64 byte è la dimensione minima di un frame Ethernet, non dell'header TCP, che al massimo arriva a 60 byte con tutte le opzioni.",
+      "16": "Non corrisponde ad alcuna dimensione standard dell'header TCP: i soli campi obbligatori superano già questo valore."
+    },
+    "conceptToReview": "Dimensione fissa e variabile dell'intestazione TCP.",
+    "miniSummary": "TCP: 20 byte minimi, 60 massimi con opzioni. UDP: 8 byte fissi.",
+    "memoryTrick": "20 come l'header IPv4: entrambi partono da 20 byte, UDP invece è il 'leggero' da 8.",
+    "similarExamQuestion": "Quanti byte occupa l'intestazione UDP e perché è più corta di quella TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 8,
+    "id": "hist-008",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "facile",
+    "question": "Quali sono i tre campi che compongono la request line di un messaggio di richiesta HTTP?",
+    "options": [
+      "Metodo, indirizzamento, server, versione",
+      "Metodo, URL, oggetto",
+      "Metodo, URL, versione",
+      "Metodo, URL, indirizzo server"
+    ],
+    "correctAnswer": "Metodo, URL, versione",
+    "explanation": "La prima riga di una richiesta HTTP, chiamata request line, è composta da tre elementi separati da spazi: il metodo, che indica l'azione da compiere come GET o POST; l'URL o request-URI, che indica la risorsa su cui operare; e la versione del protocollo, ad esempio HTTP/1.1. La riga termina con la sequenza CRLF.",
+    "whyOthersAreWrong": {
+      "Metodo, indirizzamento, server, versione": "Elenca quattro elementi e introduce campi come indirizzamento e server che non fanno parte della sintassi della request line.",
+      "Metodo, URL, oggetto": "L'oggetto non è un campo della request line: la risorsa richiesta è già indicata dall'URL.",
+      "Metodo, URL, indirizzo server": "L'indirizzo del server non compare nella request line: l'host viaggia semmai nell'header Host, non nella prima riga."
+    },
+    "conceptToReview": "Struttura della request line HTTP.",
+    "miniSummary": "Request line = metodo + URL + versione, separati da spazi e chiusi da CRLF.",
+    "memoryTrick": "Pensa a 'GET /index.html HTTP/1.1': cosa faccio, su cosa, con quale versione.",
+    "similarExamQuestion": "Come viene indicata la fine della sezione di intestazione in un messaggio HTTP?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 9,
+    "id": "hist-009",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "media",
+    "question": "Quali informazioni contengono i Root Domain Server?",
+    "options": [
+      "Gli indirizzi dell'host richiesto",
+      "Gli indirizzi dei top level domain",
+      "Nessun'informazione, mantengono la cache della richiesta",
+      "Gli indirizzi della zona d'interesse"
+    ],
+    "correctAnswer": "Gli indirizzi dei top level domain",
+    "explanation": "Il sistema DNS è organizzato in una struttura ad albero gerarchica e al vertice ci sono i root name server. Questi non conoscono l'indirizzo IP di ogni singolo sito: quando ricevono una query per un dominio che non conoscono restituiscono l'indirizzo dei server responsabili del Top Level Domain corrispondente, ad esempio i server che gestiscono tutti i domini .com o .it.",
+    "whyOthersAreWrong": {
+      "Gli indirizzi dell'host richiesto": "L'indirizzo finale dell'host è noto al server autoritativo della zona, non ai root server.",
+      "Nessun'informazione, mantengono la cache della richiesta": "Il caching è tipico dei local DNS server, mentre i root contengono realmente i riferimenti ai TLD.",
+      "Gli indirizzi della zona d'interesse": "I record di una specifica zona sono mantenuti dal server autoritativo di quella zona, non dalla radice della gerarchia."
+    },
+    "conceptToReview": "Gerarchia DNS: root, TLD e server autoritativi.",
+    "miniSummary": "Il root non sa dove sta il sito: sa a chi chiedere, cioè al TLD competente.",
+    "memoryTrick": "Ogni livello DNS ti passa al livello più specifico: root → TLD → autoritativo → IP.",
+    "similarExamQuestion": "Qual è la sequenza di server interrogati in una risoluzione DNS iterativa completa?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 10,
+    "id": "hist-010",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "facile",
+    "question": "Indicare quale protocollo utilizza DNS nella fase di ricerca dell'indirizzo.",
+    "options": ["DHCP", "ARP", "UDP", "TCP"],
+    "correctAnswer": "UDP",
+    "explanation": "Nella fase comune di risoluzione, quando un client chiede l'indirizzo IP di un dominio, il DNS utilizza il protocollo di trasporto UDP sulla porta 53. La motivazione è la velocità: essendo connectionless, UDP non richiede l'handshake a tre vie tipico di TCP, e poiché una richiesta DNS è composta da un solo pacchetto di domanda e uno di risposta, l'uso di TCP raddoppierebbe inutilmente il tempo di attesa.",
+    "whyOthersAreWrong": {
+      "DHCP": "DHCP serve ad assegnare dinamicamente la configurazione di rete a un host, non è un protocollo di trasporto usato dal DNS.",
+      "ARP": "ARP risolve indirizzi IP in indirizzi MAC nella rete locale e opera a un livello diverso da quello di trasporto.",
+      "TCP": "TCP viene usato dal DNS solo in casi particolari, come il trasferimento di zona o risposte che superano i 512 byte, non nella normale fase di lookup."
+    },
+    "conceptToReview": "Scelta del protocollo di trasporto nel DNS e relative eccezioni.",
+    "miniSummary": "Lookup DNS su UDP porta 53; TCP solo per zone transfer o risposte molto grandi.",
+    "memoryTrick": "Una domanda e una risposta: perché aprire una connessione per due pacchetti?",
+    "similarExamQuestion": "In quali situazioni il DNS ricorre al protocollo TCP invece che a UDP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 11,
+    "id": "hist-011",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quale affermazione descrive correttamente il campo Header Checksum dell'intestazione IPv4?",
+    "options": [
+      "Rileva errori solo all'interno dell'intestazione IP e va ricalcolato a ogni router",
+      "Rileva errori sull'intero datagramma, intestazione e dati applicativi compresi",
+      "Viene calcolato una sola volta dal mittente e non cambia mai lungo il percorso",
+      "Sostituisce il checksum del livello di trasporto rendendolo superfluo"
+    ],
+    "correctAnswer": "Rileva errori solo all'interno dell'intestazione IP e va ricalcolato a ogni router",
+    "explanation": "L'Header Checksum si trova nella terza parola dell'intestazione IPv4, subito dopo i campi Time To Live e Protocol, e serve a rilevare bit errati esclusivamente all'interno dell'intestazione IP: non controlla i dati del payload, che hanno un proprio checksum a livello di trasporto. Poiché il TTL viene decrementato a ogni hop, l'intestazione cambia e il checksum deve essere ricalcolato da ogni router lungo il percorso.",
+    "whyOthersAreWrong": {
+      "Rileva errori sull'intero datagramma, intestazione e dati applicativi compresi": "Il controllo sui dati applicativi è compito del checksum TCP o UDP, che copre header e payload del segmento più uno pseudo-header.",
+      "Viene calcolato una sola volta dal mittente e non cambia mai lungo il percorso": "È falso proprio perché il TTL cambia a ogni hop: il checksum diventerebbe immediatamente non valido.",
+      "Sostituisce il checksum del livello di trasporto rendendolo superfluo": "I due controlli coprono porzioni diverse del pacchetto e sono complementari, non alternativi."
+    },
+    "conceptToReview": "Ambito di copertura del checksum IP rispetto a quello di trasporto.",
+    "miniSummary": "Il checksum IP protegge solo l'header e si ricalcola a ogni hop perché il TTL cambia.",
+    "memoryTrick": "IP controlla la busta, TCP controlla la lettera dentro la busta.",
+    "similarExamQuestion": "Quali campi dell'intestazione IP vengono modificati da un router durante l'inoltro?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 12,
+    "id": "hist-012",
+    "category": "Internet",
+    "topic": "switch",
+    "difficulty": "facile",
+    "question": "Come funziona l'auto-apprendimento degli switch Ethernet?",
+    "options": [
+      "Gli switch richiedono agli amministratori di rete di fornire informazioni sugli indirizzi MAC dei dispositivi",
+      "Gli switch monitorano i pacchetti in rete per apprendere gli indirizzi MAC dei dispositivi connessi",
+      "Gli switch utilizzano protocolli di routing per apprendere le rotte disponibili nella rete",
+      "Questa funzione non è prevista in questo tipo di switch"
+    ],
+    "correctAnswer": "Gli switch monitorano i pacchetti in rete per apprendere gli indirizzi MAC dei dispositivi connessi",
+    "explanation": "Gli switch Ethernet costruiscono la propria tabella di inoltro in modo dinamico e autonomo, con un meccanismo detto backward learning. Quando un frame arriva su un'interfaccia, il dispositivo esamina l'indirizzo MAC sorgente e impara che quel dispositivo si trova collegato a quella porta, memorizzando l'associazione nella CAM table.",
+    "whyOthersAreWrong": {
+      "Gli switch richiedono agli amministratori di rete di fornire informazioni sugli indirizzi MAC dei dispositivi": "La configurazione manuale è possibile ma non è il funzionamento normale: l'apprendimento è automatico e non richiede intervento umano.",
+      "Gli switch utilizzano protocolli di routing per apprendere le rotte disponibili nella rete": "I protocolli di routing operano a livello 3 sugli indirizzi IP, mentre lo switch lavora a livello 2 sugli indirizzi MAC.",
+      "Questa funzione non è prevista in questo tipo di switch": "L'auto-apprendimento è proprio la caratteristica distintiva degli switch Ethernet rispetto agli hub."
+    },
+    "conceptToReview": "Backward learning e costruzione della CAM table.",
+    "miniSummary": "Lo switch impara guardando il MAC sorgente dei frame in ingresso e la porta da cui arrivano.",
+    "memoryTrick": "Impara da chi parla, non da chi ascolta: si guarda sempre il MAC sorgente.",
+    "similarExamQuestion": "Cosa fa uno switch quando riceve un frame per un MAC non presente nella sua tabella?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 13,
+    "id": "hist-013",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Quale delle seguenti affermazioni descrive il parametro receive window?",
+    "options": [
+      "Non viene comunicato al mittente la sua dimensione",
+      "Fornisce al mittente un'indicazione dello spazio libero nel ricevente",
+      "Nessuna delle precedenti",
+      "Indica la quantità di dati ricevuta dal destinatario"
+    ],
+    "correctAnswer": "Fornisce al mittente un'indicazione dello spazio libero nel ricevente",
+    "explanation": "Il campo receive window, spesso abbreviato in rwnd, è il meccanismo principale con cui TCP implementa il controllo di flusso. Ogni volta che il destinatario invia un segmento, tipicamente un ACK, inserisce in questo campo a 16 bit il numero di byte che è attualmente in grado di accettare nel proprio buffer. Serve a garantire che un mittente veloce non inondi un ricevitore lento.",
+    "whyOthersAreWrong": {
+      "Non viene comunicato al mittente la sua dimensione": "È esattamente il contrario: il valore viene annunciato esplicitamente nell'header di ogni segmento inviato dal ricevitore.",
+      "Nessuna delle precedenti": "Una delle opzioni descrive correttamente il parametro, quindi questa alternativa non è valida.",
+      "Indica la quantità di dati ricevuta dal destinatario": "La quantità di dati già ricevuta è comunicata dal numero di acknowledgment, non dalla finestra di ricezione, che indica invece lo spazio ancora libero."
+    },
+    "conceptToReview": "Controllo di flusso TCP tramite finestra di ricezione.",
+    "miniSummary": "rwnd = spazio libero residuo nel buffer del ricevitore, annunciato a ogni segmento.",
+    "memoryTrick": "Non è quanto ho ricevuto, è quanto ancora ci sta: è una capienza, non un conteggio.",
+    "similarExamQuestion": "Qual è la differenza tra receive window e congestion window in TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 14,
+    "id": "hist-014",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quando un host invia un datagramma, come viene determinato se il destinatario è nella stessa rete o in una remota?",
+    "options": [
+      "Si usa la maschera di rete (CIDR) per confrontare l'indirizzo sorgente con quello di destinazione",
+      "Si verifica se esiste un router di default",
+      "Si confrontano gli indirizzi MAC del mittente e del destinatario",
+      "Non viene fatto niente, sarà il router a gestire il datagramma"
+    ],
+    "correctAnswer": "Si usa la maschera di rete (CIDR) per confrontare l'indirizzo sorgente con quello di destinazione",
+    "explanation": "Prima di trasmettere, l'host esegue un AND logico tra il proprio IP e la propria subnet mask per ottenere il proprio ID di rete, e ripete l'operazione con l'IP di destinazione usando la stessa maschera. Se i due ID di rete coincidono la destinazione è locale e l'host cercherà direttamente il MAC del destinatario tramite ARP; se sono diversi invierà il pacchetto al MAC del default gateway.",
+    "whyOthersAreWrong": {
+      "Si verifica se esiste un router di default": "Il default gateway viene usato solo dopo aver stabilito che la destinazione è remota: è la conseguenza della decisione, non il criterio con cui la si prende.",
+      "Si confrontano gli indirizzi MAC del mittente e del destinatario": "Il MAC del destinatario remoto non è nemmeno noto all'host e gli indirizzi fisici non contengono informazione di rete.",
+      "Non viene fatto niente, sarà il router a gestire il datagramma": "L'host deve decidere da solo a quale MAC consegnare il frame, altrimenti non saprebbe nemmeno a chi inviarlo sul segmento locale."
+    },
+    "conceptToReview": "Test locale/remoto tramite AND con la subnet mask.",
+    "miniSummary": "Stessa rete: ARP diretto al destinatario. Rete diversa: frame verso il MAC del gateway.",
+    "memoryTrick": "Prima di parlare l'host si chiede: 'sei il mio vicino di casa o abiti lontano?'.",
+    "similarExamQuestion": "A quale indirizzo MAC viene inviato un frame destinato a un host di una rete remota?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 15,
+    "id": "hist-015",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Indicare quale dei seguenti campi del datagramma IP viene decrementato da ogni router attraversato.",
+    "options": ["Checksum", "Protocol number", "TOS", "TTL"],
+    "correctAnswer": "TTL",
+    "explanation": "Il campo Time To Live serve a evitare che i pacchetti IP vaghino all'infinito nella rete a causa di loop di routing. Il mittente imposta un valore iniziale, tipicamente 64 o 128, e ogni router che riceve e inoltra il pacchetto decrementa il valore di uno. Se il valore raggiunge lo zero il router scarta il pacchetto e invia al mittente un messaggio ICMP Time Exceeded, principio su cui si basa il comando traceroute.",
+    "whyOthersAreWrong": {
+      "Checksum": "L'header checksum viene ricalcolato dal router perché il TTL è cambiato, ma non viene decrementato: è un valore di controllo, non un contatore.",
+      "Protocol number": "Il campo Protocol identifica il protocollo di livello superiore trasportato, ad esempio TCP o UDP, e resta invariato lungo il percorso.",
+      "TOS": "Il campo Type Of Service indica il trattamento desiderato per il pacchetto e non viene decrementato hop by hop."
+    },
+    "conceptToReview": "Funzione del TTL e prevenzione dei loop di instradamento.",
+    "miniSummary": "Il TTL è un contatore di salti residui: a zero il pacchetto muore e nasce un ICMP Time Exceeded.",
+    "memoryTrick": "TTL = vite rimaste. Ogni router ne toglie una.",
+    "similarExamQuestion": "Su quale meccanismo dell'header IP si basa il funzionamento di traceroute?",
+    "figureRewritten": false
+  }
+]

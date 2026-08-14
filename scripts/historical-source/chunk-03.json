@@ -1,0 +1,357 @@
+[
+  {
+    "originalNumber": 31,
+    "id": "hist-031",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "facile",
+    "question": "Che cos'è un Cyclical Redundance Check (CRC)?",
+    "options": [
+      "Una tecnica che permette a più LAN logiche di funzionare sullo stesso dispositivo",
+      "I dati effettivamente trasportati da un frame ethernet",
+      "Un meccanismo che permette la sincronizzazione dei clock di due computer",
+      "Una formula matematica usata per verificare che i dati arrivati siano integri (non modificati)"
+    ],
+    "correctAnswer": "Una formula matematica usata per verificare che i dati arrivati siano integri (non modificati)",
+    "explanation": "Il CRC è un codice di rilevazione degli errori utilizzato principalmente nel livello data link, come in Ethernet e Wi-Fi, per garantire l'integrità dei dati. Il mittente tratta i bit del messaggio come un polinomio e lo divide per un polinomio generatore standard: il resto della divisione costituisce il codice CRC, inserito nel campo FCS in coda al frame. Il destinatario ripete l'operazione e, se il risultato non coincide, scarta il pacchetto perché corrotto.",
+    "whyOthersAreWrong": {
+      "Una tecnica che permette a più LAN logiche di funzionare sullo stesso dispositivo": "Questa è la definizione di VLAN, un meccanismo di segmentazione logica del tutto estraneo al controllo di errore.",
+      "I dati effettivamente trasportati da un frame ethernet": "I dati trasportati sono il payload del frame, mentre il CRC è un valore di controllo aggiunto nel trailer.",
+      "Un meccanismo che permette la sincronizzazione dei clock di due computer": "La sincronizzazione dei clock in Ethernet è affidata al preambolo, non al CRC."
+    },
+    "conceptToReview": "Rilevazione degli errori tramite CRC e campo FCS.",
+    "miniSummary": "Il CRC è il resto di una divisione polinomiale: se non torna, il frame viene scartato.",
+    "memoryTrick": "Il CRC rileva l'errore ma non lo corregge: chi sbaglia viene buttato, non riparato.",
+    "similarExamQuestion": "In quale parte del frame Ethernet è contenuto il valore calcolato con il CRC?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 32,
+    "id": "hist-032",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "facile",
+    "question": "Quante coppie di fili in rame sono presenti in un cavo UTP?",
+    "options": ["4", "5", "2", "8"],
+    "correctAnswer": "4",
+    "explanation": "Un cavo UTP standard usato nelle reti Ethernet contiene al suo interno otto fili conduttori in rame, intrecciati a due a due per formare quattro coppie. L'operazione di intreccio è fondamentale per annullare le interferenze elettromagnetiche generate dai cavi adiacenti. Le quattro coppie sono identificate dai colori standard arancione, verde, blu e marrone e i cavi terminano solitamente con connettori RJ-45.",
+    "whyOthersAreWrong": {
+      "5": "Non corrisponde ad alcuno standard: i cavi UTP per Ethernet hanno sempre quattro coppie.",
+      "2": "Due coppie erano sufficienti per il vecchio 10BASE-T e 100BASE-TX, ma il cavo ne contiene comunque quattro.",
+      "8": "Otto è il numero dei singoli fili, non delle coppie: raggruppandoli a due a due si ottengono quattro coppie."
+    },
+    "conceptToReview": "Struttura fisica del cavo UTP e funzione dell'intreccio.",
+    "miniSummary": "8 fili intrecciati a due a due danno 4 coppie; l'intreccio annulla il crosstalk.",
+    "memoryTrick": "Attenzione al tranello: la domanda chiede le coppie, non i fili.",
+    "similarExamQuestion": "Che differenza c'è tra un cavo UTP e uno STP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 33,
+    "id": "hist-033",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "Quale affermazione è corretta riguardo allo standard IEEE 802.3?",
+    "options": [
+      "È best effort",
+      "Non è usato per reti locali",
+      "Ha come modalità CSMA/CA",
+      "Riguarda il livello di rete"
+    ],
+    "correctAnswer": "È best effort",
+    "explanation": "Lo standard IEEE 802.3, cioè Ethernet, fornisce un servizio connectionless e non affidabile. Non prevede meccanismi di riscontro a livello data link: se un frame viene scartato per errori di CRC o per congestione, il protocollo non lo ritrasmette e si limita a fare del suo meglio per consegnarlo, lasciando il recupero degli errori ai protocolli superiori come TCP.",
+    "whyOthersAreWrong": {
+      "Non è usato per reti locali": "È esattamente il contrario: 802.3 è lo standard de facto proprio per le reti locali cablate.",
+      "Ha come modalità CSMA/CA": "Ethernet usa CSMA/CD con rilevamento delle collisioni; CSMA/CA con collision avoidance è del Wi-Fi 802.11.",
+      "Riguarda il livello di rete": "Ethernet opera ai livelli fisico e data link, in particolare nel sottolivello MAC, non al livello di rete."
+    },
+    "conceptToReview": "Natura non affidabile del servizio Ethernet e collocazione nello stack.",
+    "miniSummary": "Ethernet consegna al meglio senza ACK: chi recupera gli errori è il livello di trasporto.",
+    "memoryTrick": "802.3 = cavo = CD (Detection). 802.11 = radio = CA (Avoidance).",
+    "similarExamQuestion": "Quale livello dello stack si fa carico del recupero degli errori scartati da Ethernet?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 34,
+    "id": "hist-034",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "difficile",
+    "question": "Indicare l'affermazione NON corretta per un protocollo Go-back-N.",
+    "options": [
+      "Il mittente, quando scatta il timer, trasmette tutti i pacchetti senza riscontro (ack)",
+      "Il ricevitore invia solo ack cumulativi",
+      "Il mittente attiva un timer per ogni pacchetto senza riscontro (ack)",
+      "Il mittente può avere fino a N pacchetti senza riscontro nella pipeline"
+    ],
+    "correctAnswer": "Il mittente attiva un timer per ogni pacchetto senza riscontro (ack)",
+    "explanation": "Nel protocollo Go-Back-N il mittente utilizza un solo timer logico, associato al pacchetto più vecchio non ancora riscontrato, cioè alla base della finestra. Se questo timer scade vengono ritrasmessi tutti i pacchetti inviati e non ancora riscontrati. L'affermazione sui timer individuali descrive invece il Selective Repeat, che gestisce un timer per pacchetto per ritrasmettere selettivamente solo quello perso.",
+    "whyOthersAreWrong": {
+      "Il mittente, quando scatta il timer, trasmette tutti i pacchetti senza riscontro (ack)": "È vera: è esattamente il comportamento che dà il nome al protocollo, tornare indietro di N e ritrasmettere l'intero blocco.",
+      "Il ricevitore invia solo ack cumulativi": "È vera: in Go-Back-N l'ACK n conferma la corretta ricezione di tutti i pacchetti fino a n compreso.",
+      "Il mittente può avere fino a N pacchetti senza riscontro nella pipeline": "È vera: N rappresenta proprio la dimensione della finestra di trasmissione."
+    },
+    "conceptToReview": "Differenze tra Go-Back-N e Selective Repeat nella gestione dei timer.",
+    "miniSummary": "Go-Back-N: un timer sulla base della finestra. Selective Repeat: un timer per ogni pacchetto.",
+    "memoryTrick": "Un solo timer, una sola marcia indietro in blocco: è il Go-Back-N.",
+    "similarExamQuestion": "Quale vantaggio offre Selective Repeat rispetto a Go-Back-N in caso di perdita di un singolo pacchetto?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 35,
+    "id": "hist-035",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "difficile",
+    "question": "Il funzionamento del protocollo TCP si può definire come?",
+    "options": [
+      "A prova di errori",
+      "Connectionless",
+      "STOP and WAIT",
+      "Un misto tra GOBACK-N e ripetizione selettiva"
+    ],
+    "correctAnswer": "Un misto tra GOBACK-N e ripetizione selettiva",
+    "explanation": "TCP non aderisce perfettamente a nessuno dei due modelli teorici puri ma ne combina le caratteristiche migliori. Come Go-Back-N utilizza ACK cumulativi e un unico timer associato al pacchetto più vecchio non riscontrato; come Selective Repeat però bufferizza i segmenti arrivati fuori ordine e, grazie a Fast Retransmit e alle opzioni SACK, evita di ritrasmettere l'intera finestra ritrasmettendo solo il segmento mancante.",
+    "whyOthersAreWrong": {
+      "A prova di errori": "Nessun protocollo è a prova di errori: TCP rileva e recupera gli errori, ma non può impedirne il verificarsi sul canale.",
+      "Connectionless": "TCP è connection-oriented e richiede il three-way handshake prima di scambiare dati; connectionless è UDP.",
+      "STOP and WAIT": "Stop-and-wait invia un solo pacchetto per volta attendendone il riscontro, mentre TCP usa il pipelining con una finestra."
+    },
+    "conceptToReview": "Natura ibrida dei meccanismi di ritrasmissione di TCP.",
+    "miniSummary": "ACK cumulativi e timer unico come GBN, ma buffering fuori ordine e SACK come Selective Repeat.",
+    "memoryTrick": "TCP prende il meglio dei due mondi: non è né l'uno né l'altro in forma pura.",
+    "similarExamQuestion": "Cosa fa TCP quando riceve tre ACK duplicati per lo stesso numero di sequenza?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 36,
+    "id": "hist-036",
+    "category": "Internet",
+    "topic": "NAT",
+    "difficulty": "difficile",
+    "question": "Riguardo al NAT, indicare quale delle seguenti affermazioni è corretta.",
+    "options": [
+      "Ogni NAT è in grado di gestire al più 65536 comunicazioni contemporanee",
+      "In una rete con dispositivo NAT ci possono essere infiniti host",
+      "Il NAT garantisce che non ci siano collisioni all'interno della rete locale",
+      "Il NAT garantisce l'anonimato degli utenti"
+    ],
+    "correctAnswer": "Ogni NAT è in grado di gestire al più 65536 comunicazioni contemporanee",
+    "explanation": "Nella sua implementazione più comune, il NAT overload o PAT, il router mappa molti indirizzi IP privati su un unico indirizzo pubblico distinguendo le connessioni tramite il numero di porta. Poiché il campo porta nell'header TCP e UDP è di 16 bit, esistono 2^16 = 65536 porte possibili: questo è il limite teorico massimo di connessioni simultanee gestibili attraverso un singolo indirizzo IP pubblico.",
+    "whyOthersAreWrong": {
+      "In una rete con dispositivo NAT ci possono essere infiniti host": "Il numero di host è limitato sia dallo spazio di indirizzamento privato sia dal numero di porte disponibili per le traduzioni.",
+      "Il NAT garantisce che non ci siano collisioni all'interno della rete locale": "Le collisioni sono un fenomeno di livello 2 gestito da switch e protocolli di accesso al mezzo, mentre il NAT opera ai livelli 3 e 4.",
+      "Il NAT garantisce l'anonimato degli utenti": "Il NAT nasconde gli indirizzi interni verso l'esterno ma non fornisce anonimato: l'ISP conosce l'IP pubblico assegnato e il NAT stesso mantiene la tabella delle traduzioni."
+    },
+    "conceptToReview": "Funzionamento del PAT e limite imposto dal campo porta a 16 bit.",
+    "miniSummary": "Il NAT distingue le connessioni per porta, quindi il tetto teorico è 65536 per IP pubblico.",
+    "memoryTrick": "Il limite del NAT non è il numero di host, è il numero di porte: 2^16.",
+    "similarExamQuestion": "Quale principio architetturale di Internet viene violato dall'uso del NAT?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 37,
+    "id": "hist-037",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "facile",
+    "question": "Indicare uno degli elementi presenti nell'URL.",
+    "options": [
+      "L'indirizzo MAC del server",
+      "Il protocollo usato",
+      "L'indirizzo IP del gateway",
+      "La versione del browser"
+    ],
+    "correctAnswer": "Il protocollo usato",
+    "explanation": "Un URL segue una struttura standardizzata del tipo protocollo://hostname[:porta]/percorso. Il protocollo, detto anche scheme, è il primo elemento visibile, ad esempio http, https, ftp o mailto, e definisce le regole di comunicazione che il browser deve usare per recuperare la risorsa.",
+    "whyOthersAreWrong": {
+      "L'indirizzo MAC del server": "Il MAC è un parametro di livello data link, mai presente in un indirizzo web: viene semmai risolto localmente tramite ARP.",
+      "L'indirizzo IP del gateway": "Il gateway è una configurazione di rete locale del client e non compare in alcun modo nell'URL.",
+      "La versione del browser": "La versione del browser viaggia nell'header HTTP User-Agent, non fa parte dell'URL."
+    },
+    "conceptToReview": "Sintassi di un URL e significato dello scheme.",
+    "miniSummary": "URL = protocollo + host + eventuale porta + percorso della risorsa.",
+    "memoryTrick": "Quello che vedi prima dei due punti nella barra degli indirizzi è il protocollo.",
+    "similarExamQuestion": "Quale porta viene usata implicitamente quando l'URL non la specifica in http e https?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 38,
+    "id": "hist-038",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Indicare quale protocollo è usato per comunicare gli errori a livello di rete.",
+    "options": ["UDP", "ICMP", "TCP", "Traceroute"],
+    "correctAnswer": "ICMP",
+    "explanation": "Il protocollo IP è best effort e non ha meccanismi interni per segnalare errori. ICMP è il protocollo di supporto usato da router e host per comunicare informazioni di controllo e di errore: viaggia incapsulato direttamente dentro i pacchetti IP ed è considerato parte del livello di rete. Messaggi tipici sono Destination Unreachable e Time Exceeded.",
+    "whyOthersAreWrong": {
+      "UDP": "UDP è un protocollo di trasporto per i dati applicativi, non un protocollo di controllo e diagnostica della rete.",
+      "TCP": "Anche TCP è un protocollo di trasporto: gestisce l'affidabilità del proprio flusso, non la segnalazione di errori di rete.",
+      "Traceroute": "Traceroute non è un protocollo ma un'applicazione diagnostica, che peraltro utilizza proprio i messaggi ICMP per funzionare."
+    },
+    "conceptToReview": "Ruolo di ICMP come protocollo di controllo del livello di rete.",
+    "miniSummary": "ICMP non trasporta dati utente: trasporta segnalazioni di errore e diagnostica per IP.",
+    "memoryTrick": "ICMP è il meccanico di IP: non guida, ma ti dice cosa si è rotto.",
+    "similarExamQuestion": "ICMP viaggia sopra TCP, sopra UDP o direttamente dentro IP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 39,
+    "id": "hist-039",
+    "category": "Internet",
+    "topic": "Introduzione a Internet",
+    "difficulty": "media",
+    "question": "Cos'è il ritardo di propagazione in una rete di comunicazione?",
+    "options": [
+      "Il tempo richiesto per inviare un pacchetto da uno all'altro",
+      "Il tempo richiesto per elaborare un pacchetto nei nodi intermedi della rete",
+      "Il tempo richiesto per propagare un segnale elettrico o ottico tra due punti nella rete",
+      "Il tempo richiesto per effettuare la codifica e la decodifica del pacchetto durante la trasmissione"
+    ],
+    "correctAnswer": "Il tempo richiesto per propagare un segnale elettrico o ottico tra due punti nella rete",
+    "explanation": "Il ritardo di propagazione è il tempo necessario affinché un singolo bit viaggi fisicamente attraverso il mezzo trasmissivo, che sia rame, fibra o aria, dal trasmettitore al ricevitore. Si calcola come d/s, dove d è la distanza fisica tra i due nodi e s è la velocità di propagazione del segnale nel mezzo, tipicamente vicina alla velocità della luce.",
+    "whyOthersAreWrong": {
+      "Il tempo richiesto per inviare un pacchetto da uno all'altro": "Questo descrive il ritardo di trasmissione, che dipende dalla lunghezza del pacchetto e dalla larghezza di banda, non dalla distanza.",
+      "Il tempo richiesto per elaborare un pacchetto nei nodi intermedi della rete": "Questo è il ritardo di elaborazione, il tempo che il router impiega ad analizzare l'header e decidere l'inoltro.",
+      "Il tempo richiesto per effettuare la codifica e la decodifica del pacchetto durante la trasmissione": "La codifica e decodifica non costituiscono una delle quattro componenti classiche del ritardo nodale."
+    },
+    "conceptToReview": "Le quattro componenti del ritardo nodale e loro dipendenze.",
+    "miniSummary": "Propagazione dipende dalla distanza (d/s), trasmissione dipende dalla banda (L/R).",
+    "memoryTrick": "Propagazione = quanto è lungo il cavo. Trasmissione = quanto è grosso il pacchetto.",
+    "similarExamQuestion": "Da quali quattro contributi è composto il ritardo nodale totale?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 40,
+    "id": "hist-040",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "difficile",
+    "question": "Qual è il corretto suffisso CIDR per una organizzazione che necessita di 1023 indirizzi IP?",
+    "options": ["/21", "/24", "/22", "/23"],
+    "correctAnswer": "/22",
+    "explanation": "Per accomodare 1023 indirizzi bisogna trovare la potenza di due immediatamente superiore o uguale: 2^10 = 1024. Servono quindi 10 bit dedicati alla parte host e, poiché un indirizzo IPv4 è lungo 32 bit, il prefisso di rete risulta 32 − 10 = 22. Una subnet /22 fornisce esattamente 1024 indirizzi totali, il blocco più piccolo capace di contenere la richiesta.",
+    "whyOthersAreWrong": {
+      "/21": "Un /21 offre 2^11 = 2048 indirizzi: conterrebbe la richiesta ma sprecherebbe metà del blocco, quindi non è la scelta ottimale.",
+      "/24": "Un /24 offre solo 2^8 = 256 indirizzi, largamente insufficienti per i 1023 richiesti.",
+      "/23": "Un /23 offre 2^9 = 512 indirizzi, ancora insufficienti a coprire il fabbisogno."
+    },
+    "conceptToReview": "Dimensionamento di una subnet a partire dal numero di indirizzi richiesti.",
+    "miniSummary": "Trova la potenza di 2 che copre la richiesta, conta i bit host e sottrai da 32.",
+    "memoryTrick": "1024 = 2^10, quindi 32 − 10 = 22. Ragiona sempre a potenze di due.",
+    "similarExamQuestion": "Quale prefisso CIDR serve per una rete che deve ospitare 500 host?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 41,
+    "id": "hist-041",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "facile",
+    "question": "Quale protocollo è usato per trovare l'indirizzo della scheda (MAC address) di un dispositivo locale?",
+    "options": ["RIP", "ARP", "UDP", "TCP"],
+    "correctAnswer": "ARP",
+    "explanation": "ARP è il protocollo che funge da ponte tra il livello di rete, dove si usano gli indirizzi IP logici, e il livello data link, dove servono gli indirizzi MAC fisici per la consegna locale. Quando un host deve inviare un pacchetto a un dispositivo della stessa rete locale conosce l'IP di destinazione ma spesso non il MAC, quindi invia una richiesta ARP in broadcast e memorizza la risposta nella cache ARP.",
+    "whyOthersAreWrong": {
+      "RIP": "RIP è un protocollo di routing di tipo distance vector che serve a costruire tabelle di instradamento, non a risolvere indirizzi fisici.",
+      "UDP": "UDP è un protocollo di trasporto: ARP non viaggia nemmeno sopra UDP, ma direttamente dentro i frame Ethernet.",
+      "TCP": "TCP è un protocollo di trasporto orientato alla connessione e non ha alcun ruolo nella risoluzione degli indirizzi di livello 2."
+    },
+    "conceptToReview": "ARP come ponte tra indirizzamento logico e fisico.",
+    "miniSummary": "Serve il MAC di un host sulla mia stessa LAN? Si usa ARP e si mette in cache il risultato.",
+    "memoryTrick": "Address Resolution Protocol: risolve un indirizzo in un altro, da IP a MAC.",
+    "similarExamQuestion": "Cosa contiene la ARP table e perché viene mantenuta?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 42,
+    "id": "hist-042",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "difficile",
+    "question": "L'host A manda due segmenti consecutivi all'host B, il primo di 60 byte e il secondo di 30. Il numero di sequenza del primo è 127, la porta sorgente è 412 e la porta destinazione è 80. Qual è il valore di ack che l'host B manda dopo aver ricevuto il secondo segmento?",
+    "options": ["129", "217", "216", "413"],
+    "correctAnswer": "217",
+    "explanation": "In TCP il numero di riscontro indica sempre il numero di sequenza del prossimo byte che l'host si aspetta di ricevere. Il primo segmento parte da 127 e contiene 60 byte, quindi copre fino al byte 186; il secondo parte da 187 e contiene 30 byte, arrivando fino al byte 216. Avendo ricevuto correttamente tutto fino al 216, l'host B richiede il byte successivo: 127 + 60 + 30 = 217.",
+    "whyOthersAreWrong": {
+      "129": "Sarebbe il riscontro di appena due byte a partire da 127, ignorando completamente le dimensioni dei due segmenti.",
+      "216": "216 è l'ultimo byte effettivamente ricevuto, ma l'ACK indica il prossimo byte atteso, quindi va incrementato di uno.",
+      "413": "413 deriva dal numero di porta sorgente 412, che non ha alcun rapporto con il calcolo dei numeri di sequenza."
+    },
+    "conceptToReview": "Semantica cumulativa del numero di acknowledgment in TCP.",
+    "miniSummary": "ACK = numero di sequenza iniziale + totale dei byte ricevuti correttamente.",
+    "memoryTrick": "L'ACK non dice 'ho ricevuto fin qui', dice 'ora mandami questo'.",
+    "similarExamQuestion": "Se un segmento ha sequence number 201 e lunghezza 100, quale ACK restituisce il destinatario?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 43,
+    "id": "hist-043",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Qual è il meccanismo principale utilizzato dall'algoritmo Distance Vector per scambiare informazioni di routing tra i nodi di una rete?",
+    "options": [
+      "Invio di messaggi di aggiornamento periodici",
+      "Invio di richieste di routing specifiche",
+      "Invio di tabelle di routing complete",
+      "Invio di pacchetti di controllo multicast"
+    ],
+    "correctAnswer": "Invio di tabelle di routing complete",
+    "explanation": "Gli algoritmi Distance Vector funzionano secondo un principio iterativo e distribuito nel quale ogni nodo condivide la propria conoscenza della rete, cioè il suo vettore delle distanze, solo con i vicini diretti. A differenza dei link state, che diffondono in flooding lo stato dei collegamenti a tutta la rete, qui ogni router invia ai vicini l'intera lista delle destinazioni raggiungibili con il relativo costo stimato, e il vicino aggiorna la propria tabella applicando l'equazione di Bellman-Ford.",
+    "whyOthersAreWrong": {
+      "Invio di messaggi di aggiornamento periodici": "La periodicità è una caratteristica implementativa di protocolli come RIP, ma non descrive che cosa venga effettivamente scambiato.",
+      "Invio di richieste di routing specifiche": "Il distance vector non funziona a richiesta puntuale: l'aggiornamento è un annuncio spontaneo verso i vicini.",
+      "Invio di pacchetti di controllo multicast": "Il trasporto multicast è un dettaglio implementativo di alcune versioni, non il meccanismo concettuale dello scambio."
+    },
+    "conceptToReview": "Routing by rumor e scambio dei vettori delle distanze.",
+    "miniSummary": "Ogni nodo dice ai vicini tutto quello che sa raggiungere e a che costo.",
+    "memoryTrick": "Distance vector = mi fido del sentito dire dei vicini; link state = ho la mappa completa.",
+    "similarExamQuestion": "Quale problema tipico affligge gli algoritmi distance vector e come viene mitigato?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 44,
+    "id": "hist-044",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "media",
+    "question": "Quale elemento è contenuto nel trailer (coda) del frame data-link?",
+    "options": ["Indirizzo fisico", "Dati", "Indirizzo logico", "Correzione di errore"],
+    "correctAnswer": "Correzione di errore",
+    "explanation": "Un frame data link è composto da tre parti: l'header con le informazioni di indirizzamento fisico e il tipo di protocollo, il payload con il pacchetto del livello superiore, e il trailer finale. Il trailer contiene il campo FCS, all'interno del quale viene inserito il valore calcolato tramite l'algoritmo CRC, che serve al destinatario per verificare che il frame non si sia corrotto durante il viaggio.",
+    "whyOthersAreWrong": {
+      "Indirizzo fisico": "Gli indirizzi MAC di sorgente e destinazione si trovano nell'header, all'inizio del frame, non in coda.",
+      "Dati": "Il payload occupa la parte centrale del frame, tra header e trailer.",
+      "Indirizzo logico": "L'indirizzo IP appartiene all'intestazione del pacchetto di livello 3, incapsulato nel payload del frame."
+    },
+    "conceptToReview": "Struttura header, payload e trailer di un frame di livello 2.",
+    "miniSummary": "Nel trailer c'è l'FCS con il CRC: è l'ultima cosa che il ricevitore controlla.",
+    "memoryTrick": "Il controllo di integrità si mette in fondo, perché va calcolato su tutto ciò che precede.",
+    "similarExamQuestion": "Quale valore viene inserito nel campo FCS e come lo verifica il destinatario?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 45,
+    "id": "hist-045",
+    "category": "Internet",
+    "topic": "switch",
+    "difficulty": "facile",
+    "question": "Indicare il livello in cui opera lo switch.",
+    "options": ["Network", "Transport", "Data link", "Physical"],
+    "correctAnswer": "Data link",
+    "explanation": "Uno switch di rete tradizionale opera al livello di collegamento dati, cioè il livello 2 del modello OSI. Prende le decisioni di inoltro analizzando gli indirizzi fisici MAC presenti nell'intestazione dei frame Ethernet, a differenza dell'hub che lavora al livello fisico rigenerando solo il segnale, e del router che lavora al livello di rete usando gli indirizzi IP.",
+    "whyOthersAreWrong": {
+      "Network": "Il livello di rete è quello del router, che instrada tra reti diverse basandosi sugli indirizzi IP.",
+      "Transport": "Il livello di trasporto è implementato solo negli host terminali e riguarda porte, segmenti e affidabilità end-to-end.",
+      "Physical": "Il livello fisico è quello dell'hub e dei ripetitori, che rigenerano il segnale senza interpretare gli indirizzi."
+    },
+    "conceptToReview": "Collocazione di hub, switch e router nei livelli dello stack.",
+    "miniSummary": "Hub livello 1, switch livello 2 sui MAC, router livello 3 sugli IP.",
+    "memoryTrick": "Se il dispositivo guarda i MAC è di livello 2; se guarda gli IP è di livello 3.",
+    "similarExamQuestion": "Quali livelli dello stack protocollare deve implementare un router?",
+    "figureRewritten": false
+  }
+]

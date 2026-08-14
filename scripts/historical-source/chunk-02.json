@@ -1,0 +1,372 @@
+[
+  {
+    "originalNumber": 16,
+    "id": "hist-016",
+    "category": "Internet",
+    "topic": "Introduzione a Internet",
+    "difficulty": "difficile",
+    "question": "Supponendo che le velocità di trasmissione fra il commutatore e gli host siano R1 e R2, e che il commutatore adotti la strategia store-and-forward, qual è il ritardo totale da un capo all'altro per inviare un pacchetto di lunghezza L, ignorando i ritardi di accodamento, propagazione ed elaborazione?",
+    "options": ["2L/R2", "L/R1 + L/R2", "L/(R1 + R2)", "L/R1"],
+    "correctAnswer": "L/R1 + L/R2",
+    "explanation": "Il meccanismo store-and-forward implica che il commutatore debba ricevere l'intero pacchetto prima di poter iniziare a trasmettere il primo bit sul collegamento successivo. Il tempo per inviare il pacchetto di lunghezza L alla velocità R1 è L/R1; solo dopo aver ricevuto l'ultimo bit lo switch inizia a trasmettere verso la destinazione alla velocità R2, impiegando L/R2. Il ritardo totale è quindi la somma dei due tempi di trasmissione.",
+    "whyOthersAreWrong": {
+      "2L/R2": "Assume che entrambi i collegamenti abbiano velocità R2, ignorando completamente il primo tratto che viaggia a R1.",
+      "L/(R1 + R2)": "Sommare le velocità presupporrebbe una trasmissione parallela sui due collegamenti, mentre lo store-and-forward li rende rigorosamente sequenziali.",
+      "L/R1": "Considera solo il primo tratto e trascura il tempo necessario allo switch per ritrasmettere il pacchetto verso la destinazione."
+    },
+    "conceptToReview": "Ritardo di trasmissione e semantica dello store-and-forward.",
+    "miniSummary": "Con store-and-forward i tempi di trasmissione dei singoli link si sommano, non si sovrappongono.",
+    "memoryTrick": "Il pacchetto deve entrare tutto prima di poter uscire: ogni salto costa un L/R intero.",
+    "similarExamQuestion": "Qual è il ritardo end-to-end per un pacchetto su N collegamenti tutti di velocità R con store-and-forward?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 17,
+    "id": "hist-017",
+    "category": "Internet",
+    "topic": "switch",
+    "difficulty": "difficile",
+    "question": "In una LAN quattro host sono collegati a uno switch: PC1 sulla porta 4, PC3 sulla porta 2, PC4 sulla porta 1 e PC2 sulla porta 3. La MAC address table contiene solo due voci, quelle relative alla porta 1 e alla porta 3. Se PC1 invia un frame destinato a PC3, qual è il comportamento dello switch?",
+    "options": [
+      "Lo switch invia il frame solo alla porta 2",
+      "Lo switch invia il frame a tutte le porte eccetto la 4",
+      "Lo switch scarta il frame",
+      "Lo switch invia il frame a tutte le porte"
+    ],
+    "correctAnswer": "Lo switch invia il frame a tutte le porte eccetto la 4",
+    "explanation": "La tabella di inoltro non contiene alcuna voce per PC3, che si trova sulla porta 2, quindi lo switch non sa dove sia il destinatario: siamo nel caso di unknown unicast. Per garantire comunque la consegna lo switch ricorre al flooding, inoltrando il frame su tutte le interfacce attive tranne quella da cui il frame è arrivato, cioè la porta 4 collegata al mittente PC1, così da evitare di rimandarlo indietro.",
+    "whyOthersAreWrong": {
+      "Lo switch invia il frame solo alla porta 2": "Sarebbe il comportamento corretto solo se il MAC di PC3 fosse già presente in tabella, ma la porta 2 non compare tra le voci apprese.",
+      "Lo switch scarta il frame": "Lo switch non scarta i frame con destinazione sconosciuta: è proprio per questo che esiste il meccanismo di flooding.",
+      "Lo switch invia il frame a tutte le porte": "Il frame non viene mai reinviato sulla porta di ingresso, altrimenti tornerebbe al mittente e si rischierebbero loop."
+    },
+    "conceptToReview": "Gestione dell'unknown unicast e flooding selettivo.",
+    "miniSummary": "MAC sconosciuto significa flooding su tutte le porte tranne quella di provenienza.",
+    "memoryTrick": "Lo switch grida a tutti tranne che a chi gli ha appena parlato.",
+    "similarExamQuestion": "Come si comporta uno switch quando riceve un frame destinato all'indirizzo di broadcast?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 18,
+    "id": "hist-018",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "facile",
+    "question": "Quale protocollo è usato per ottenere dinamicamente un indirizzo IP in una rete locale?",
+    "options": ["DNS", "DHCP", "ARP", "Ethernet"],
+    "correctAnswer": "DHCP",
+    "explanation": "DHCP è un protocollo di livello applicativo che permette a un server di assegnare automaticamente indirizzi IP e altri parametri di configurazione come subnet mask, gateway predefinito e server DNS ai client della rete. Questo semplifica la gestione evitando la configurazione manuale con IP statico su ogni host.",
+    "whyOthersAreWrong": {
+      "DNS": "Il DNS traduce nomi di dominio in indirizzi IP, ma non assegna alcun indirizzo agli host.",
+      "ARP": "ARP risolve un indirizzo IP già noto nel corrispondente indirizzo MAC per la consegna locale, non distribuisce configurazioni.",
+      "Ethernet": "Ethernet è lo standard tecnologico dei livelli fisico e data link, non un protocollo di configurazione IP."
+    },
+    "conceptToReview": "Ruolo del DHCP nella configurazione automatica degli host.",
+    "miniSummary": "DHCP assegna IP, maschera, gateway e DNS; ARP e DNS risolvono, non assegnano.",
+    "memoryTrick": "DHCP ti dà l'indirizzo, DNS ti dà il nome, ARP ti dà la scheda di rete.",
+    "similarExamQuestion": "Quali parametri di rete oltre all'indirizzo IP può fornire un server DHCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 19,
+    "id": "hist-019",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Indicare come viene modificato il campo TTL dei datagrammi IP ogni volta che attraversa un router.",
+    "options": [
+      "Il campo TTL viene incrementato di uno",
+      "Il campo TTL non viene modificato se non ci sono errori",
+      "Il campo TTL viene reinizializzato a zero",
+      "Il campo TTL viene decrementato di uno"
+    ],
+    "correctAnswer": "Il campo TTL viene decrementato di uno",
+    "explanation": "Il campo Time To Live impedisce che i pacchetti circolino all'infinito nella rete a causa di cicli di instradamento. Ogni router che riceve un pacchetto IP deve obbligatoriamente decrementare il valore del TTL di almeno uno prima di inoltrarlo; se il valore raggiunge lo zero il router scarta il pacchetto e invia al mittente un messaggio ICMP di tipo Time Exceeded.",
+    "whyOthersAreWrong": {
+      "Il campo TTL viene incrementato di uno": "Un incremento renderebbe il meccanismo inutile: il pacchetto non scadrebbe mai e i loop non verrebbero interrotti.",
+      "Il campo TTL non viene modificato se non ci sono errori": "Il decremento avviene sempre, indipendentemente dalla presenza di errori: è la regola base dell'inoltro IP.",
+      "Il campo TTL viene reinizializzato a zero": "Azzerare il TTL a ogni hop farebbe scartare immediatamente ogni pacchetto già al primo router."
+    },
+    "conceptToReview": "Decremento del TTL hop by hop e messaggio ICMP Time Exceeded.",
+    "miniSummary": "Ogni router toglie uno al TTL; a zero il pacchetto viene scartato con notifica ICMP al mittente.",
+    "memoryTrick": "Il TTL è un conto alla rovescia di salti, non un contatore che cresce.",
+    "similarExamQuestion": "Quale messaggio ICMP viene generato quando il TTL di un datagramma raggiunge lo zero?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 20,
+    "id": "hist-020",
+    "category": "Internet",
+    "topic": "MAC address",
+    "difficulty": "facile",
+    "question": "Quale fra i seguenti è un indirizzo di broadcast a livello data-link?",
+    "options": [
+      "01-00-5E-00-00-03",
+      "00-26-0F-4B-00-3E",
+      "FF-FF-FF-FF-FF-FF",
+      "E5C-26-0A-4B-19-3E"
+    ],
+    "correctAnswer": "FF-FF-FF-FF-FF-FF",
+    "explanation": "A livello data link l'indirizzo speciale riservato alla comunicazione broadcast, cioè destinata a tutti i dispositivi della rete locale, è costituito da 48 bit tutti impostati a 1. Poiché ogni cifra esadecimale rappresenta 4 bit, un indirizzo di 48 bit a uno si scrive come una sequenza di dodici F, tipicamente raggruppate a coppie.",
+    "whyOthersAreWrong": {
+      "01-00-5E-00-00-03": "Il prefisso 01-00-5E identifica un indirizzo multicast, usato per mappare gruppi multicast IP su Ethernet, non il broadcast.",
+      "00-26-0F-4B-00-3E": "È un normale indirizzo unicast assegnato a una singola scheda di rete.",
+      "E5C-26-0A-4B-19-3E": "Non è nemmeno un indirizzo sintatticamente valido: il primo gruppo contiene tre cifre esadecimali invece di due."
+    },
+    "conceptToReview": "Indirizzi Ethernet unicast, multicast e broadcast.",
+    "miniSummary": "Broadcast di livello 2 = tutti i 48 bit a uno = FF:FF:FF:FF:FF:FF.",
+    "memoryTrick": "Tutti a uno significa 'a tutti'. Se vedi solo F, è broadcast.",
+    "similarExamQuestion": "Qual è l'indirizzo di destinazione usato nel frame di una ARP request?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 21,
+    "id": "hist-021",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "In quale protocollo è utilizzato l'algoritmo di backoff esponenziale binario?",
+    "options": ["PIGGYBACK", "CSMA/CA", "GOBACK-N", "CSMA/CD"],
+    "correctAnswer": "CSMA/CD",
+    "explanation": "In una rete Ethernet cablata, quando due stazioni trasmettono contemporaneamente avviene una collisione. Per risolverla le stazioni coinvolte interrompono la trasmissione e attendono un tempo casuale prima di riprovare: l'algoritmo di backoff esponenziale binario determina questo tempo raddoppiando l'intervallo di estrazione a ogni collisione consecutiva, riducendo drasticamente la probabilità che le stazioni scelgano di nuovo lo stesso istante.",
+    "whyOthersAreWrong": {
+      "PIGGYBACK": "Il piggybacking è la tecnica che trasporta riscontri e dati nella stessa unità informativa, non ha nulla a che vedere con la gestione delle collisioni.",
+      "CSMA/CA": "Anche il Wi-Fi usa un meccanismo di backoff, ma il termine backoff esponenziale binario è storicamente e tecnicamente associato allo standard Ethernet 802.3 e al rilevamento delle collisioni.",
+      "GOBACK-N": "Go-Back-N è un protocollo di trasferimento affidabile a finestra del livello di trasporto o collegamento, estraneo all'accesso al mezzo condiviso."
+    },
+    "conceptToReview": "Risoluzione delle collisioni in Ethernet e crescita esponenziale della finestra di contesa.",
+    "miniSummary": "Dopo m collisioni la stazione estrae k in [0, 2^m − 1] e attende k volte 512 bit-time.",
+    "memoryTrick": "Più ci si scontra, più si aspetta: l'intervallo raddoppia a ogni scontro.",
+    "similarExamQuestion": "Dopo quante collisioni consecutive un frame Ethernet viene definitivamente scartato?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 22,
+    "id": "hist-022",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Durante la comunicazione tra due host che attraversa più router, cosa accade agli indirizzi?",
+    "options": [
+      "Gli indirizzi IP e gli indirizzi MAC variano in ogni tratto intermedio",
+      "Gli indirizzi IP rimangono fissi mentre gli indirizzi MAC variano in ogni tratto",
+      "Gli indirizzi IP e gli indirizzi MAC rimangono fissi lungo tutto il percorso",
+      "Gli indirizzi IP contenuti nei vari pacchetti variano in ogni tratto di collegamento fra i router"
+    ],
+    "correctAnswer": "Gli indirizzi IP rimangono fissi mentre gli indirizzi MAC variano in ogni tratto",
+    "explanation": "Gli indirizzi IP sorgente e destinazione identificano i capolinea della comunicazione e devono restare invariati per tutto il viaggio, salvo scenari con NAT: è il principio end-to-end. Gli indirizzi MAC servono invece solo a spostare il frame da un dispositivo al successivo all'interno della stessa rete locale, quindi ogni router rimuove il vecchio header di livello 2 e ne crea uno nuovo con il proprio MAC come sorgente e quello del next hop come destinazione.",
+    "whyOthersAreWrong": {
+      "Gli indirizzi IP e gli indirizzi MAC variano in ogni tratto intermedio": "Se cambiassero anche gli IP il pacchetto perderebbe l'informazione su mittente e destinatario finali e non potrebbe essere consegnato né riscontrato.",
+      "Gli indirizzi IP e gli indirizzi MAC rimangono fissi lungo tutto il percorso": "I MAC hanno significato solo sul singolo segmento locale: non possono restare gli stessi attraversando reti diverse.",
+      "Gli indirizzi IP contenuti nei vari pacchetti variano in ogni tratto di collegamento fra i router": "È esattamente il contrario di quanto avviene nel normale instradamento IP senza NAT."
+    },
+    "conceptToReview": "Principio end-to-end degli indirizzi IP contro l'indirizzamento hop-by-hop dei MAC.",
+    "miniSummary": "IP = destinazione finale invariata; MAC = prossimo salto, riscritto a ogni router.",
+    "memoryTrick": "L'IP è l'indirizzo scritto sulla lettera, il MAC è il postino del tratto successivo.",
+    "similarExamQuestion": "Quali operazioni compie un router sull'intestazione di livello 2 di un pacchetto in transito?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 23,
+    "id": "hist-023",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "difficile",
+    "question": "Indicare quale affermazione relativa all'algoritmo di Dijkstra utilizzato per il routing è errata.",
+    "options": [
+      "Utilizza il flooding per inviare le informazioni agli altri router",
+      "Centralizzato",
+      "Dinamico",
+      "Distribuito"
+    ],
+    "correctAnswer": "Distribuito",
+    "explanation": "Nei testi di riferimento gli algoritmi di routing si dividono in globali, di tipo link state come Dijkstra, e decentrati o distribuiti, di tipo distance vector basati su Bellman-Ford. Dijkstra richiede una conoscenza completa e centralizzata della topologia: ogni router possiede la mappa completa della rete e calcola localmente i cammini minimi su quei dati globali, quindi definirlo distribuito è scorretto.",
+    "whyOthersAreWrong": {
+      "Utilizza il flooding per inviare le informazioni agli altri router": "È vero: il flooding è il meccanismo con cui i protocolli link state diffondono le informazioni sullo stato dei collegamenti a tutta la rete.",
+      "Centralizzato": "È vero nel senso che l'algoritmo lavora su un database che rappresenta la visione globale della rete, come se avesse una vista centrale.",
+      "Dinamico": "È vero: l'algoritmo reagisce automaticamente ai cambiamenti della topologia."
+    },
+    "conceptToReview": "Classificazione degli algoritmi di routing in globali e decentrati.",
+    "miniSummary": "Dijkstra è link state e lavora su informazione globale; distribuito è invece il distance vector.",
+    "memoryTrick": "Chi ha la mappa intera non è distribuito: il distribuito si fida solo dei vicini.",
+    "similarExamQuestion": "Su quale equazione si basano invece gli algoritmi di tipo distance vector?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 24,
+    "id": "hist-024",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "Quale delle seguenti definizioni è più corretta per definire il TCP MSS (Maximum Segment Size)?",
+    "options": [
+      "Tutti i dati inclusi nel segmento TCP includendo solo le intestazioni TCP e IP",
+      "Tutti i dati inclusi nel segmento TCP compreso le intestazioni del livello 2, IP e TCP",
+      "Tutti i dati inclusi nel segmento TCP inclusa solo l'intestazione TCP",
+      "Tutti i dati inclusi nel segmento TCP escludendo tutte le intestazioni"
+    ],
+    "correctAnswer": "Tutti i dati inclusi nel segmento TCP escludendo tutte le intestazioni",
+    "explanation": "Il Maximum Segment Size definisce la quantità massima di dati applicativi, cioè di payload, che un host è disposto ad accettare in un singolo segmento TCP. Nonostante il nome faccia pensare all'intero segmento, il valore non include né l'intestazione TCP né quella IP: l'MSS si ricava dall'MTU sottraendo i 20 byte di header IP e i 20 di header TCP, per cui con MTU 1500 l'MSS tipico è 1460 byte.",
+    "whyOthersAreWrong": {
+      "Tutti i dati inclusi nel segmento TCP includendo solo le intestazioni TCP e IP": "Se comprendesse gli header il valore coinciderebbe con l'MTU, non con l'MSS che è esattamente l'MTU meno gli header.",
+      "Tutti i dati inclusi nel segmento TCP compreso le intestazioni del livello 2, IP e TCP": "L'MSS è un parametro del livello di trasporto e non tiene conto dell'incapsulamento di livello 2.",
+      "Tutti i dati inclusi nel segmento TCP inclusa solo l'intestazione TCP": "Anche i soli 20 byte di header TCP sono esclusi dal conteggio dell'MSS."
+    },
+    "conceptToReview": "Relazione tra MTU e MSS.",
+    "miniSummary": "MSS = MTU − header IP (20) − header TCP (20). Con MTU 1500 si ottiene 1460.",
+    "memoryTrick": "Il nome inganna: 'Segment Size' misura solo i dati, non il segmento intero.",
+    "similarExamQuestion": "Quanto vale l'MSS su un collegamento Ethernet standard e come si calcola?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 25,
+    "id": "hist-025",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Qual è il significato dell'acronimo CIDR?",
+    "options": [
+      "Classless Inter-Domain Routing",
+      "Classless Internet Destination Routing",
+      "Classfull Inter-Destination Routing",
+      "Classfull Identification Routing"
+    ],
+    "correctAnswer": "Classless Inter-Domain Routing",
+    "explanation": "Introdotto nel 1993, il CIDR è nato per sostituire la vecchia architettura di indirizzamento classful basata sulle classi rigide A, B e C, che stava portando al rapido esaurimento degli indirizzi IPv4 e all'esplosione delle tabelle di routing. Il termine classless indica che non si seguono più le regole rigide delle classi e permette di assegnare blocchi con maschere di lunghezza arbitraria, oltre a consentire l'aggregazione di più reti contigue in un'unica voce di routing.",
+    "whyOthersAreWrong": {
+      "Classless Internet Destination Routing": "Le parole Internet e Destination non fanno parte dell'acronimo: il riferimento corretto è a Inter-Domain.",
+      "Classfull Inter-Destination Routing": "Classful è esattamente il modello che il CIDR ha superato, quindi il termine è in contraddizione con il concetto stesso.",
+      "Classfull Identification Routing": "Sia Classful sia Identification sono errati: il CIDR è classless e riguarda l'instradamento tra domini."
+    },
+    "conceptToReview": "Passaggio dall'indirizzamento classful al CIDR e route aggregation.",
+    "miniSummary": "CIDR = Classless Inter-Domain Routing: maschere di lunghezza libera e aggregazione delle rotte.",
+    "memoryTrick": "La parola chiave è Classless: se un'opzione dice Classful, è sbagliata per definizione.",
+    "similarExamQuestion": "Quale vantaggio introduce la route aggregation resa possibile dal CIDR?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 26,
+    "id": "hist-026",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "facile",
+    "question": "A cosa serve il protocollo ARP?",
+    "options": [
+      "Trova l'indirizzo IP dato l'indirizzo MAC",
+      "Trova l'indirizzo MAC dato l'indirizzo IP",
+      "Risolvere il campo TYPE dell'indirizzo MAC",
+      "Trova l'indirizzo del router"
+    ],
+    "correctAnswer": "Trova l'indirizzo MAC dato l'indirizzo IP",
+    "explanation": "Per inviare un frame Ethernet all'interno di una rete locale il mittente deve conoscere l'indirizzo fisico del destinatario, mentre le applicazioni lavorano con indirizzi logici IP. L'Address Resolution Protocol colma questa distanza: il mittente invia in broadcast una ARP request chiedendo chi possiede un dato indirizzo IP, il dispositivo interessato risponde in unicast con il proprio MAC, e la coppia viene salvata nella ARP table per evitare di ripetere la richiesta.",
+    "whyOthersAreWrong": {
+      "Trova l'indirizzo IP dato l'indirizzo MAC": "Questa è la funzione inversa svolta da RARP, protocollo ormai obsoleto e sostituito da DHCP.",
+      "Risolvere il campo TYPE dell'indirizzo MAC": "Il campo Type appartiene all'intestazione del frame Ethernet e indica il protocollo trasportato: non viene risolto da ARP.",
+      "Trova l'indirizzo del router": "L'indirizzo del gateway è un parametro di configurazione ottenuto staticamente o via DHCP, non scoperto da ARP."
+    },
+    "conceptToReview": "Risoluzione IP verso MAC e caching ARP.",
+    "miniSummary": "ARP chiede in broadcast 'chi ha questo IP?' e riceve in unicast il MAC corrispondente.",
+    "memoryTrick": "ARP va da logico a fisico: parti dall'IP, arrivi alla scheda di rete.",
+    "similarExamQuestion": "Quale informazione è l'unica sconosciuta al mittente in un pacchetto di ARP request?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 27,
+    "id": "hist-027",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "difficile",
+    "question": "Nella macchina a stati finiti del protocollo RDT 3.0 lato sender, quale evento provoca la ritrasmissione del pacchetto e il riavvio del timer restando nello stesso stato di attesa dell'ACK?",
+    "options": [
+      "Ricezione di dati dal livello superiore",
+      "Ricezione di un pacchetto corrotto",
+      "Ricezione di un ack",
+      "Timeout"
+    ],
+    "correctAnswer": "Timeout",
+    "explanation": "RDT 3.0 è un protocollo stop-and-wait progettato per canali con perdita di pacchetti. Nella sua macchina a stati la transizione che parte dallo stato di attesa dell'ACK e vi ritorna, eseguendo udt_send del pacchetto e start_timer, è innescata dallo scadere del tempo massimo di attesa: se il timer scade senza aver ricevuto l'ACK il protocollo assume che il pacchetto sia andato perso e lo rimanda.",
+    "whyOthersAreWrong": {
+      "Ricezione di dati dal livello superiore": "Questo evento provoca una transizione a partire dagli stati di attesa di chiamata dall'alto, non dallo stato di attesa dell'ACK.",
+      "Ricezione di un pacchetto corrotto": "Un ACK corrotto viene semplicemente ignorato in attesa del timeout, non provoca da solo la ritrasmissione immediata con riavvio del timer.",
+      "Ricezione di un ack": "Un ACK valido e atteso fa avanzare il protocollo allo stato successivo e ferma il timer, non causa alcuna ritrasmissione."
+    },
+    "conceptToReview": "Ruolo del timer nei protocolli di trasferimento dati affidabile.",
+    "miniSummary": "Solo il timeout permette al mittente di reagire alla perdita totale di un pacchetto.",
+    "memoryTrick": "Checksum e numeri di sequenza gestiscono errori e duplicati; contro la perdita serve il timer.",
+    "similarExamQuestion": "Perché nei protocolli rdt viene introdotto il timer e quale problema risolve rispetto a checksum e ACK?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 28,
+    "id": "hist-028",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "media",
+    "question": "Se si considera il funzionamento dei proxy HTTP (web cache), indicare quale delle seguenti affermazioni è vera.",
+    "options": [
+      "Il proxy HTTP è un dispositivo di rete che serve a mascherare gli indirizzi IP",
+      "Un proxy HTTP ha sempre nella sua cache gli oggetti richiesti dai client",
+      "Un proxy HTTP usa il GET condizionale per gestire l'aggiornamento degli oggetti nella propria cache",
+      "Il proxy HTTP serve principalmente per bilanciare le richieste che vengono fatte ai server web"
+    ],
+    "correctAnswer": "Un proxy HTTP usa il GET condizionale per gestire l'aggiornamento degli oggetti nella propria cache",
+    "explanation": "Il problema principale di una web cache è assicurarsi che i dati salvati localmente siano ancora aggiornati rispetto al server originale. Per verificarlo il proxy invia una richiesta includendo l'header If-Modified-Since: se l'oggetto non è cambiato il server risponde con 304 Not Modified senza reinviare i dati e il proxy usa la copia in cache, altrimenti invia il nuovo oggetto con codice 200 OK.",
+    "whyOthersAreWrong": {
+      "Il proxy HTTP è un dispositivo di rete che serve a mascherare gli indirizzi IP": "Il mascheramento degli indirizzi è compito del NAT: la finalità di una web cache è ridurre latenza e traffico.",
+      "Un proxy HTTP ha sempre nella sua cache gli oggetti richiesti dai client": "La cache contiene solo un sottoinsieme degli oggetti; in caso di miss il proxy deve inoltrare la richiesta al server d'origine.",
+      "Il proxy HTTP serve principalmente per bilanciare le richieste che vengono fatte ai server web": "Il bilanciamento del carico è una funzione diversa, svolta da load balancer o dal DNS, non lo scopo principale di una cache."
+    },
+    "conceptToReview": "Coerenza della cache HTTP e GET condizionale.",
+    "miniSummary": "If-Modified-Since più risposta 304 Not Modified: si valida la copia senza riscaricarla.",
+    "memoryTrick": "La cache non chiede 'dammelo', chiede 'è cambiato?'.",
+    "similarExamQuestion": "Cosa significa il codice di stato HTTP 304 e in quale scenario viene restituito?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 29,
+    "id": "hist-029",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Indicare quale dei seguenti indirizzi IPv4 non è valido.",
+    "options": ["192.168.1.1", "151.97.6.4", "1.1.1.1", "257.70.3.46"],
+    "correctAnswer": "257.70.3.46",
+    "explanation": "Un indirizzo IPv4 è una stringa di 32 bit divisa in quattro segmenti da 8 bit ciascuno, chiamati ottetti e separati da punti. Con 8 bit a disposizione il valore decimale massimo rappresentabile è 2^8 − 1 = 255, quindi ogni numero deve essere compreso tra 0 e 255. Il valore 257 nel primo ottetto supera il limite consentito e rende l'indirizzo sintatticamente invalido.",
+    "whyOthersAreWrong": {
+      "192.168.1.1": "È un indirizzo privato perfettamente valido, molto comune nelle reti domestiche.",
+      "151.97.6.4": "Tutti gli ottetti rientrano nell'intervallo ammesso, quindi l'indirizzo è sintatticamente corretto.",
+      "1.1.1.1": "È un indirizzo valido e realmente utilizzato, notoriamente come resolver DNS pubblico."
+    },
+    "conceptToReview": "Sintassi degli indirizzi IPv4 e intervallo ammesso per ogni ottetto.",
+    "miniSummary": "Quattro ottetti, ciascuno tra 0 e 255: oltre 255 l'indirizzo non è rappresentabile su 8 bit.",
+    "memoryTrick": "Cerca subito il numero maggiore di 255: è sempre quello il trucco della domanda.",
+    "similarExamQuestion": "Quanti indirizzi distinti sono rappresentabili complessivamente in IPv4 e perché?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 30,
+    "id": "hist-030",
+    "category": "Internet",
+    "topic": "porte e socket",
+    "difficulty": "media",
+    "question": "Considerata una connessione TCP fra gli host A e B, supponendo che i segmenti in viaggio da A a B abbiano numero di porta di origine x e numero di porta di destinazione y, quali sono i numeri di porta per i segmenti che viaggiano da B ad A?",
+    "options": [
+      "I valori non dipendono né da x né da y",
+      "Porta origine y, porta destinazione x",
+      "Porta origine x, porta destinazione y",
+      "Porta origine: y+1, porta destinazione x+1"
+    ],
+    "correctAnswer": "Porta origine y, porta destinazione x",
+    "explanation": "Una connessione TCP è composta da due flussi di dati e i numeri di porta identificano i processi comunicanti su ciascun host. Nel viaggio da A a B il mittente è A con porta x e il destinatario è B con porta y; nel viaggio di ritorno i ruoli si invertono, quindi B usa la propria porta y come origine e indirizza i pacchetti alla porta x di A come destinazione.",
+    "whyOthersAreWrong": {
+      "I valori non dipendono né da x né da y": "I valori dipendono strettamente da x e y: sono gli stessi numeri, semplicemente scambiati di ruolo.",
+      "Porta origine x, porta destinazione y": "Sarebbe corretto per il verso A verso B, non per il traffico di ritorno, dove mittente e destinatario si invertono.",
+      "Porta origine: y+1, porta destinazione x+1": "I numeri di porta non vengono incrementati durante la connessione: restano fissi per tutta la sua durata."
+    },
+    "conceptToReview": "Simmetria delle porte nei due versi di una connessione TCP.",
+    "miniSummary": "Nel verso di ritorno le porte si scambiano semplicemente di ruolo: origine e destinazione si invertono.",
+    "memoryTrick": "Come il mittente e il destinatario di una busta: al ritorno basta girarla.",
+    "similarExamQuestion": "Quali quattro parametri identificano univocamente una socket TCP?",
+    "figureRewritten": false
+  }
+]

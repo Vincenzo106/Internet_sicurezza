@@ -14,6 +14,7 @@ type HomeProps = {
   onStartHardExam: () => void;
   onStartRealExam: (minutes: number) => void;
   onStartSprintJulySix: () => void;
+  onStartHistoricalExam: () => void;
   onOpenTraining: () => void;
   onOpenMistakes: () => void;
 };
@@ -39,12 +40,19 @@ export function Home({
   onStartHardExam,
   onStartRealExam,
   onStartSprintJulySix,
+  onStartHistoricalExam,
   onOpenTraining,
   onOpenMistakes,
 }: HomeProps) {
   const [realExamMinutes, setRealExamMinutes] = useState(30);
 
   const modeCards: ModeCard[] = [
+    {
+      title: "Solo domande già uscite",
+      description: "Le domande trascritte dal simulatore storico: il più vicino allo scritto vero.",
+      variant: "primary",
+      onClick: onStartHistoricalExam,
+    },
     {
       title: "Simulazione classica",
       description: "20 domande, 15 Internet + 5 Sicurezza, come il vero scritto.",
