@@ -16,6 +16,7 @@ export type QuizMode =
   | "exam"
   | "real-exam"
   | "hard-exam"
+  | "historical-exam"
   | "sprint-july-6"
   | "training"
   | "mistake-review";
