@@ -1,4 +1,5 @@
 import { advancedQuestions, hardQuestionIds } from "./advancedQuestions";
+import { historicalQuestions } from "./historicalQuestions";
 import { securityExtraQuestions } from "./securityExtraQuestions";
 import type { Question, TopicGroup } from "../types";
 import { applyQuestionAudit, type QuestionAuditOverride } from "./questionAudit";
@@ -3043,6 +3044,7 @@ export const questions: Question[] = [
   ...auditedBaseQuestions,
   ...advancedQuestions,
   ...securityExtraQuestions,
+  ...historicalQuestions,
 ];
 
 export { hardQuestionIds };

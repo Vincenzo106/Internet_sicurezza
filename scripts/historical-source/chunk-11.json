@@ -1,0 +1,403 @@
+[
+  {
+    "originalNumber": 151,
+    "id": "hist-151",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "difficile",
+    "question": "In una sessione TCP in cui l'utente digita il carattere 'c', l'host A invia un primo segmento con Seq=14, ACK=18 e 1 byte di dati. L'host B risponde con un segmento (verde) che riscontra la ricezione e contiene l'eco del carattere, cioè 1 byte di dati. Infine l'host A invia un terzo segmento (rosso) che riscontra l'eco ricevuto. Quali sono i valori corretti dei numeri di sequenza e di riscontro?",
+    "options": [
+      "Seq V = 19; ack V = 16, Seq R = 20, ack R = 17",
+      "Seq V = 19; ack V = 15, Seq R = 20, ack R = 16",
+      "Seq V = 18; ack V = 15, Seq R = 15, ack R = 20",
+      "Seq V = 18; ack V = 15, Seq R = 15, ack R = 19"
+    ],
+    "correctAnswer": "Seq V = 18; ack V = 15, Seq R = 15, ack R = 19",
+    "explanation": "L'host B deve usare come numero di sequenza il valore che A si aspettava, cioè l'ACK del pacchetto precedente: Seq V vale quindi 18. B conferma inoltre di aver ricevuto il byte 14 inviato da A, quindi il prossimo byte atteso è 15 e ACK V vale 15. Nel terzo segmento A usa come sequenza il valore richiesto da B, cioè 15, e conferma di aver ricevuto l'eco partito dal byte 18, quindi ACK R vale 19.",
+    "whyOthersAreWrong": {
+      "Seq V = 19; ack V = 16, Seq R = 20, ack R = 17": "Incrementa erroneamente tutti i valori di uno: il numero di sequenza di B deve coincidere con l'ACK atteso da A, cioè 18.",
+      "Seq V = 19; ack V = 15, Seq R = 20, ack R = 16": "Il numero di sequenza di B non può essere 19: A si aspettava il byte 18, come indicato nell'ACK del primo segmento.",
+      "Seq V = 18; ack V = 15, Seq R = 15, ack R = 20": "I primi tre valori sono corretti, ma l'ultimo ACK è errato: avendo ricevuto un solo byte a partire dal 18, il prossimo atteso è 19, non 20."
+    },
+    "conceptToReview": "Evoluzione incrociata di sequence number e acknowledgment in una sessione TCP.",
+    "miniSummary": "Il Seq di una parte coincide con l'ACK che l'altra si aspettava; l'ACK è sempre l'ultimo byte più uno.",
+    "memoryTrick": "Segui i due flussi separatamente: ognuno numera i propri byte e riscontra quelli altrui.",
+    "similarExamQuestion": "Quale ACK invia il ricevitore dopo un segmento con Seq 201 e lunghezza 100?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 152,
+    "id": "hist-152",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "facile",
+    "question": "Quanti byte aggiunge al messaggio una intestazione UDP?",
+    "options": ["8 byte", "16 byte", "4 byte", "20 byte"],
+    "correctAnswer": "8 byte",
+    "explanation": "L'header UDP è composto da soli quattro campi, ciascuno di 2 byte: porta sorgente, porta destinazione, lunghezza e checksum. Il totale è quindi 8 byte fissi. Per confronto, un'intestazione TCP standard senza opzioni occupa 20 byte, così come l'intestazione IPv4.",
+    "whyOthersAreWrong": {
+      "16 byte": "Non corrisponde ad alcuna intestazione standard: i quattro campi UDP da 2 byte danno 8, non 16.",
+      "4 byte": "Quattro byte basterebbero appena per le due porte, lasciando fuori lunghezza e checksum.",
+      "20 byte": "20 byte è la dimensione minima dell'intestazione TCP e di quella IPv4, non di UDP."
+    },
+    "conceptToReview": "Struttura e dimensione dell'intestazione UDP.",
+    "miniSummary": "Quattro campi da 2 byte: porte, lunghezza e checksum, per 8 byte totali.",
+    "memoryTrick": "UDP è il protocollo leggero: 8 byte contro i 20 di TCP.",
+    "similarExamQuestion": "Quanti byte aggiunge un'intestazione TCP in assenza di opzioni?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 153,
+    "id": "hist-153",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "In fase di progettazione dell'indirizzamento di una rete locale viene assegnato lo schema 192.168.30.0/24 e gli indirizzi 192.168.30.255 e 192.168.30.0 vengono esclusi. Spiegare perché.",
+    "options": [
+      "192.168.30.0 è l'indirizzo di rete e 192.168.30.255 è l'indirizzo di broadcast",
+      "192.168.30.0 e 192.168.30.255 sono riservati per il gestore della mail e del DNS",
+      "192.168.30.0 è l'indirizzo di rete riservato al gateway di default e 192.168.30.255 è l'indirizzo riservato ai server DHCP",
+      "192.168.30.0 e 192.168.30.255 sono riservati per permettere l'accesso alla rete esterna"
+    ],
+    "correctAnswer": "192.168.30.0 è l'indirizzo di rete e 192.168.30.255 è l'indirizzo di broadcast",
+    "explanation": "In una rete /24 l'ultimo ottetto è dedicato agli host. L'indirizzo con tutti i bit host a zero identifica la rete stessa e nessun dispositivo può assumerlo, perché i router lo usano per indirizzare il traffico verso l'intera sottorete. L'indirizzo con tutti i bit host a uno è l'indirizzo di broadcast diretto, ricevuto da tutti gli host della rete. Restano quindi utilizzabili gli indirizzi da .1 a .254, cioè 254 host.",
+    "whyOthersAreWrong": {
+      "192.168.30.0 e 192.168.30.255 sono riservati per il gestore della mail e del DNS": "Mail e DNS sono servizi applicativi e non hanno alcun indirizzo riservato per convenzione nella sottorete.",
+      "192.168.30.0 è l'indirizzo di rete riservato al gateway di default e 192.168.30.255 è l'indirizzo riservato ai server DHCP": "Il gateway riceve un normale indirizzo host, tipicamente .1 o .254, e il DHCP non ha indirizzi riservati per standard.",
+      "192.168.30.0 e 192.168.30.255 sono riservati per permettere l'accesso alla rete esterna": "L'accesso esterno passa dal gateway, che è un host ordinario della sottorete."
+    },
+    "conceptToReview": "Indirizzi non assegnabili in una sottorete IPv4.",
+    "miniSummary": "Bit host tutti a zero identificano la rete, tutti a uno il broadcast: entrambi non assegnabili.",
+    "memoryTrick": "In ogni sottorete perdi sempre due indirizzi: il primo e l'ultimo.",
+    "similarExamQuestion": "Quanti host utilizzabili offre effettivamente una sottorete /26?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 154,
+    "id": "hist-154",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "facile",
+    "question": "Indicare il tipo di servizio offerto da TCP.",
+    "options": [
+      "Un servizio affidabile, orientato alla connessione",
+      "Un servizio inaffidabile, non orientato alla connessione",
+      "Un servizio affidabile, non orientato alla connessione",
+      "Un servizio inaffidabile, orientato alla connessione"
+    ],
+    "correctAnswer": "Un servizio affidabile, orientato alla connessione",
+    "explanation": "TCP è orientato alla connessione perché prima di inviare qualsiasi dato applicativo client e server devono sincronizzarsi tramite il three-way handshake con SYN, SYN-ACK e ACK. È inoltre affidabile perché garantisce la consegna dei dati senza errori, senza perdite e nel giusto ordine: se un pacchetto viene perso o arriva corrotto, TCP se ne accorge e lo ritrasmette automaticamente.",
+    "whyOthersAreWrong": {
+      "Un servizio inaffidabile, non orientato alla connessione": "Questa è la descrizione esatta di UDP, il protocollo complementare a TCP.",
+      "Un servizio affidabile, non orientato alla connessione": "L'affidabilità di TCP si costruisce proprio sullo stato mantenuto dalla connessione: le due proprietà non sono separabili in questo modo.",
+      "Un servizio inaffidabile, orientato alla connessione": "TCP è affidabile per definizione: sarebbe contraddittorio mantenere una connessione senza garantire la consegna."
+    },
+    "conceptToReview": "Le due proprietà fondamentali del servizio TCP.",
+    "miniSummary": "Connection-oriented grazie all'handshake e reliable grazie ad ACK e ritrasmissioni.",
+    "memoryTrick": "TCP e UDP sono opposti su entrambe le proprietà: se una descrizione è di uno, non è dell'altro.",
+    "similarExamQuestion": "Quale sequenza di flag caratterizza il three-way handshake?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 155,
+    "id": "hist-155",
+    "category": "Internet",
+    "topic": "congestion control",
+    "difficulty": "media",
+    "question": "L'incremento della finestra corrente del trasmettitore TCP:",
+    "options": [
+      "È regolata dalla sola fase di controllo di congestione dello slow-start",
+      "È regolata dalla sola fase di fast recovery",
+      "È regolata dalle fasi di controllo di congestione dette slow-start e di congestion avoidance",
+      "È regolata da sola dal ricevitore"
+    ],
+    "correctAnswer": "È regolata dalle fasi di controllo di congestione dette slow-start e di congestion avoidance",
+    "explanation": "Il trasmettitore gestisce la crescita della finestra di congestione in due fasi principali. Nello slow start, all'inizio della connessione o dopo un timeout, la cwnd cresce in modo esponenziale raddoppiando a ogni RTT finché resta sotto la soglia ssthresh. Superata la soglia si entra in congestion avoidance, dove la crescita diventa lineare con un incremento di 1 MSS per ogni RTT, per sondare il limite della banda con prudenza.",
+    "whyOthersAreWrong": {
+      "È regolata dalla sola fase di controllo di congestione dello slow-start": "Lo slow start governa solo la crescita iniziale: superata la soglia subentra la congestion avoidance.",
+      "È regolata dalla sola fase di fast recovery": "Il fast recovery è una fase di ripristino dopo una perdita, non il meccanismo ordinario di crescita della finestra.",
+      "È regolata da sola dal ricevitore": "Il ricevitore impone un tetto massimo tramite la receive window, ma la logica di incremento progressivo è dell'algoritmo del trasmettitore."
+    },
+    "conceptToReview": "Fasi di crescita della finestra di congestione.",
+    "miniSummary": "Crescita esponenziale sotto la soglia, lineare sopra la soglia.",
+    "memoryTrick": "Slow start è veloce nonostante il nome; congestion avoidance è quella prudente.",
+    "similarExamQuestion": "Cosa accade alla finestra di congestione allo scadere di un timeout?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 156,
+    "id": "hist-156",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Qual è il compito principale del protocollo ICMP e a quale livello appartiene?",
+    "options": [
+      "Errore e diagnosi, livello di rete",
+      "Indirizzamento, livello di rete",
+      "Errore e diagnosi, livello di trasporto",
+      "Errore e diagnosi, datalink"
+    ],
+    "correctAnswer": "Errore e diagnosi, livello di rete",
+    "explanation": "ICMP è il protocollo di servizio del livello IP: poiché IP è best effort e non garantito, quando un router deve scartare un pacchetto perché è scaduto il TTL o la rete non è raggiungibile, usa ICMP per avvisare il mittente. Appartiene strettamente al livello di rete e lavora a fianco di IP. Usi comuni sono Echo Request e Reply per il comando ping e Time Exceeded per traceroute.",
+    "whyOthersAreWrong": {
+      "Indirizzamento, livello di rete": "Il livello è corretto ma il compito no: l'indirizzamento è di IP, mentre ICMP si occupa di controllo e diagnostica.",
+      "Errore e diagnosi, livello di trasporto": "Il compito è corretto ma il livello no: ICMP non usa né TCP né UDP e non appartiene al livello di trasporto.",
+      "Errore e diagnosi, datalink": "Il compito è corretto ma il livello no: ICMP viaggia incapsulato dentro i pacchetti IP, quindi opera al livello di rete."
+    },
+    "conceptToReview": "Ruolo e collocazione di ICMP nello stack protocollare.",
+    "miniSummary": "ICMP segnala errori e diagnostica per conto di IP, al livello di rete.",
+    "memoryTrick": "Viaggia dentro IP, quindi sta allo stesso livello di IP.",
+    "similarExamQuestion": "Quale protocollo è usato per comunicare gli errori a livello di rete?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 157,
+    "id": "hist-157",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "Nel formato del frame Ethernet i campi si susseguono così: un primo campo di 7 byte evidenziato in rosso, l'SFD di 1 byte, l'indirizzo di destinazione di 6 byte, l'indirizzo sorgente di 6 byte, un campo di 2 byte evidenziato in blu, i dati da 46 a 1500 byte e infine un campo di 4 byte evidenziato in giallo. Indicare le corrispondenze corrette.",
+    "options": [
+      "Rosso = preambolo, blu = crc, giallo = lunghezza",
+      "Rosso = lunghezza, blu = preambolo, giallo = crc",
+      "Rosso = preambolo, blu = lunghezza, giallo = crc",
+      "Rosso = versione, blu = lunghezza, giallo = crc"
+    ],
+    "correctAnswer": "Rosso = preambolo, blu = lunghezza, giallo = crc",
+    "explanation": "Il frame IEEE 802.3 inizia con 7 byte di preambolo con bit alternati per la sincronizzazione fisica, seguiti dallo Start Frame Delimiter di 1 byte. Dopo i due indirizzi MAC da 6 byte ciascuno si trova un campo di 2 byte che indica la lunghezza dei dati se il valore è minore o uguale a 1500, oppure il tipo di protocollo trasportato se è maggiore o uguale a 1536. Il frame si chiude con 4 byte di FCS contenenti il CRC per rilevare errori di trasmissione.",
+    "whyOthersAreWrong": {
+      "Rosso = preambolo, blu = crc, giallo = lunghezza": "Inverte gli ultimi due campi: il CRC occupa 4 byte in coda, mentre la lunghezza sta nei 2 byte prima dei dati.",
+      "Rosso = lunghezza, blu = preambolo, giallo = crc": "Il preambolo è sempre il primo campo del frame e occupa 7 byte, non può trovarsi dopo gli indirizzi.",
+      "Rosso = versione, blu = lunghezza, giallo = crc": "Il frame Ethernet non contiene alcun campo versione: quello iniziale è il preambolo."
+    },
+    "conceptToReview": "Struttura completa del frame Ethernet e dimensione dei campi.",
+    "miniSummary": "Preambolo, SFD, MAC destinazione, MAC sorgente, lunghezza/tipo, dati, FCS.",
+    "memoryTrick": "Il controllo di integrità sta sempre in coda: 4 byte finali di CRC.",
+    "similarExamQuestion": "Quale elemento è contenuto nel trailer del frame data-link?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 158,
+    "id": "hist-158",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "Qual è la dimensione dei dati che può essere inserita in un normale frame ethernet?",
+    "options": [
+      "Da 64 a 2048 bytes",
+      "Da 0 a 1500 bytes",
+      "Da 0 a 1024 bytes",
+      "Da 46 a 1500 bytes"
+    ],
+    "correctAnswer": "Da 46 a 1500 bytes",
+    "explanation": "Un frame Ethernet standard ha dimensione massima di 1518 byte: sottraendo i 18 byte di intestazione, cioè 6 di destinazione, 6 di sorgente, 2 di tipo o lunghezza e 4 di CRC, restano 1500 byte per i dati, che costituiscono la MTU. Il minimo è invece imposto dal rilevamento delle collisioni: un frame non può essere più piccolo di 64 byte, quindi il campo dati deve essere almeno di 46 byte, con padding se necessario.",
+    "whyOthersAreWrong": {
+      "Da 64 a 2048 bytes": "64 byte è la dimensione minima dell'intero frame, non del solo campo dati, e 2048 supera la MTU standard.",
+      "Da 0 a 1500 bytes": "Il limite superiore è corretto, ma il campo dati non può scendere sotto 46 byte, altrimenti si aggiunge padding.",
+      "Da 0 a 1024 bytes": "Entrambi gli estremi sono errati rispetto allo standard Ethernet."
+    },
+    "conceptToReview": "Dimensione minima e massima del payload Ethernet e ruolo del padding.",
+    "miniSummary": "Payload tra 46 e 1500 byte; sotto i 46 si riempie con padding.",
+    "memoryTrick": "Il minimo esiste per far funzionare il rilevamento delle collisioni, non per i dati.",
+    "similarExamQuestion": "Perché un frame Ethernet non può essere più piccolo di 64 byte?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 159,
+    "id": "hist-159",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Supponiamo di avere un ISP che gestisce il blocco di indirizzi 128.119.40.0/24 a partire dal quale si vogliono creare due sottoreti di dimensione uguale. Quali sono i prefissi delle due sottoreti?",
+    "options": [
+      "128.119.40.32/25 e 128.119.40.64/25",
+      "128.119.40.0/25 e 128.119.40.128/25",
+      "128.119.40.0/25 e 128.119.40.255/25",
+      "128.119.40.0/24 e 128.119.40.128/24"
+    ],
+    "correctAnswer": "128.119.40.0/25 e 128.119.40.128/25",
+    "explanation": "Per dividere un blocco in due sottoreti bisogna incrementare il prefisso di un bit, passando quindi da /24 a /25. Un blocco /25 contiene 2 elevato a 7, cioè 128 indirizzi: la prima sottorete va da .0 a .127 e ha come indirizzo di rete 128.119.40.0/25, la seconda va da .128 a .255 e ha come indirizzo di rete 128.119.40.128/25.",
+    "whyOthersAreWrong": {
+      "128.119.40.32/25 e 128.119.40.64/25": "Non sono indirizzi di rete validi per blocchi /25: i confini corretti cadono su .0 e .128.",
+      "128.119.40.0/25 e 128.119.40.255/25": "Il valore .255 è l'indirizzo di broadcast del blocco originale, non l'indirizzo di rete della seconda sottorete.",
+      "128.119.40.0/24 e 128.119.40.128/24": "Mantenere il prefisso /24 non divide nulla: entrambe le voci descriverebbero lo stesso blocco di partenza."
+    },
+    "conceptToReview": "Suddivisione di un blocco in sottoreti tramite estensione del prefisso.",
+    "miniSummary": "Per 2^n sottoreti si aggiungono n bit al prefisso: da /24 a /25 per due parti.",
+    "memoryTrick": "Dividere in due significa un bit in più nella maschera e metà indirizzi per parte.",
+    "similarExamQuestion": "Quale prefisso serve per suddividere un /24 in quattro sottoreti uguali?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 160,
+    "id": "hist-160",
+    "category": "Internet",
+    "topic": "SMTP, POP3, IMAP",
+    "difficulty": "facile",
+    "question": "Indicare quale dei seguenti protocolli permette di mantenere le e-mail sul server e organizzarle in cartelle.",
+    "options": ["HTTP", "POP3", "SMTP", "IMAP"],
+    "correctAnswer": "IMAP",
+    "explanation": "IMAP mantiene la posta sul server e la sincronizza, supportando la gestione delle cartelle lato server: l'utente vede la stessa struttura organizzata da qualsiasi dispositivo. POP3 invece scarica la posta sul dispositivo locale e solitamente la cancella dal server, senza sincronizzare le cartelle, che restano puramente locali.",
+    "whyOthersAreWrong": {
+      "HTTP": "HTTP è usato per accedere alla webmail dal browser, ma non è un protocollo di gestione della posta in sé.",
+      "POP3": "POP3 scarica i messaggi in locale e non supporta la sincronizzazione di cartelle sul server.",
+      "SMTP": "SMTP serve solo a inviare la posta o a trasferirla tra server, non a consultarla o organizzarla."
+    },
+    "conceptToReview": "Differenza tra IMAP e POP3 nella gestione dei messaggi.",
+    "miniSummary": "IMAP sincronizza e lascia tutto sul server; POP3 scarica e tipicamente cancella.",
+    "memoryTrick": "Se vuoi vedere le stesse cartelle da telefono e PC ti serve IMAP.",
+    "similarExamQuestion": "Quale protocollo viene usato per il recupero dei messaggi inviati tramite SMTP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 161,
+    "id": "hist-161",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "difficile",
+    "question": "Quale dei seguenti insiemi di attributi è obbligatorio in EBGP?",
+    "options": [
+      "AGGREGATOR, ORIGIN, NEXT-HOP",
+      "ORIGIN, AS-PATH, NEXT-HOP",
+      "AGGREGATOR, AS-PATH, NEXT-HOP",
+      "ORIGIN, AS-PATH"
+    ],
+    "correctAnswer": "ORIGIN, AS-PATH, NEXT-HOP",
+    "explanation": "Questi tre sono gli attributi well-known mandatory di BGP. ORIGIN definisce l'origine dell'informazione di instradamento, ad esempio se appresa da IGP o EGP; AS-PATH elenca i sistemi autonomi attraversati ed è fondamentale in eBGP per evitare i loop di instradamento; NEXT-HOP indica l'indirizzo IP del router successivo verso la destinazione.",
+    "whyOthersAreWrong": {
+      "AGGREGATOR, ORIGIN, NEXT-HOP": "AGGREGATOR è un attributo optional transitive, quindi non obbligatorio, e manca AS-PATH che invece lo è.",
+      "AGGREGATOR, AS-PATH, NEXT-HOP": "Include AGGREGATOR che è opzionale e omette ORIGIN, che è obbligatorio.",
+      "ORIGIN, AS-PATH": "L'elenco è incompleto: manca NEXT-HOP, anch'esso well-known mandatory."
+    },
+    "conceptToReview": "Attributi obbligatori e opzionali del protocollo BGP.",
+    "miniSummary": "I tre obbligatori sono ORIGIN, AS-PATH e NEXT-HOP.",
+    "memoryTrick": "Da dove viene, per dove è passata, a chi la mando: sono le tre domande essenziali.",
+    "similarExamQuestion": "Quale attributo non è previsto nel protocollo BGP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 162,
+    "id": "hist-162",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "media",
+    "question": "Qual è la sequenza corretta di eventi nel caso del protocollo 802.11 RTS/CTS?",
+    "options": [
+      "RTS > CTS > DATA > CTS",
+      "CTS > RTS > DATA > CTS",
+      "CTS > RTS > DATA > ACK",
+      "RTS > CTS > DATA > ACK"
+    ],
+    "correctAnswer": "RTS > CTS > DATA > ACK",
+    "explanation": "La sequenza serve a riservare il mezzo trasmissivo e a confermare la ricezione. Il mittente chiede il permesso di trasmettere con un Request To Send; il destinatario lo accorda con un Clear To Send, silenziando i nodi vicini che lo sentono; il mittente invia i dati; infine il destinatario conferma la ricezione corretta con un ACK, fondamentale perché nel wireless interferenze e collisioni sono frequenti.",
+    "whyOthersAreWrong": {
+      "RTS > CTS > DATA > CTS": "La conferma finale della ricezione è un ACK, non un secondo CTS che serve solo a concedere il canale.",
+      "CTS > RTS > DATA > CTS": "Inverte l'ordine iniziale: il permesso CTS non può precedere la richiesta RTS, e chiude con un CTS invece che con un ACK.",
+      "CTS > RTS > DATA > ACK": "La conclusione è corretta ma l'apertura è invertita: si chiede prima con RTS e si riceve poi il CTS."
+    },
+    "conceptToReview": "Handshake di prenotazione del canale in 802.11.",
+    "miniSummary": "Chiedo, ricevo il permesso, trasmetto, ottengo conferma: RTS, CTS, DATA, ACK.",
+    "memoryTrick": "È una conversazione educata: permesso, prego, parlo, ricevuto.",
+    "similarExamQuestion": "Quale meccanismo risolve il problema del terminale nascosto in 802.11?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 163,
+    "id": "hist-163",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "facile",
+    "question": "Quale tipo di messaggio viene utilizzato nel protocollo ARP (Address Resolution Protocol) per ottenere l'indirizzo MAC di un host nella rete locale?",
+    "options": ["ARP Probe", "ARP Reply", "ARP request", "ARP Announcement"],
+    "correctAnswer": "ARP request",
+    "explanation": "Il mittente conosce l'IP di destinazione ma non il MAC, quindi invia una ARP request in broadcast all'indirizzo FF:FF:FF:FF:FF:FF chiedendo chi possiede quell'indirizzo IP. L'host che riconosce il proprio indirizzo risponde poi in unicast con una ARP reply contenente il proprio indirizzo MAC.",
+    "whyOthersAreWrong": {
+      "ARP Probe": "L'ARP Probe serve a verificare eventuali conflitti di indirizzo IP, cioè la Duplicate Address Detection.",
+      "ARP Reply": "La reply è la risposta che fornisce il MAC, non il messaggio con cui lo si richiede.",
+      "ARP Announcement": "L'announcement, o Gratuitous ARP, serve ad aggiornare spontaneamente le cache degli altri host."
+    },
+    "conceptToReview": "Tipi di messaggio del protocollo ARP e relative funzioni.",
+    "miniSummary": "Request per chiedere, reply per rispondere, probe e announcement per casi particolari.",
+    "memoryTrick": "Chi cerca fa una richiesta: request. Chi sa risponde: reply.",
+    "similarExamQuestion": "In quale modalità viene inviata una ARP request?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 164,
+    "id": "hist-164",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "media",
+    "question": "Come fa un dispositivo ad apprendere l'indirizzo MAC dato l'indirizzo IP?",
+    "options": [
+      "Verifica la sua presenza nella tabella ARP, se non è presente usa il protocollo DHCP",
+      "Genera un pacchetto con indirizzo di destinazione vuoto e lo invia",
+      "Verifica la sua presenza nella tabella ARP, se non è presente invia una ARP request",
+      "Genera un pacchetto con indirizzo di destinazione il valore IP di broadcast e lo invia"
+    ],
+    "correctAnswer": "Verifica la sua presenza nella tabella ARP, se non è presente invia una ARP request",
+    "explanation": "Il sistema operativo consulta prima la ARP table locale: se la corrispondenza tra IP e MAC è già in cache la usa direttamente, senza generare traffico di rete. Solo in caso di cache miss il dispositivo invia una ARP request in broadcast chiedendo chi possiede quell'indirizzo IP, e memorizza poi la risposta per gli usi successivi.",
+    "whyOthersAreWrong": {
+      "Verifica la sua presenza nella tabella ARP, se non è presente usa il protocollo DHCP": "DHCP serve a ottenere la propria configurazione IP all'avvio, non a scoprire gli indirizzi fisici degli altri host.",
+      "Genera un pacchetto con indirizzo di destinazione vuoto e lo invia": "Un frame senza indirizzo di destinazione non sarebbe processabile da nessun dispositivo della rete.",
+      "Genera un pacchetto con indirizzo di destinazione il valore IP di broadcast e lo invia": "Il broadcast della ARP request avviene a livello MAC, non usando l'indirizzo IP di broadcast come destinazione."
+    },
+    "conceptToReview": "Consultazione della cache ARP e gestione del cache miss.",
+    "miniSummary": "Prima si guarda in tabella, e solo se manca si chiede in broadcast.",
+    "memoryTrick": "Si controlla sempre la memoria locale prima di disturbare tutta la rete.",
+    "similarExamQuestion": "Perché la coppia IP-MAC viene salvata nella ARP table dopo la risposta?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 165,
+    "id": "hist-165",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Dato il seguente indirizzo 178.12.34.1/28, cosa rappresenta il 28?",
+    "options": [
+      "Il numero di bit nella porzione di rete",
+      "Il numero di bit nella porzione di nodo",
+      "Il numero di nodi nella rete",
+      "La classe di appartenenza"
+    ],
+    "correctAnswer": "Il numero di bit nella porzione di rete",
+    "explanation": "Un indirizzo IPv4 è composto da 32 bit totali e la notazione /28 indica che i primi 28 bit sono assegnati all'identificativo della rete. I restanti 4 bit sono disponibili per indirizzare i singoli nodi, il che consente 2 elevato a 4, cioè 16 combinazioni, da cui vanno tolti indirizzo di rete e broadcast per un totale di 14 host utilizzabili.",
+    "whyOthersAreWrong": {
+      "Il numero di bit nella porzione di nodo": "I bit riservati agli host sono quelli rimanenti, cioè 32 meno 28 uguale 4.",
+      "Il numero di nodi nella rete": "Il numero di nodi si calcola a partire dai bit host ed è 14, non 28.",
+      "La classe di appartenenza": "Le classi appartengono al vecchio modello classful, superato proprio dalla notazione CIDR."
+    },
+    "conceptToReview": "Significato del suffisso nella notazione CIDR.",
+    "miniSummary": "Il numero dopo lo slash conta i bit di rete; gli host sono ciò che resta fino a 32.",
+    "memoryTrick": "Il suffisso indica quanto è lunga la maschera, non quanti host ci stanno.",
+    "similarExamQuestion": "Quanti host utilizzabili offre una sottorete con prefisso /28?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 166,
+    "id": "hist-166",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Indicare quale affermazione NON è corretta per il meccanismo di controllo del traffico \"Flow Control\".",
+    "options": [
+      "Con questo meccanismo si evita che il destinatario riceva più dati di quelli che può gestire",
+      "Questo meccanismo agisce rallentando il traffico in uscita",
+      "Viene controllato il traffico del core e non quello tra sorgente e destinazione",
+      "I livelli di data link e Transport gestiscono questo meccanismo"
+    ],
+    "correctAnswer": "Viene controllato il traffico del core e non quello tra sorgente e destinazione",
+    "explanation": "Il controllo di flusso è una negoziazione tra due estremi: se il buffer del ricevitore è pieno, questi comunica al mittente di rallentare. Non si occupa di ciò che accade nel core della rete, che è invece competenza del controllo di congestione: quest'ultimo interviene quando i router intermedi sono saturi, per evitare il collasso della rete.",
+    "whyOthersAreWrong": {
+      "Con questo meccanismo si evita che il destinatario riceva più dati di quelli che può gestire": "È vera: è esattamente la definizione di controllo di flusso.",
+      "Questo meccanismo agisce rallentando il traffico in uscita": "È vera: il mittente riduce la quantità di dati in volo in base alla finestra annunciata dal ricevitore.",
+      "I livelli di data link e Transport gestiscono questo meccanismo": "È vera: il controllo di flusso esiste sia a livello 2, con i PAUSE frame, sia a livello 4 con la finestra TCP."
+    },
+    "conceptToReview": "Confine tra controllo di flusso e controllo di congestione.",
+    "miniSummary": "Flow control guarda al ricevitore, congestion control guarda alla rete.",
+    "memoryTrick": "Se il problema è nel mezzo della rete non è flusso, è congestione.",
+    "similarExamQuestion": "Quale meccanismo TCP evita che segmenti vengano scartati per differenza di velocità tra host?",
+    "figureRewritten": false
+  }
+]

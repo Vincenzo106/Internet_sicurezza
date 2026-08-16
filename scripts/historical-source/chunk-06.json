@@ -1,0 +1,367 @@
+[
+  {
+    "originalNumber": 76,
+    "id": "hist-076",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "difficile",
+    "question": "Quale delle seguenti formule è corretta per il timer di ritrasmissione (RTO), dove SRTT è la media dei valori di RTT misurati e RTTVAR la stima della deviazione standard di RTT?",
+    "options": [
+      "RTO = SRTT + 4 * RTTVAR",
+      "RTO = RTT",
+      "RTO = SRTT + 2 * RTTVAR",
+      "RTO = SRTT * 2 + RTTVAR"
+    ],
+    "correctAnswer": "RTO = SRTT + 4 * RTTVAR",
+    "explanation": "SRTT rappresenta la media mobile dei tempi di andata e ritorno misurati e fornisce una stima stabile del ritardo attuale della rete, mentre RTTVAR rappresenta la variazione dei campioni rispetto alla media. Lo standard TCP utilizza un fattore moltiplicativo pari a 4 per la variazione, così da garantire che il timer non scada prematuramente in presenza di alta varianza nei ritardi, lasciando un margine di sicurezza sufficientemente ampio.",
+    "whyOthersAreWrong": {
+      "RTO = RTT": "Usare il singolo RTT misurato renderebbe il timer estremamente instabile e soggetto a scadenze premature a ogni fluttuazione.",
+      "RTO = SRTT + 2 * RTTVAR": "Il coefficiente corretto previsto dallo standard è 4, non 2: un margine troppo stretto causerebbe ritrasmissioni inutili.",
+      "RTO = SRTT * 2 + RTTVAR": "Raddoppiare la media invece di pesare la variabilità non è la formula standard e produrrebbe timeout sistematicamente troppo lunghi."
+    },
+    "conceptToReview": "Formula del Retransmission Timeout e ruolo della variabilità.",
+    "miniSummary": "RTO somma la media degli RTT a quattro volte la loro variabilità.",
+    "memoryTrick": "Il quattro è il margine di sicurezza: più la rete è instabile, più il timer si allarga.",
+    "similarExamQuestion": "Perché un valore di RTO troppo basso è dannoso quanto uno troppo alto?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 77,
+    "id": "hist-077",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "facile",
+    "question": "Da quale protocollo è adottato CSMA/CA?",
+    "options": ["802.5", "802.11", "802.3", "Nessuna delle precedenti"],
+    "correctAnswer": "802.11",
+    "explanation": "CSMA/CA è il metodo di accesso al mezzo utilizzato nelle reti wireless. Poiché un'interfaccia radio non può rilevare una collisione mentre sta trasmettendo, a causa del problema del nodo nascosto e di limiti hardware, il protocollo cerca di prevenire le collisioni: prima di trasmettere il nodo ascolta il canale e, se occupato, attende un tempo casuale di backoff. Spesso utilizza anche i messaggi RTS/CTS.",
+    "whyOthersAreWrong": {
+      "802.5": "Token Ring utilizza il passaggio di un gettone per regolare l'accesso al mezzo, eliminando alla base il concetto di collisione.",
+      "802.3": "Ethernet utilizza CSMA/CD, dove le collisioni vengono rilevate dopo che sono avvenute e gestite di conseguenza.",
+      "Nessuna delle precedenti": "Uno degli standard elencati adotta effettivamente CSMA/CA, quindi l'alternativa non è valida."
+    },
+    "conceptToReview": "Corrispondenza tra standard IEEE 802 e metodo di accesso al mezzo.",
+    "miniSummary": "802.3 con CSMA/CD, 802.11 con CSMA/CA, 802.5 con token passing.",
+    "memoryTrick": "Nel wireless non puoi ascoltare mentre parli, quindi devi evitare, non rilevare.",
+    "similarExamQuestion": "Qual è il nome del protocollo di accesso al mezzo usato nella rete Wi-Fi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 78,
+    "id": "hist-078",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "Supponendo che tra i nodi A e B esista una connessione TCP nello stato established, e che il segmento inviato dal nodo A contenga un sequence number pari a 201 e un valore di length pari a 100, quale valore inserisce il nodo B nel campo acknowledgment del segmento di ACK inviato ad A?",
+    "options": ["301", "200", "300", "201"],
+    "correctAnswer": "301",
+    "explanation": "Il segmento inizia dal byte numero 201 e ha una lunghezza di 100 byte, quindi i byte contenuti vanno dal 201 al 300 compreso. In TCP il numero di acknowledgment non conferma l'ultimo byte ricevuto ma comunica al mittente qual è il prossimo byte atteso: avendo ricevuto correttamente fino al 300, il nodo B richiede il 301. La formula rapida è sequence number più length.",
+    "whyOthersAreWrong": {
+      "200": "È precedente al primo byte del segmento e indicherebbe che B non ha ricevuto nulla di quanto inviato.",
+      "300": "È l'ultimo byte effettivamente ricevuto, ma l'ACK deve indicare il byte successivo atteso.",
+      "201": "È il numero di sequenza iniziale del segmento, non il riscontro dei dati ricevuti."
+    },
+    "conceptToReview": "Calcolo del numero di acknowledgment in TCP.",
+    "miniSummary": "ACK = sequence number + length, cioè il prossimo byte che il ricevitore si aspetta.",
+    "memoryTrick": "L'ACK guarda avanti, non indietro: dice cosa vuole, non cosa ha avuto.",
+    "similarExamQuestion": "Quale ACK invia il ricevitore dopo due segmenti consecutivi da 60 e 30 byte con sequenza iniziale 127?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 79,
+    "id": "hist-079",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "facile",
+    "question": "Indicare a quale categoria appartiene il protocollo OSPF.",
+    "options": [
+      "Routed protocol",
+      "Path Vector Protocol",
+      "Distance Vector Protocol",
+      "Link State"
+    ],
+    "correctAnswer": "Link State",
+    "explanation": "In un protocollo Link State come OSPF ogni router invia informazioni sullo stato dei propri collegamenti, i Link State Advertisement, a tutti gli altri router dell'area. Ogni nodo costruisce così una visione identica e completa della topologia e, una volta ottenuta la mappa, utilizza l'algoritmo SPF di Dijkstra per calcolare l'albero dei cammini minimi verso ogni destinazione.",
+    "whyOthersAreWrong": {
+      "Routed protocol": "Un routed protocol è quello che viene instradato e trasporta i dati dell'utente, come IP, non quello che decide le rotte.",
+      "Path Vector Protocol": "Il path vector è la categoria di BGP, che memorizza l'intero percorso in termini di sistemi autonomi.",
+      "Distance Vector Protocol": "Il distance vector è la categoria di RIP, dove i router conoscono solo distanza e direzione basandosi sui vicini."
+    },
+    "conceptToReview": "Classificazione dei protocolli di routing e loro algoritmi.",
+    "miniSummary": "OSPF è link state e usa Dijkstra; RIP è distance vector e usa Bellman-Ford.",
+    "memoryTrick": "Open Shortest Path First: il nome stesso richiama Shortest Path First, cioè Dijkstra.",
+    "similarExamQuestion": "Quale algoritmo utilizza OSPF per determinare le tabelle di forwarding?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 80,
+    "id": "hist-080",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Indicare quale dei seguenti indirizzi in sintassi CIDR è corretto per indicare una rete che permette 1024 indirizzi di host.",
+    "options": [
+      "100.200.20.40",
+      "100.200.20.40/23",
+      "100.200.20.40/22",
+      "100.200.20.40/24"
+    ],
+    "correctAnswer": "100.200.20.40/22",
+    "explanation": "Per avere 1024 combinazioni servono 10 bit dedicati alla parte host, poiché 2 elevato a 10 fa 1024. Un indirizzo IPv4 è composto da 32 bit totali, quindi i bit rimanenti per la maschera di rete sono 32 meno 10, cioè 22. In una rete reale gli host utilizzabili sarebbero 1022, togliendo indirizzo di rete e di broadcast, ma la dimensione del blocco resta definita dal prefisso /22.",
+    "whyOthersAreWrong": {
+      "100.200.20.40": "Senza prefisso non definisce una rete ma un singolo host: non si può determinare l'estensione della sottorete.",
+      "100.200.20.40/23": "Un /23 lascia 9 bit per gli host, cioè 512 indirizzi, insufficienti rispetto ai 1024 richiesti.",
+      "100.200.20.40/24": "Un /24 lascia 8 bit per gli host, cioè 256 indirizzi, molto meno di quanto richiesto."
+    },
+    "conceptToReview": "Relazione tra prefisso CIDR e numero di indirizzi disponibili.",
+    "miniSummary": "Bit host = log2(indirizzi richiesti); prefisso = 32 meno i bit host.",
+    "memoryTrick": "1024 è 2^10, quindi 32 − 10 = 22. Ogni bit in meno raddoppia il blocco.",
+    "similarExamQuestion": "Qual è il suffisso CIDR corretto per un'organizzazione che necessita di 1023 indirizzi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 81,
+    "id": "hist-081",
+    "category": "Internet",
+    "topic": "SMTP, POP3, IMAP",
+    "difficulty": "facile",
+    "question": "Quale fra i seguenti è il protocollo utilizzato per il recupero dei messaggi di posta elettronica inviati tramite SMTP?",
+    "options": ["FTP", "POP3", "HTTP", "Sempre SMTP"],
+    "correctAnswer": "POP3",
+    "explanation": "SMTP è utilizzato esclusivamente per il trasferimento e l'invio della posta elettronica, sia dal client verso il server sia tra server diversi. POP3 è invece un protocollo di accesso alla posta, usato dal client per recuperare i messaggi dal server: tradizionalmente li scarica in locale e li cancella dal server, anche se le configurazioni moderne permettono di mantenerne copia.",
+    "whyOthersAreWrong": {
+      "FTP": "FTP è usato per il trasferimento di file generici e non ha alcun ruolo nella gestione della posta elettronica.",
+      "HTTP": "HTTP è usato dalle webmail come trasporto nel browser, ma il protocollo specifico per la gestione della posta resta POP3 o IMAP.",
+      "Sempre SMTP": "SMTP serve a inviare e trasferire i messaggi, non a scaricarli dalla casella del destinatario."
+    },
+    "conceptToReview": "Divisione dei ruoli tra protocolli di invio e di accesso alla posta.",
+    "miniSummary": "SMTP spinge i messaggi, POP3 e IMAP li tirano giù dalla casella.",
+    "memoryTrick": "SMTP è push, POP e IMAP sono pull.",
+    "similarExamQuestion": "Quale protocollo permette di mantenere le email sul server e organizzarle in cartelle?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 82,
+    "id": "hist-082",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "Quale delle seguenti affermazioni è vera per CSMA/CD?",
+    "options": [
+      "Quando un dispositivo verifica la presenza della portante, può trasmettere senza rischio di collisione",
+      "Tutti i dispositivi di rete devono verificare la presenza della portante prima di trasmettere",
+      "I dispositivi trasmettono immediatamente e poi verificano una eventuale collisione",
+      "I dispositivi coinvolti in una collisione acquisiscono priorità sugli altri presenti in rete"
+    ],
+    "correctAnswer": "Tutti i dispositivi di rete devono verificare la presenza della portante prima di trasmettere",
+    "explanation": "La prima regola del protocollo è ascolta prima di parlare: ogni nodo deve verificare se c'è un segnale sul cavo e, se il canale è occupato, attende. Questo è il Carrier Sense da cui prende il nome il protocollo, ed è un obbligo per tutte le stazioni della rete condivisa.",
+    "whyOthersAreWrong": {
+      "Quando un dispositivo verifica la presenza della portante, può trasmettere senza rischio di collisione": "Anche con il canale apparentemente libero resta un rischio dovuto al ritardo di propagazione: due nodi possono iniziare quasi contemporaneamente senza essersi ancora sentiti.",
+      "I dispositivi trasmettono immediatamente e poi verificano una eventuale collisione": "Trasmettere senza ascoltare prima contraddice il Carrier Sense: l'ascolto preventivo è obbligatorio.",
+      "I dispositivi coinvolti in una collisione acquisiscono priorità sugli altri presenti in rete": "È il contrario: dopo una collisione devono attendere un tempo casuale di backoff e competere di nuovo per il canale."
+    },
+    "conceptToReview": "Fasi del protocollo CSMA/CD e residuo rischio di collisione.",
+    "miniSummary": "Ascolta, trasmetti, continua ad ascoltare: il rischio residuo dipende dalla propagazione.",
+    "memoryTrick": "Carrier Sense significa ascoltare prima; Collision Detection significa ascoltare anche durante.",
+    "similarExamQuestion": "Cosa fa una stazione Ethernet subito dopo aver rilevato una collisione?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 83,
+    "id": "hist-083",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti non è un messaggio del protocollo DHCP?",
+    "options": ["DHCP Accept", "DHCP Discover", "DHCP Offer", "DHCP Request"],
+    "correctAnswer": "DHCP Accept",
+    "explanation": "Il ciclo di vita standard del protocollo DHCP segue l'acronimo DORA: Discover, con cui il client cerca in broadcast i server disponibili; Offer, con cui il server propone un indirizzo IP e altri parametri; Request, con cui il client richiede formalmente quell'indirizzo; e Acknowledgment, con cui il server conferma l'assegnazione. Non esiste alcun messaggio chiamato Accept: la conferma finale è sempre un ACK, o un NAK in caso di rifiuto.",
+    "whyOthersAreWrong": {
+      "DHCP Discover": "È il primo messaggio del ciclo DORA, inviato in broadcast dal client per individuare i server.",
+      "DHCP Offer": "È la risposta del server che propone un indirizzo IP disponibile dal proprio pool.",
+      "DHCP Request": "È il messaggio con cui il client accetta l'offerta e richiede formalmente l'assegnazione."
+    },
+    "conceptToReview": "Sequenza DORA del protocollo DHCP.",
+    "miniSummary": "Discover, Offer, Request, Acknowledgment: nessun messaggio si chiama Accept.",
+    "memoryTrick": "Ricorda DORA: se un nome non sta in queste quattro lettere, è inventato.",
+    "similarExamQuestion": "Qual è la risposta attesa al messaggio DHCP Discover?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 84,
+    "id": "hist-084",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "difficile",
+    "question": "Indicare quale affermazione è corretta per un algoritmo di tipo Link State.",
+    "options": [
+      "I pacchetti di link-state inviati da un router non vengono ricevuti dagli altri router",
+      "Nessuna delle altre affermazioni è corretta",
+      "Ogni router ha una mappa completa della rete e tutti i router cooperano per calcolare l'albero dei cammini minimi che è identico per tutti",
+      "Ogni router ha una mappa completa della rete e calcola, indipendentemente dagli altri router, i cammini"
+    ],
+    "correctAnswer": "Ogni router ha una mappa completa della rete e calcola, indipendentemente dagli altri router, i cammini",
+    "explanation": "In un algoritmo Link State ogni router possiede il Link State Database, una copia esatta della topologia dell'intera rete. Una volta sincronizzato il database, ogni router esegue l'algoritmo di Dijkstra localmente e in modo indipendente: i router cooperano per scambiarsi le informazioni, ma non per eseguire il calcolo.",
+    "whyOthersAreWrong": {
+      "I pacchetti di link-state inviati da un router non vengono ricevuti dagli altri router": "È falsa: gli LSA vengono diffusi in flooding proprio perché tutti i router li ricevano e costruiscano lo stesso database.",
+      "Nessuna delle altre affermazioni è corretta": "Una delle affermazioni descrive correttamente il funzionamento, quindi l'alternativa non è valida.",
+      "Ogni router ha una mappa completa della rete e tutti i router cooperano per calcolare l'albero dei cammini minimi che è identico per tutti": "L'albero risultante non è identico per tutti: ogni nodo calcola i percorsi mettendo se stesso come radice, quindi il risultato dipende dal punto di partenza."
+    },
+    "conceptToReview": "Sincronizzazione del database contro indipendenza del calcolo nei link state.",
+    "miniSummary": "Database condiviso e identico, ma calcolo locale con se stessi come radice.",
+    "memoryTrick": "Stessa mappa per tutti, percorso diverso per ciascuno: dipende da dove parti.",
+    "similarExamQuestion": "Quale struttura dati sincronizzano tra loro i router che usano OSPF?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 85,
+    "id": "hist-085",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Quale protocollo utilizza il BGP per trasferire informazioni?",
+    "options": ["TCP", "UDP", "IP", "Nessuno di quelli indicati"],
+    "correctAnswer": "TCP",
+    "explanation": "BGP è un protocollo di tipo Path Vector utilizzato per il routing tra diversi Sistemi Autonomi. Poiché deve scambiare enormi quantità di dati, cioè le tabelle di routing globali, necessita della consegna garantita, del controllo degli errori e della gestione del flusso offerti da TCP, sul quale opera usando la porta 179. Questo gli evita di dover implementare internamente meccanismi di frammentazione, riordinamento e ritrasmissione.",
+    "whyOthersAreWrong": {
+      "UDP": "UDP è usato da RIP sulla porta 520, che privilegia la velocità e gestisce internamente i propri timer, ma non da BGP.",
+      "IP": "Girare direttamente sopra IP è la scelta di OSPF, che usa il numero di protocollo 89, non di BGP.",
+      "Nessuno di quelli indicati": "BGP si appoggia effettivamente a uno dei protocolli elencati, quindi l'alternativa non è valida."
+    },
+    "conceptToReview": "Protocollo di trasporto usato dai principali protocolli di routing.",
+    "miniSummary": "BGP su TCP porta 179, RIP su UDP porta 520, OSPF direttamente su IP.",
+    "memoryTrick": "Chi scambia tabelle enormi non può permettersi di perderne pezzi: serve TCP.",
+    "similarExamQuestion": "Quali sono gli attributi obbligatori in eBGP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 86,
+    "id": "hist-086",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "media",
+    "question": "Qual è la funzione fondamentale del sottolivello MAC?",
+    "options": [
+      "Quella di fornire un'interfaccia unificata verso il livello di rete",
+      "Quella di offrire servizi per la frammentazione delle frame",
+      "Quella di offrire servizi orientati alla connessione",
+      "Quella di risolvere il problema della condivisione del mezzo trasmissivo"
+    ],
+    "correctAnswer": "Quella di risolvere il problema della condivisione del mezzo trasmissivo",
+    "explanation": "Il sottolivello MAC è responsabile della gestione dell'accesso al mezzo trasmissivo quando questo è condiviso tra più dispositivi. Senza un protocollo MAC, due dispositivi che trasmettessero contemporaneamente sovrapporrebbero i segnali causando una collisione: il MAC implementa quindi le regole, come CSMA/CD o CSMA/CA, che stabiliscono chi può trasmettere e quando.",
+    "whyOthersAreWrong": {
+      "Quella di fornire un'interfaccia unificata verso il livello di rete": "Questo è compito del sottolivello LLC, che si occupa dell'interfaccia verso il livello superiore e del controllo di errore e flusso.",
+      "Quella di offrire servizi per la frammentazione delle frame": "La frammentazione è tipicamente una funzione del livello di rete, non lo scopo fondamentale del sottolivello MAC.",
+      "Quella di offrire servizi orientati alla connessione": "Il livello data link nelle LAN offre normalmente un servizio connectionless e non affidabile."
+    },
+    "conceptToReview": "Divisione del livello data link in sottolivelli LLC e MAC.",
+    "miniSummary": "MAC decide chi parla sul mezzo condiviso; LLC guarda verso il livello di rete.",
+    "memoryTrick": "Medium Access Control: il nome dice già che controlla l'accesso al mezzo.",
+    "similarExamQuestion": "Quale sottolivello del data link si occupa dell'indirizzamento fisico?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 87,
+    "id": "hist-087",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "difficile",
+    "question": "Nell'algoritmo Ethernet CSMA/CD, quanto tempo attende il NIC prima di ritrasmettere il frame (binary backoff) dopo m collisioni?",
+    "options": [
+      "k · 512 con k appartenente a {0, 1, 2, ..., 2^(m−1)}",
+      "k secondi con k appartenente a {0, 1, 2, ..., m}",
+      "k · 512 con k appartenente a {0, 1, 2, ..., m}",
+      "k · 512 con k appartenente a {0, 1, 2, ..., 2^m − 1}"
+    ],
+    "correctAnswer": "k · 512 con k appartenente a {0, 1, 2, ..., 2^m − 1}",
+    "explanation": "Dopo la m-esima collisione consecutiva il trasmettitore sceglie un numero intero casuale k nell'intervallo da 0 a 2 elevato a m meno 1, e lo moltiplica per 512 bit-time, che corrisponde al tempo di trasmissione di un frame minimo di 64 byte. Dopo la prima collisione k vale 0 o 1, dopo la seconda va da 0 a 3, dopo la terza da 0 a 7: l'intervallo raddoppia ogni volta, diluendo i tentativi quando la rete è congestionata.",
+    "whyOthersAreWrong": {
+      "k · 512 con k appartenente a {0, 1, 2, ..., 2^(m−1)}": "L'estremo superiore corretto è 2^m − 1, non 2^(m−1): questa versione restringe erroneamente l'intervallo di contesa.",
+      "k secondi con k appartenente a {0, 1, 2, ..., m}": "L'unità di misura non è il secondo ma il bit-time, e l'intervallo cresce esponenzialmente, non linearmente.",
+      "k · 512 con k appartenente a {0, 1, 2, ..., m}": "Una crescita lineare in m non ridurrebbe abbastanza la probabilità di collisioni ripetute: la crescita è esponenziale."
+    },
+    "conceptToReview": "Formula del backoff esponenziale binario e unità di misura in bit-time.",
+    "miniSummary": "k casuale in [0, 2^m − 1] moltiplicato per 512 bit-time.",
+    "memoryTrick": "L'intervallo raddoppia a ogni collisione: è binario ed esponenziale, non lineare.",
+    "similarExamQuestion": "Dopo quante collisioni consecutive un frame viene definitivamente scartato?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 88,
+    "id": "hist-088",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "facile",
+    "question": "Indicare quale delle seguenti affermazioni è vera.",
+    "options": [
+      "DHCP usa il protocollo HTTP",
+      "DHCP usa il protocollo UDP",
+      "Nessuna delle precedenti",
+      "DHCP usa il protocollo TCP"
+    ],
+    "correctAnswer": "DHCP usa il protocollo UDP",
+    "explanation": "Il processo di assegnazione degli indirizzi avviene spesso prima che l'host abbia uno stack IP completamente configurato, e UDP è adatto a questo compito perché permette l'invio di messaggi in broadcast, cosa che TCP non può fare. Il protocollo si appoggia a due porte specifiche: la 67 usata dal server per ricevere le richieste e la 68 usata dal client per ricevere le risposte. Trattandosi di pochi messaggi, l'overhead di una connessione TCP sarebbe controproducente.",
+    "whyOthersAreWrong": {
+      "DHCP usa il protocollo HTTP": "HTTP è un protocollo applicativo per il web e non ha alcun ruolo nella configurazione automatica degli indirizzi.",
+      "Nessuna delle precedenti": "Una delle affermazioni è corretta, quindi questa alternativa non è valida.",
+      "DHCP usa il protocollo TCP": "TCP non supporta il broadcast e richiederebbe un handshake impossibile per un host privo di indirizzo IP."
+    },
+    "conceptToReview": "Motivazioni della scelta di UDP in DHCP e porte utilizzate.",
+    "miniSummary": "DHCP su UDP, porte 67 lato server e 68 lato client, con messaggi in broadcast.",
+    "memoryTrick": "Non hai ancora un indirizzo IP: non puoi aprire una connessione, devi gridare a tutti.",
+    "similarExamQuestion": "Perché DHCP deve poter usare messaggi di broadcast nella fase iniziale?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 89,
+    "id": "hist-089",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "Il protocollo TCP:",
+    "options": [
+      "Fornisce un rilevamento di errore sui dati di ogni segmento mediante un checksum",
+      "Non fornisce un rilevamento e recupero di errore sui dati",
+      "Non è affidabile",
+      "Fornisce un rilevamento di errore solo sull'intestazione del segmento"
+    ],
+    "correctAnswer": "Fornisce un rilevamento di errore sui dati di ogni segmento mediante un checksum",
+    "explanation": "A differenza del protocollo IP, il cui checksum protegge solo l'intestazione del pacchetto, il checksum di TCP viene calcolato su tutto il segmento, header e dati, e include anche uno pseudo-header con informazioni provenienti dal livello IP come gli indirizzi sorgente e destinazione. Se il checksum rivela un errore o se un segmento non viene confermato, TCP provvede alla ritrasmissione.",
+    "whyOthersAreWrong": {
+      "Non fornisce un rilevamento e recupero di errore sui dati": "TCP non solo rileva l'errore ma lo recupera attivamente, richiedendo al mittente una nuova copia corretta dei dati.",
+      "Non è affidabile": "TCP è per definizione un protocollo reliable: garantisce consegna, ordine e integrità.",
+      "Fornisce un rilevamento di errore solo sull'intestazione del segmento": "Il controllo limitato alla sola intestazione è caratteristico di IPv4, non di TCP."
+    },
+    "conceptToReview": "Copertura del checksum TCP rispetto a quello IP.",
+    "miniSummary": "Il checksum TCP copre header, dati e pseudo-header; quello IP solo l'intestazione.",
+    "memoryTrick": "Il router controlla solo la busta per andare veloce; gli host controllano anche il contenuto.",
+    "similarExamQuestion": "Qual è la dimensione del campo Internet Checksum nei protocolli di trasporto?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 90,
+    "id": "hist-090",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Quale delle seguenti affermazioni è vera riguardo eBGP e iBGP?",
+    "options": [
+      "eBGP e iBGP sono entrambi utilizzati all'interno di un singolo AS",
+      "eBGP e iBGP sono due nomi diversi per la stessa cosa",
+      "eBGP viene utilizzato tra router in AS diversi, mentre iBGP viene utilizzato tra router all'interno dello stesso AS",
+      "iBGP viene utilizzato tra router in AS diversi, mentre eBGP viene utilizzato tra router all'interno dello stesso AS"
+    ],
+    "correctAnswer": "eBGP viene utilizzato tra router in AS diversi, mentre iBGP viene utilizzato tra router all'interno dello stesso AS",
+    "explanation": "eBGP, cioè External BGP, viene stabilito tra router che appartengono a Sistemi Autonomi differenti ed è il protocollo che permette a Internet di funzionare come rete di reti scambiando rotte tra provider. iBGP, cioè Internal BGP, viene stabilito tra router dello stesso Sistema Autonomo e serve a distribuire internamente le rotte esterne apprese via eBGP.",
+    "whyOthersAreWrong": {
+      "eBGP e iBGP sono entrambi utilizzati all'interno di un singolo AS": "Solo iBGP opera all'interno di un AS: eBGP nasce proprio per collegare AS distinti.",
+      "eBGP e iBGP sono due nomi diversi per la stessa cosa": "Pur condividendo il formato dei messaggi hanno regole diverse, ad esempio nella gestione del next-hop e nella propagazione.",
+      "iBGP viene utilizzato tra router in AS diversi, mentre eBGP viene utilizzato tra router all'interno dello stesso AS": "I ruoli sono invertiti: la e sta per external e la i per internal."
+    },
+    "conceptToReview": "Distinzione tra sessioni BGP interne ed esterne.",
+    "miniSummary": "eBGP collega AS diversi, iBGP distribuisce le rotte dentro lo stesso AS.",
+    "memoryTrick": "La lettera iniziale dice tutto: e come esterno, i come interno.",
+    "similarExamQuestion": "Perché iBGP ha regole di propagazione più stringenti rispetto a eBGP?",
+    "figureRewritten": false
+  }
+]

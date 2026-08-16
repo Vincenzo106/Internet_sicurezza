@@ -1,0 +1,336 @@
+[
+  {
+    "originalNumber": 121,
+    "id": "hist-121",
+    "category": "Internet",
+    "topic": "NAT",
+    "difficulty": "difficile",
+    "question": "Il NAT (Network Address Translation) viola almeno il seguente principio:",
+    "options": [
+      "Indipendenza tra i livelli (Trasparenza)",
+      "Obbligo di crittografia end-to-end",
+      "Possibilità di usare indirizzi privati su reti pubbliche",
+      "Frammentazione obbligatoria dei datagrammi"
+    ],
+    "correctAnswer": "Indipendenza tra i livelli (Trasparenza)",
+    "explanation": "Un router dovrebbe operare solo al livello di rete, ma il NAT deve modificare anche i numeri di porta, che appartengono al livello di trasporto, per distinguere le connessioni: questo rompe la separazione netta tra i livelli. Inoltre impedisce che due host comunichino direttamente senza intermediari che alterino il pacchetto, rendendo problematici i protocolli che includono l'indirizzo IP dentro il payload.",
+    "whyOthersAreWrong": {
+      "Obbligo di crittografia end-to-end": "Non esiste alcun obbligo generale di cifratura end-to-end tra i principi architetturali di Internet.",
+      "Possibilità di usare indirizzi privati su reti pubbliche": "Non è un principio violato ma lo scopo stesso per cui il NAT è stato creato, cioè far fronte alla scarsità di indirizzi IPv4.",
+      "Frammentazione obbligatoria dei datagrammi": "La frammentazione non è un principio obbligatorio e non viene violata dal funzionamento del NAT."
+    },
+    "conceptToReview": "Violazione della stratificazione e del principio end-to-end da parte del NAT.",
+    "miniSummary": "Il NAT è di livello 3 ma tocca le porte di livello 4: rompe l'indipendenza tra i livelli.",
+    "memoryTrick": "Se un dispositivo di livello 3 guarda le porte, sta sconfinando di livello.",
+    "similarExamQuestion": "Quante comunicazioni contemporanee può gestire al massimo un NAT su un singolo IP pubblico?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 122,
+    "id": "hist-122",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "facile",
+    "question": "Qual è il protocollo di trasporto usato dal DNS (Domain Name System)?",
+    "options": ["IP", "TCP", "UDP", "ICMP"],
+    "correctAnswer": "UDP",
+    "explanation": "UDP è connectionless e permette di ottenere risposte rapide alle query DNS senza il sovraccarico dell'apertura e chiusura di una sessione TCP con handshake a tre vie. Il DNS opera sulla porta 53. Il ricorso a TCP avviene solo quando l'affidabilità è critica o i dati sono troppo voluminosi per un singolo datagramma UDP, come nei trasferimenti di zona.",
+    "whyOthersAreWrong": {
+      "IP": "IP è un protocollo di livello 3, cioè di rete, non un protocollo di trasporto.",
+      "TCP": "TCP viene usato dal DNS solo in casi particolari, non nella normale fase di risoluzione.",
+      "ICMP": "ICMP è un protocollo di servizio per messaggi di controllo ed errore e non trasporta dati applicativi."
+    },
+    "conceptToReview": "Protocollo di trasporto del DNS e relative eccezioni.",
+    "miniSummary": "DNS su UDP porta 53; TCP solo per zone transfer o risposte oltre i 512 byte.",
+    "memoryTrick": "Una domanda e una risposta non giustificano il costo di aprire una connessione.",
+    "similarExamQuestion": "In quali casi il DNS ricorre a TCP invece che a UDP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 123,
+    "id": "hist-123",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "media",
+    "question": "Quale dei seguenti elementi dello stack protocollare TCP/IP rientra nella categoria end-to-end?",
+    "options": ["ARP", "TCP e UDP", "Tutti quelli indicati", "IP"],
+    "correctAnswer": "TCP e UDP",
+    "explanation": "TCP e UDP gestiscono la comunicazione tra i processi applicativi sugli host terminali: il router non legge né modifica i numeri di sequenza o le porte, e il controllo degli errori e del flusso avviene solo alle estremità del cammino. IP è invece considerato hop-by-hop perché viene elaborato da ogni nodo lungo il percorso per decidere il prossimo salto.",
+    "whyOthersAreWrong": {
+      "ARP": "ARP opera solo all'interno di una singola rete locale per mappare indirizzi IP su MAC, quindi non ha portata end-to-end.",
+      "Tutti quelli indicati": "IP e ARP non sono end-to-end: il primo è hop-by-hop, il secondo puramente locale.",
+      "IP": "Il protocollo IP viene elaborato da ogni router intermedio, quindi è per definizione hop-by-hop."
+    },
+    "conceptToReview": "Distinzione tra protocolli end-to-end e hop-by-hop.",
+    "miniSummary": "Il livello di trasporto vive solo agli estremi; IP viene toccato a ogni salto.",
+    "memoryTrick": "Se un router lo elabora non è end-to-end.",
+    "similarExamQuestion": "Quali livelli dello stack deve implementare un router?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 124,
+    "id": "hist-124",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "difficile",
+    "question": "Considerando il protocollo slotted ALOHA, qual è la massima efficienza possibile (approssimata)?",
+    "options": ["0,52", "0,1", "0,37", "0,80"],
+    "correctAnswer": "0,37",
+    "explanation": "Nello slotted ALOHA il tempo è diviso in slot discreti e un invio ha successo se esattamente un nodo trasmette in uno slot. Se p è la probabilità di trasmissione, l'efficienza è N per p per (1 − p) elevato a N−1. Per un numero elevato di nodi il valore massimo di questa funzione tende a 1 diviso e, cioè circa 0,368. Lo slotted ALOHA raddoppia l'efficienza rispetto ad ALOHA puro, che si ferma attorno al 18 per cento.",
+    "whyOthersAreWrong": {
+      "0,52": "Nessuna delle due varianti di ALOHA raggiunge un'efficienza superiore al 37 per cento circa.",
+      "0,1": "È un valore troppo basso: sottostima anche l'efficienza dell'ALOHA puro.",
+      "0,80": "Efficienze così elevate si ottengono con protocolli a partizionamento o a turni, non con l'accesso casuale puro."
+    },
+    "conceptToReview": "Efficienza teorica dei protocolli ad accesso casuale.",
+    "miniSummary": "Slotted ALOHA circa 0,37, cioè 1/e; ALOHA puro circa la metà.",
+    "memoryTrick": "Il valore magico è 1 diviso e: circa 37 per cento.",
+    "similarExamQuestion": "Perché lo slotted ALOHA è più efficiente dell'ALOHA puro?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 125,
+    "id": "hist-125",
+    "category": "Internet",
+    "topic": "SMTP, POP3, IMAP",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti elementi NON è un componente dei sistemi di posta elettronica?",
+    "options": [
+      "Spool file",
+      "User Agent",
+      "Multimedia Viewer",
+      "Message Transfer Agent"
+    ],
+    "correctAnswer": "Multimedia Viewer",
+    "explanation": "I componenti reali del sistema di posta sono lo User Agent, cioè l'interfaccia con cui l'utente compone e legge le email; il Message Transfer Agent, cioè il server che invia e riceve i messaggi tramite SMTP; e lo spool file o mailbox, lo spazio sul server dove i messaggi sono accodati o depositati. Un visualizzatore multimediale può servire ad aprire un allegato, ma non partecipa in alcun modo all'invio, all'instradamento o alla ricezione del messaggio.",
+    "whyOthersAreWrong": {
+      "Spool file": "È un componente reale: la coda o casella dove i messaggi restano in attesa di essere inviati o scaricati.",
+      "User Agent": "È un componente reale: il client di posta con cui l'utente interagisce.",
+      "Message Transfer Agent": "È un componente reale: il server che si occupa del trasferimento dei messaggi tra i nodi."
+    },
+    "conceptToReview": "Architettura di un sistema di posta elettronica.",
+    "miniSummary": "User Agent, Message Transfer Agent e spool file sono i tre componenti del sistema.",
+    "memoryTrick": "Chiediti se serve a spedire, instradare o conservare: se no, non è del sistema di posta.",
+    "similarExamQuestion": "Quale protocollo usano i Message Transfer Agent per scambiarsi i messaggi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 126,
+    "id": "hist-126",
+    "category": "Internet",
+    "topic": "porte e socket",
+    "difficulty": "facile",
+    "question": "Il livello di trasporto introduce il concetto di porta. Qual è la dimensione di questo campo?",
+    "options": ["4 bit", "8 bit", "32 bit", "16 bit"],
+    "correctAnswer": "16 bit",
+    "explanation": "Con 16 bit il sistema può gestire porte da 0 a 65535. Le porte permettono al livello di trasporto di distinguere tra le diverse applicazioni che girano contemporaneamente sullo stesso host con un unico indirizzo IP, realizzando il multiplexing. La IANA suddivide l'intervallo in well-known ports da 0 a 1023, registered ports da 1024 a 49151 e dynamic ports da 49152 a 65535.",
+    "whyOthersAreWrong": {
+      "4 bit": "Sedici valori possibili non basterebbero nemmeno per i servizi di sistema più comuni.",
+      "8 bit": "256 porte sarebbero insufficienti a coprire anche solo le well-known ports più i servizi registrati.",
+      "32 bit": "32 bit corrispondono allo spazio occupato dalle due porte insieme nell'header, non da una singola porta."
+    },
+    "conceptToReview": "Dimensione del campo porta e suddivisione IANA degli intervalli.",
+    "miniSummary": "16 bit per porta, da 0 a 65535, divise in well-known, registered e dynamic.",
+    "memoryTrick": "Le porte arrivano a 65535 perché 2^16 − 1: la dimensione è nel numero stesso.",
+    "similarExamQuestion": "Quale intervallo di porte viene assegnato dinamicamente ai client?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 128,
+    "id": "hist-128",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Indicare a cosa serve la tecnica detta \"Poisoned reverse\" nell'algoritmo distance vector.",
+    "options": [
+      "Impedisce che si possano formare cicli",
+      "Riparare degli errori",
+      "La tecnica non si applica a questo algoritmo ma ad uno di tipo link state",
+      "Garantire che tutte le destinazioni siano presenti"
+    ],
+    "correctAnswer": "Impedisce che si possano formare cicli",
+    "explanation": "Se il nodo A instrada i pacchetti verso la destinazione Z passando per il nodo B, allora A annuncia a B che la propria distanza verso Z è infinita. Questa bugia a fin di bene assicura che B non provi mai a instradare traffico verso Z passando per A, eliminando alla radice la possibilità che si crei un ciclo tra i due nodi in caso di guasto di un collegamento e mitigando il problema del conteggio all'infinito.",
+    "whyOthersAreWrong": {
+      "Riparare degli errori": "Il poisoned reverse è una tecnica di prevenzione dei loop di instradamento, non un meccanismo di correzione di errori sui dati.",
+      "La tecnica non si applica a questo algoritmo ma ad uno di tipo link state": "È specifica proprio dei protocolli distance vector: i link state non ne hanno bisogno perché ogni router possiede la mappa completa.",
+      "Garantire che tutte le destinazioni siano presenti": "La completezza delle destinazioni deriva dallo scambio delle tabelle, non da questa tecnica."
+    },
+    "conceptToReview": "Prevenzione dei loop e conteggio all'infinito nel distance vector.",
+    "miniSummary": "Dichiaro distanza infinita verso chi mi fa da tramite, così non mi rimanda il traffico.",
+    "memoryTrick": "Avveleno la rotta all'indietro per non farmela restituire.",
+    "similarExamQuestion": "In cosa consiste il problema del count-to-infinity negli algoritmi distance vector?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 129,
+    "id": "hist-129",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "Quale delle seguenti funzioni NON è fornita da TCP?",
+    "options": [
+      "Indirizzamento dei nodi",
+      "Ritrasmissione dei pacchetti",
+      "Congestion control",
+      "Flow control"
+    ],
+    "correctAnswer": "Indirizzamento dei nodi",
+    "explanation": "La responsabilità di identificare univocamente un nodo nella rete spetta agli indirizzi IP, quindi al livello di rete: TCP utilizza questi indirizzi ma non li assegna né li gestisce. Sono invece funzioni proprie di TCP la ritrasmissione dei segmenti persi o corrotti, il controllo di flusso per non saturare il ricevitore e il controllo di congestione per non saturare la rete.",
+    "whyOthersAreWrong": {
+      "Ritrasmissione dei pacchetti": "È una funzione di TCP: se un segmento va perso o arriva corrotto, il mittente lo ritrasmette.",
+      "Congestion control": "È una funzione di TCP, gestita tramite la finestra di congestione per evitare il collasso dei router intermedi.",
+      "Flow control": "È una funzione di TCP, realizzata tramite la finestra di ricezione annunciata dal destinatario."
+    },
+    "conceptToReview": "Ripartizione delle responsabilità tra livello di rete e di trasporto.",
+    "miniSummary": "TCP gestisce affidabilità, flusso e congestione; l'indirizzamento dei nodi è di IP.",
+    "memoryTrick": "TCP parla ai processi, IP parla ai nodi.",
+    "similarExamQuestion": "Quale proprietà fondamentale è garantita dal protocollo TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 130,
+    "id": "hist-130",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "facile",
+    "question": "Quale fra i seguenti NON è un algoritmo/protocollo di routing?",
+    "options": ["OSPF", "Hop Selector", "Link State", "Distance vector"],
+    "correctAnswer": "Hop Selector",
+    "explanation": "Non esiste alcun protocollo o tecnica di routing chiamato Hop Selector: è un termine costruito a partire dal concetto di hop count, che è una metrica di routing ma non un algoritmo a sé stante. Link State e Distance Vector sono invece le due grandi famiglie di algoritmi di routing, e OSPF è il protocollo link state più diffuso.",
+    "whyOthersAreWrong": {
+      "OSPF": "È un protocollo di routing reale ed è l'implementazione link state più diffusa all'interno dei sistemi autonomi.",
+      "Link State": "È una delle due famiglie fondamentali di algoritmi di routing, in cui ogni router costruisce la mappa completa della rete.",
+      "Distance vector": "È l'altra famiglia fondamentale, in cui i router scambiano informazioni di distanza solo con i vicini diretti."
+    },
+    "conceptToReview": "Nomi reali degli algoritmi e dei protocolli di routing.",
+    "miniSummary": "Le famiglie sono link state e distance vector; hop count è una metrica, non un algoritmo.",
+    "memoryTrick": "Se il nome suona plausibile ma non l'hai mai visto sul libro, probabilmente è inventato.",
+    "similarExamQuestion": "Quale attributo non è previsto nel protocollo BGP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 131,
+    "id": "hist-131",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "media",
+    "question": "Qual è il nome del meccanismo utilizzato nel protocollo 802.11 per la gestione dei terminali nascosti durante la comunicazione wireless?",
+    "options": [
+      "NAV (Network Allocation Vector)",
+      "DIFS (Distributed Interframe Space)",
+      "ACK (Acknowledgement)",
+      "RTS/CTS (Request To Send/Clear To Send)"
+    ],
+    "correctAnswer": "RTS/CTS (Request To Send/Clear To Send)",
+    "explanation": "Il mittente invia un pacchetto Request To Send e, se il ricevente è libero, risponde con un Clear To Send. Il CTS viene ricevuto da tutti i nodi nel raggio del destinatario, compresi quelli nascosti al mittente, avvisandoli di non trasmettere per la durata specificata. È proprio questo che risolve il problema del terminale nascosto.",
+    "whyOthersAreWrong": {
+      "NAV (Network Allocation Vector)": "Il NAV è il timer mantenuto dai nodi che sentono RTS o CTS, cioè il valore contenuto nei pacchetti, non il meccanismo di risoluzione in sé.",
+      "DIFS (Distributed Interframe Space)": "Il DIFS è il tempo di attesa minimo prima che una stazione possa tentare di trasmettere, parte del normale CSMA/CA.",
+      "ACK (Acknowledgement)": "L'ACK conferma la ricezione corretta di un frame, ma non previene la collisione tra terminali che non si sentono."
+    },
+    "conceptToReview": "Problema del terminale nascosto e prenotazione del canale.",
+    "miniSummary": "RTS e CTS prenotano il canale e silenziano i vicini del destinatario.",
+    "memoryTrick": "Il CTS è la voce che sentono anche quelli che non sentono il mittente.",
+    "similarExamQuestion": "Qual è la sequenza corretta di eventi nel protocollo 802.11 con RTS/CTS?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 132,
+    "id": "hist-132",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Qual è la dimensione corretta di un indirizzo IPv6?",
+    "options": ["32 bit", "128 bit", "64 bit", "16 bit"],
+    "correctAnswer": "128 bit",
+    "explanation": "128 bit corrispondono a 2 elevato a 128 indirizzi possibili, circa 3,4 per 10 alla 38. A differenza degli indirizzi IPv4 in decimale puntato, gli indirizzi IPv6 sono scritti in notazione esadecimale, divisi in otto gruppi di quattro cifre separati da due punti. La dimensione maggiore permette anche una gerarchia di indirizzamento più strutturata, migliorando l'efficienza del routing globale.",
+    "whyOthersAreWrong": {
+      "32 bit": "32 bit è la dimensione degli indirizzi IPv4, ormai insufficiente per il numero di dispositivi connessi.",
+      "64 bit": "64 bit corrispondono alla metà di un indirizzo IPv6, spesso usata come parte di rete, ma non all'indirizzo completo.",
+      "16 bit": "16 bit è la dimensione di un singolo gruppo esadecimale di IPv6, non dell'intero indirizzo."
+    },
+    "conceptToReview": "Spazio di indirizzamento e rappresentazione di IPv6.",
+    "miniSummary": "128 bit in otto gruppi esadecimali separati da due punti.",
+    "memoryTrick": "Otto gruppi da quattro cifre esadecimali: 8 per 16 bit fa 128.",
+    "similarExamQuestion": "Quale protocollo prevede uno schema di indirizzamento di 128 bit?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 133,
+    "id": "hist-133",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "I protocolli a finestre sono anche chiamati ARQ, perché?",
+    "options": [
+      "Non esiste una tecnica ARQ",
+      "Nel caso di arrivo di un pacchetto errato il ricevitore richiede la ritrasmissione",
+      "Nel caso di un mancato ritorno di un ACK il ricevitore chiede la ritrasmissione",
+      "Lo scadere del timeout del trasmettitore corrisponde ad una richiesta automatica di ritrasmissione"
+    ],
+    "correctAnswer": "Lo scadere del timeout del trasmettitore corrisponde ad una richiesta automatica di ritrasmissione",
+    "explanation": "Il cuore dei protocolli ARQ, cioè Automatic Repeat reQuest, risiede nell'automatismo: il trasmettitore fa partire un timer ogni volta che invia un pacchetto e, se il timer scade prima della ricezione dell'ACK, interpreta questo silenzio come una richiesta implicita di rinvio. I protocolli a finestra migliorano l'ARQ di base permettendo di avere più pacchetti in volo contemporaneamente.",
+    "whyOthersAreWrong": {
+      "Non esiste una tecnica ARQ": "ARQ esiste ed è la famiglia che comprende Stop-and-Wait, Go-Back-N e Selective Repeat.",
+      "Nel caso di arrivo di un pacchetto errato il ricevitore richiede la ritrasmissione": "Esistono i riscontri negativi, ma molti protocolli moderni si affidano ai timeout o agli ACK duplicati: la richiesta è automatica lato mittente.",
+      "Nel caso di un mancato ritorno di un ACK il ricevitore chiede la ritrasmissione": "Il ricevitore non può accorgersi di un ACK mancante, perché è lui stesso a doverlo inviare: è il mittente a rilevare l'assenza."
+    },
+    "conceptToReview": "Significato dell'automatismo nei protocolli ARQ.",
+    "miniSummary": "Il timeout del mittente equivale a una richiesta automatica di ritrasmissione.",
+    "memoryTrick": "Automatic Repeat reQuest: la richiesta non arriva da nessuno, scatta da sola.",
+    "similarExamQuestion": "Perché nei protocolli rdt viene introdotto il timer?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 134,
+    "id": "hist-134",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti formati denota correttamente un indirizzo IP con il formato CIDR (Classless Inter-Domain Routing)?",
+    "options": [
+      "128.119.40.0/25",
+      "Ip = 128.119.40.0, netmask = 255.255.255.255",
+      "128.119.40.0",
+      "Nessuno dei precedenti"
+    ],
+    "correctAnswer": "128.119.40.0/25",
+    "explanation": "Il formato CIDR è standardizzato come indirizzo IP seguito da slash e lunghezza del prefisso. Il suffisso /25 indica esplicitamente che i primi 25 bit dell'indirizzo identificano la rete, mentre i restanti 7 bit sono disponibili per gli host.",
+    "whyOthersAreWrong": {
+      "Ip = 128.119.40.0, netmask = 255.255.255.255": "Descrive i parametri in forma estesa senza usare la notazione compatta standard, e la maschera indicata identificherebbe peraltro un singolo host.",
+      "128.119.40.0": "Il solo indirizzo non è in formato CIDR: senza la maschera esplicita non si può determinare l'estensione della sottorete.",
+      "Nessuno dei precedenti": "Una delle opzioni rispetta esattamente la sintassi CIDR, quindi l'alternativa non è valida."
+    },
+    "conceptToReview": "Notazione CIDR e significato del suffisso.",
+    "miniSummary": "Indirizzo più slash più numero di bit di rete: è l'unica forma corretta.",
+    "memoryTrick": "Senza lo slash non stai definendo una rete ma un singolo indirizzo.",
+    "similarExamQuestion": "Quale notazione CIDR corrisponde a una rete con 1024 indirizzi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 135,
+    "id": "hist-135",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "facile",
+    "question": "Quale categoria fra le seguenti descrive meglio CSMA/CD?",
+    "options": [
+      "Metodo di accesso",
+      "Tecnica di encapsulating dei messaggi",
+      "Controlli di flusso",
+      "Codifica dei messaggi"
+    ],
+    "correctAnswer": "Metodo di accesso",
+    "explanation": "CSMA/CD definisce le regole con cui più dispositivi che condividono lo stesso mezzo decidono chi può trasmettere e quando. Carrier Sense indica l'ascolto preventivo del canale, Multiple Access il fatto che più dispositivi condividono il cavo, e Collision Detection il rilevamento delle collisioni con successivo backoff casuale.",
+    "whyOthersAreWrong": {
+      "Tecnica di encapsulating dei messaggi": "L'incapsulamento riguarda la costruzione del frame con header e trailer, non la contesa per il mezzo.",
+      "Controlli di flusso": "Il controllo di flusso regola la velocità tra mittente e destinatario, come fa la finestra TCP, non l'accesso al canale condiviso.",
+      "Codifica dei messaggi": "La codifica riguarda la rappresentazione fisica dei bit sul mezzo, ad esempio la codifica Manchester."
+    },
+    "conceptToReview": "Classificazione di CSMA/CD tra le funzioni del livello data link.",
+    "miniSummary": "CSMA/CD stabilisce chi parla e quando su un mezzo condiviso.",
+    "memoryTrick": "Multiple Access nel nome: è una regola di accesso al mezzo.",
+    "similarExamQuestion": "Qual è la funzione fondamentale del sottolivello MAC?",
+    "figureRewritten": false
+  }
+]

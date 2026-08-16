@@ -54,6 +54,14 @@ const SECURITY_TOPICS = new Set([
 
 const DIFFICULTIES = new Set(["facile", "media", "difficile"]);
 
+/**
+ * Domande del PDF storico escluse in modo definitivo: pongono una domanda su
+ * un'immagine (grafico della finestra di congestione, schema delle architetture
+ * di switching, segmenti evidenziati a colori) il cui contenuto non e'
+ * ricostruibile dal testo, quindi non sono riproponibili in un quiz testuale.
+ */
+const EXCLUDED_NUMBERS = new Set([106, 113, 118, 127, 172]);
+
 function normalizeText(value) {
   return value
     .toLowerCase()
@@ -104,10 +112,21 @@ async function loadExistingQuestions() {
     sources.push(
       stripModuleSyntax(
         await readFile(path.join(projectRoot, "src", "data", file), "utf8"),
-      ),
+      )
+        // questions.ts fa lo spread di historicalQuestions, cioe' proprio il file
+        // che questo script genera: qui non e' definito, quindi va tolto.
+        .replace(/^\s*\.\.\.historicalQuestions,\s*$/gmu, ""),
     );
   }
-  const merged = `${sources.join("\n")}\n(() => questions)();`;
+  // questions.ts importa anche historicalQuestions, cioe' proprio il file che
+  // questo script genera: ricostruiamo la banca dati senza quella parte, sia per
+  // evitare il riferimento circolare sia perche' confrontare le domande storiche
+  // con se stesse produrrebbe solo falsi duplicati al 100%.
+  const merged = `${sources.join("\n")}\n(() => [
+    ...auditedBaseQuestions,
+    ...advancedQuestions,
+    ...securityExtraQuestions,
+  ])();`;
   const transpiled = ts
     .transpileModule(merged, { compilerOptions: { target: ts.ScriptTarget.ES2022 } })
     .outputText.replace(/^export\s*\{\};?\s*$/gmu, "");
@@ -289,10 +308,18 @@ async function main() {
   console.log("Per argomento:", byTopic);
 
   const missing = [];
+  const unexpectedlyMissing = [];
   for (let n = 1; n <= 182; n += 1) {
-    if (!seeds.some((s) => s.originalNumber === n)) missing.push(n);
+    if (seeds.some((s) => s.originalNumber === n)) continue;
+    missing.push(n);
+    if (!EXCLUDED_NUMBERS.has(n)) unexpectedlyMissing.push(n);
   }
-  console.log(`\nNumeri originali assenti (${missing.length}): ${missing.join(", ") || "nessuno"}`);
+  console.log(
+    `\nEsclusi volutamente (${EXCLUDED_NUMBERS.size}): ${[...EXCLUDED_NUMBERS].join(", ")}`,
+  );
+  console.log(
+    `Assenti non previsti (${unexpectedlyMissing.length}): ${unexpectedlyMissing.join(", ") || "nessuno"}`,
+  );
 
   if (internalDupes.length > 0) {
     console.log(`\nDuplicati interni (${internalDupes.length}):`);

@@ -1,0 +1,362 @@
+[
+  {
+    "originalNumber": 136,
+    "id": "hist-136",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti Flag dell'intestazione TCP causa la chiusura immediata della connessione?",
+    "options": ["PSH", "FIN", "URG", "RST"],
+    "correctAnswer": "RST",
+    "explanation": "Il flag RST forza l'interruzione immediata della connessione e viene inviato quando si verifica un errore irrecuperabile, quando arriva un pacchetto per una porta chiusa, oppure quando un host vuole terminare bruscamente la comunicazione senza ripulire i buffer. Non richiede alcun ACK di conferma: la connessione cessa di esistere all'istante.",
+    "whyOthersAreWrong": {
+      "PSH": "Il flag PSH forza la consegna immediata dei dati bufferizzati all'applicazione e non chiude nulla.",
+      "FIN": "FIN avvia la procedura di chiusura ordinata a quattro vie: il mittente non ha più dati da inviare ma resta in ascolto, quindi la chiusura non è immediata.",
+      "URG": "URG segnala la presenza di dati prioritari nel segmento e non riguarda la terminazione della connessione."
+    },
+    "conceptToReview": "Differenza tra chiusura ordinata con FIN e chiusura brusca con RST.",
+    "miniSummary": "RST abbatte subito la connessione; FIN la chiude con una procedura concordata.",
+    "memoryTrick": "Reset significa strappo immediato, senza saluti né conferme.",
+    "similarExamQuestion": "Quale flag TCP è richiesto in condizioni normali per chiudere una connessione?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 137,
+    "id": "hist-137",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "media",
+    "question": "Quale dei seguenti protocolli prevede una modalità iterativa?",
+    "options": ["HTTP", "UDP", "TCP", "DNS"],
+    "correctAnswer": "DNS",
+    "explanation": "Quando un server DNS riceve una query iterativa, se non possiede la risposta non interroga altri server per conto del client, ma restituisce un riferimento al server DNS successivo nella gerarchia, ad esempio l'indirizzo del server che gestisce i domini .it. Il client deve quindi iterare il processo contattando il nuovo server. La modalità alternativa è quella ricorsiva, in cui il server si fa carico dell'intera ricerca.",
+    "whyOthersAreWrong": {
+      "HTTP": "HTTP non possiede una logica di navigazione gerarchica con rimandi progressivi tra server di livelli diversi.",
+      "UDP": "UDP è un protocollo di trasporto e non prevede alcuna modalità di risoluzione iterativa.",
+      "TCP": "Anche TCP è un protocollo di trasporto: gestisce connessioni e affidabilità, non interrogazioni gerarchiche."
+    },
+    "conceptToReview": "Modalità iterativa e ricorsiva nella risoluzione dei nomi.",
+    "miniSummary": "Iterativa significa ricevere un rimando; ricorsiva significa ricevere la risposta finale.",
+    "memoryTrick": "Iterare vuol dire ripetere: il client rifà la domanda a un altro server.",
+    "similarExamQuestion": "Quale tipo di risoluzione applica il Local DNS Server verso la gerarchia?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 138,
+    "id": "hist-138",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti NON è una delle fasi del protocollo DHCP?",
+    "options": ["DHCP Request", "DHCP Terminate", "DHCP Discover", "DHCP Offer"],
+    "correctAnswer": "DHCP Terminate",
+    "explanation": "Le fasi standard del protocollo DHCP sono quattro e seguono l'acronimo DORA: Discover, con cui il client cerca un server in broadcast; Offer, con cui il server propone un indirizzo; Request, con cui il client richiede formalmente quell'indirizzo; e Acknowledge, con cui il server conferma l'assegnazione. Il messaggio Terminate non esiste: per chiudere e liberare l'indirizzo si usa DHCPRELEASE.",
+    "whyOthersAreWrong": {
+      "DHCP Request": "È la terza fase del ciclo DORA, con cui il client accetta formalmente l'offerta ricevuta.",
+      "DHCP Discover": "È la prima fase, con cui il client cerca in broadcast i server DHCP disponibili.",
+      "DHCP Offer": "È la seconda fase, con cui il server propone un indirizzo IP disponibile dal proprio pool."
+    },
+    "conceptToReview": "Messaggi previsti dal protocollo DHCP.",
+    "miniSummary": "Le fasi sono Discover, Offer, Request e Acknowledge; per rilasciare si usa Release.",
+    "memoryTrick": "Se il nome non rientra in DORA o in Release, non esiste.",
+    "similarExamQuestion": "Quale dei seguenti non è un messaggio del protocollo DHCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 139,
+    "id": "hist-139",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "Indicare l'affermazione corretta per il campo preambolo del frame ethernet.",
+    "options": [
+      "È composto da 7 byte 10101010 e un byte 10101011",
+      "È composto da 6 byte 10101010",
+      "È composto da 6 byte 10101010 e un byte 10101011",
+      "È composto da 8 byte 10101010"
+    ],
+    "correctAnswer": "È composto da 7 byte 10101010 e un byte 10101011",
+    "explanation": "Il preambolo è formato da sette byte identici con pattern 10101010, che servono a svegliare il ricevitore e a sincronizzare il clock. L'ottavo byte è lo Start Frame Delimiter e ha pattern 10101011: i primi sei bit continuano la sincronizzazione, mentre gli ultimi due bit a 11 interrompono il pattern alternato segnalando che il bit successivo è l'inizio dell'indirizzo MAC di destinazione.",
+    "whyOthersAreWrong": {
+      "È composto da 6 byte 10101010": "Il conteggio è errato e manca completamente lo Start Frame Delimiter che chiude il preambolo.",
+      "È composto da 6 byte 10101010 e un byte 10101011": "La struttura è corretta ma il numero di byte di preambolo è sette, non sei.",
+      "È composto da 8 byte 10101010": "Gli otto byte totali sono corretti, ma l'ultimo non ripete il pattern alternato: è l'SFD con terminazione 11."
+    },
+    "conceptToReview": "Composizione del preambolo e ruolo dello Start Frame Delimiter.",
+    "miniSummary": "Sette byte 10101010 più un byte 10101011 che segnala l'inizio del frame vero.",
+    "memoryTrick": "Il doppio 1 finale rompe l'alternanza: è il segnale di via.",
+    "similarExamQuestion": "Qual è lo scopo del preambolo aggiunto ai frame IEEE 802.3?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 140,
+    "id": "hist-140",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "facile",
+    "question": "Indicare la sequenza di eventi corretta usata da DHCP per ottenere un indirizzo IP la prima volta.",
+    "options": [
+      "DHCP request > DHCP discover > DHCP offer > DHCP ack",
+      "DHCP offer > DHCP discover > DHCP request > DHCP ack",
+      "DHCP discover > DHCP request > DHCP offer > DHCP ack",
+      "DHCP discover > DHCP offer > DHCP request > DHCP ack"
+    ],
+    "correctAnswer": "DHCP discover > DHCP offer > DHCP request > DHCP ack",
+    "explanation": "Il processo di assegnazione avviene in quattro passi noti come DORA. Il client appena connesso invia un Discover in broadcast cercando un server; uno o più server rispondono con un Offer proponendo un indirizzo disponibile; il client sceglie un'offerta e invia una Request per chiedere formalmente quell'indirizzo; infine il server conferma con un Ack inviando anche i parametri di configurazione come DNS e gateway.",
+    "whyOthersAreWrong": {
+      "DHCP request > DHCP discover > DHCP offer > DHCP ack": "Il client non può richiedere un indirizzo prima di aver scoperto quali server esistono e cosa offrono.",
+      "DHCP offer > DHCP discover > DHCP request > DHCP ack": "Il server non può offrire un indirizzo prima di aver ricevuto una richiesta di scoperta dal client.",
+      "DHCP discover > DHCP request > DHCP offer > DHCP ack": "Inverte Offer e Request: il client deve prima ricevere una proposta e solo dopo può accettarla."
+    },
+    "conceptToReview": "Sequenza DORA nell'assegnazione di un indirizzo IP.",
+    "miniSummary": "Discover, Offer, Request, Ack: scoprire, proporre, richiedere, confermare.",
+    "memoryTrick": "L'acronimo DORA ti dà già l'ordine esatto.",
+    "similarExamQuestion": "Qual è la risposta attesa al messaggio DHCP Discover?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 141,
+    "id": "hist-141",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "facile",
+    "question": "Indicare quale delle seguenti proprietà è garantita dal protocollo TCP.",
+    "options": [
+      "Affidabilità",
+      "Nessun controllo di flusso",
+      "Connectionless",
+      "Reinvio di qualsiasi pacchetto non ricevuto"
+    ],
+    "correctAnswer": "Affidabilità",
+    "explanation": "L'affidabilità è la proprietà fondamentale di TCP: offre un servizio di trasferimento dati affidabile a flusso di byte sopra un livello di rete inaffidabile come IP. Questa proprietà generale comprende non solo la ritrasmissione dei dati persi, ma anche l'ordinamento dei segmenti e il controllo degli errori tramite checksum.",
+    "whyOthersAreWrong": {
+      "Nessun controllo di flusso": "È falsa: TCP implementa il controllo di flusso tramite la finestra di ricezione annunciata dal destinatario.",
+      "Connectionless": "È falsa: TCP è connection-oriented e richiede il three-way handshake prima di scambiare dati.",
+      "Reinvio di qualsiasi pacchetto non ricevuto": "Il reinvio è il meccanismo concreto, ma l'affidabilità è la proprietà complessiva che include anche ordinamento e controllo degli errori."
+    },
+    "conceptToReview": "Proprietà garantite dal protocollo TCP.",
+    "miniSummary": "TCP è affidabile e orientato alla connessione, con flusso e congestione controllati.",
+    "memoryTrick": "Affidabilità è l'ombrello: ritrasmissione, ordine e integrità stanno tutti sotto.",
+    "similarExamQuestion": "Quale tipo di servizio offre il protocollo TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 142,
+    "id": "hist-142",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "facile",
+    "question": "Qual è la dimensione dei campi Internet Checksum dei protocolli di trasporto?",
+    "options": ["8 bit", "32 bit", "16 bit", "Non è presente il campo checksum"],
+    "correctAnswer": "16 bit",
+    "explanation": "Sia l'intestazione TCP sia quella UDP contengono un campo Checksum di 16 bit. Il valore si ottiene effettuando la somma in complemento a uno di tutte le parole da 16 bit che compongono il segmento, inclusi uno pseudo-header IP, l'intestazione e i dati. A differenza del CRC a 32 bit di Ethernet, questo checksum è computazionalmente più leggero da verificare via software.",
+    "whyOthersAreWrong": {
+      "8 bit": "Otto bit offrirebbero una capacità di rilevamento degli errori troppo bassa per un segmento di dati.",
+      "32 bit": "32 bit è la dimensione del CRC usato a livello data link in Ethernet, non del checksum di trasporto.",
+      "Non è presente il campo checksum": "Il campo è presente in entrambi i protocolli di trasporto, obbligatorio in TCP e opzionale in UDP."
+    },
+    "conceptToReview": "Dimensione e calcolo del checksum nei protocolli di trasporto.",
+    "miniSummary": "16 bit sia in TCP sia in UDP, calcolati in complemento a uno su pseudo-header, header e dati.",
+    "memoryTrick": "Il livello 2 usa 32 bit di CRC, il livello 4 si accontenta di 16 bit di checksum.",
+    "similarExamQuestion": "Su quale porzione del segmento viene calcolato il checksum TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 143,
+    "id": "hist-143",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "La frammentazione di un datagramma IP può avvenire:",
+    "options": [
+      "Non avviene più",
+      "In un host di intermezzo mentre il datagramma viaggia",
+      "Nell'host destinatario",
+      "Nell'host di origine"
+    ],
+    "correctAnswer": "In un host di intermezzo mentre il datagramma viaggia",
+    "explanation": "In IPv4, se un router riceve un datagramma più grande della MTU del collegamento successivo, lo divide in frammenti più piccoli: questo può accadere sia alla sorgente sia in qualsiasi nodo intermedio lungo il percorso. Il riassemblaggio invece avviene solo nell'host di destinazione, per non sovraccaricare i router con buffer e calcoli. In IPv6 i router non frammentano più: scartano il pacchetto e avvisano la sorgente.",
+    "whyOthersAreWrong": {
+      "Non avviene più": "In IPv4 la frammentazione avviene ancora regolarmente; è in IPv6 che i router non frammentano più.",
+      "Nell'host destinatario": "Nell'host di destinazione avviene il riassemblaggio, cioè l'operazione inversa della frammentazione.",
+      "Nell'host di origine": "L'origine può frammentare, ma l'affermazione è incompleta perché esclude i nodi intermedi, dove il fenomeno si verifica tipicamente."
+    },
+    "conceptToReview": "Dove avvengono frammentazione e riassemblaggio in IPv4.",
+    "miniSummary": "Frammenta chi incontra una MTU più piccola; riassembla solo la destinazione.",
+    "memoryTrick": "Tagliare si può lungo la strada, ricomporre solo all'arrivo.",
+    "similarExamQuestion": "In IPv4, dove vengono riassemblati i pacchetti frammentati?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 144,
+    "id": "hist-144",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "facile",
+    "question": "Qual è la risposta attesa al messaggio DHCP DISCOVER?",
+    "options": ["DHCP release", "DHCP request", "DHCP ACK", "DHCP OFFER"],
+    "correctAnswer": "DHCP OFFER",
+    "explanation": "Il DHCP Discover è inviato in broadcast dal client per trovare un server disponibile. Il server riceve la richiesta e risponde con un Offer, proponendo un indirizzo IP disponibile dal proprio pool insieme ad altri parametri preliminari. Solo successivamente il client invierà una Request e il server confermerà con un ACK.",
+    "whyOthersAreWrong": {
+      "DHCP release": "Il Release è inviato dal client per liberare volontariamente un indirizzo già assegnato, non è una risposta al Discover.",
+      "DHCP request": "La Request è inviata dal client dopo aver ricevuto l'offerta, quindi viene dopo, non è la risposta al Discover.",
+      "DHCP ACK": "L'ACK è la conferma finale del server, successiva alla Request del client."
+    },
+    "conceptToReview": "Ordine dei messaggi nella sequenza DORA.",
+    "miniSummary": "Al Discover risponde sempre un Offer: è il secondo passo del ciclo.",
+    "memoryTrick": "D poi O: la lettera successiva dell'acronimo ti dà la risposta.",
+    "similarExamQuestion": "Qual è la sequenza corretta dei messaggi DHCP per ottenere un indirizzo la prima volta?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 145,
+    "id": "hist-145",
+    "category": "Internet",
+    "topic": "congestion control",
+    "difficulty": "difficile",
+    "question": "Indicare quale affermazione è vera per TCP Tahoe e non per TCP Reno.",
+    "options": [
+      "Sono tutte vere per entrambi",
+      "Dopo la ricezione di tre ack duplicati riparte dal valore di ssthresh",
+      "Gestisce la ricezione di tre ack duplicati nello stesso modo del Timeout",
+      "Alla ricezione di ack duplicati successivi al terzo incrementa di 1 la cwnd"
+    ],
+    "correctAnswer": "Gestisce la ricezione di tre ack duplicati nello stesso modo del Timeout",
+    "explanation": "TCP Tahoe non implementa il Fast Recovery, quindi tratta i tre ACK duplicati esattamente come un timeout: imposta ssthresh a metà della finestra corrente, riporta cwnd a 1 e riparte in Slow Start. TCP Reno invece reagisce ai tre ACK duplicati in modo più ottimizzato, eseguendo il Fast Retransmit, portando cwnd a ssthresh più 3 ed entrando in Fast Recovery senza tornare a 1.",
+    "whyOthersAreWrong": {
+      "Sono tutte vere per entrambi": "Le versioni si distinguono proprio per la diversa reazione ai tre ACK duplicati, quindi non tutto vale per entrambe.",
+      "Dopo la ricezione di tre ack duplicati riparte dal valore di ssthresh": "Questo è il comportamento di Reno con il Fast Recovery, non di Tahoe che riparte da 1.",
+      "Alla ricezione di ack duplicati successivi al terzo incrementa di 1 la cwnd": "L'inflazione della finestra durante il Fast Recovery è una caratteristica di Reno, assente in Tahoe."
+    },
+    "conceptToReview": "Differenze operative tra TCP Tahoe e TCP Reno.",
+    "miniSummary": "Tahoe non distingue i due eventi e torna sempre a 1; Reno tratta i 3 ACK duplicati come evento lieve.",
+    "memoryTrick": "Tahoe è drastico e tratta tutto come un timeout; Reno ha una marcia in più.",
+    "similarExamQuestion": "Quale curva del grafico di congestione corrisponde a TCP Tahoe?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 146,
+    "id": "hist-146",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "facile",
+    "question": "Indicare quale dei seguenti protocolli di routing è di tipo link state.",
+    "options": ["RIP", "OSPF", "EBGP", "DiJkstra"],
+    "correctAnswer": "OSPF",
+    "explanation": "In OSPF ogni router costruisce una mappa completa della rete tramite lo scambio di Link State Advertisement e calcola poi il percorso migliore in autonomia con l'algoritmo di Dijkstra. È il protocollo link state più diffuso all'interno dei sistemi autonomi.",
+    "whyOthersAreWrong": {
+      "RIP": "RIP è di tipo distance vector: i router conoscono solo distanza e direzione basandosi sulle tabelle dei vicini.",
+      "EBGP": "EBGP è un protocollo path vector usato per il routing tra sistemi autonomi diversi, non un IGP link state.",
+      "DiJkstra": "Dijkstra è l'algoritmo matematico usato dai protocolli link state, non il nome di un protocollo."
+    },
+    "conceptToReview": "Classificazione dei protocolli di routing per famiglia algoritmica.",
+    "miniSummary": "OSPF link state, RIP distance vector, BGP path vector.",
+    "memoryTrick": "Dijkstra è l'algoritmo, OSPF è il protocollo che lo usa: non confonderli.",
+    "similarExamQuestion": "A quale categoria appartiene il protocollo RIP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 147,
+    "id": "hist-147",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "media",
+    "question": "Perché si preferisce il protocollo UDP per lo streaming video e audio?",
+    "options": [
+      "Lo streaming richiede la ricevuta di ogni pacchetto a prescindere dal ritardo di consegna",
+      "UDP prevede un handshake iniziale che permette di valutare la banda disponibile",
+      "UDP è un protocollo affidabile che garantisce la consegna dei pacchetti",
+      "Lo streaming non tollera il ritardo dovuto ad eventuali ritrasmissioni"
+    ],
+    "correctAnswer": "Lo streaming non tollera il ritardo dovuto ad eventuali ritrasmissioni",
+    "explanation": "In TCP, se un pacchetto viene perso, quelli successivi devono attendere in coda finché non viene recuperato, fenomeno noto come Head-of-Line Blocking: in una videochiamata questo causerebbe un blocco dell'immagine. I dati audio e video in diretta hanno inoltre una scadenza: un fotogramma che arriva con due secondi di ritardo è inutile. UDP evita l'overhead dell'handshake e del mantenimento dello stato, permettendo una trasmissione più fluida.",
+    "whyOthersAreWrong": {
+      "Lo streaming richiede la ricevuta di ogni pacchetto a prescindere dal ritardo di consegna": "È l'opposto: lo streaming preferisce perdere qualche pacchetto piuttosto che attendere, perché il ritardo è il vero nemico.",
+      "UDP prevede un handshake iniziale che permette di valutare la banda disponibile": "UDP non prevede alcun handshake: è proprio questa assenza a renderlo leggero.",
+      "UDP è un protocollo affidabile che garantisce la consegna dei pacchetti": "UDP non è affidabile e non garantisce alcuna consegna: offre un servizio best effort."
+    },
+    "conceptToReview": "Compromesso tra affidabilità e latenza nelle applicazioni real-time.",
+    "miniSummary": "Meglio un fotogramma perso che un fotogramma in ritardo: per questo si sceglie UDP.",
+    "memoryTrick": "Il dato in diretta ha una scadenza: se arriva tardi è già inutile.",
+    "similarExamQuestion": "Quale servizio fra posta, trasferimento dati e videoconferenza è sensibile al ritardo?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 148,
+    "id": "hist-148",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "facile",
+    "question": "Riguardo al protocollo ARP, quale delle seguenti affermazioni è vera?",
+    "options": [
+      "ARP viene utilizzato per ottenere l'indirizzo IP di un host a partire dall'hostname",
+      "ARP è un protocollo di livello 4",
+      "ARP viene utilizzato per ottenere l'indirizzo MAC di un host a partire dall'IP",
+      "ARP viene utilizzato per determinare la rotta migliore su internet"
+    ],
+    "correctAnswer": "ARP viene utilizzato per ottenere l'indirizzo MAC di un host a partire dall'IP",
+    "explanation": "ARP colma la distanza tra il livello di rete, che usa indirizzi IP logici, e il livello data link, che richiede indirizzi MAC fisici per la consegna locale. Il mittente conosce l'IP di destinazione ma non il MAC, quindi invia una richiesta in broadcast sulla rete locale e riceve in risposta l'indirizzo fisico corrispondente.",
+    "whyOthersAreWrong": {
+      "ARP viene utilizzato per ottenere l'indirizzo IP di un host a partire dall'hostname": "La traduzione da nome a indirizzo IP è compito del DNS, non di ARP.",
+      "ARP è un protocollo di livello 4": "ARP opera tra il livello 2 e il livello 3, incapsulato direttamente in frame Ethernet, non al livello di trasporto.",
+      "ARP viene utilizzato per determinare la rotta migliore su internet": "La determinazione delle rotte è gestita da protocolli di routing come OSPF o BGP; ARP lavora solo dentro la LAN."
+    },
+    "conceptToReview": "Funzione e collocazione di ARP nello stack.",
+    "miniSummary": "Da IP a MAC, solo all'interno della rete locale.",
+    "memoryTrick": "DNS traduce nomi, ARP traduce indirizzi: due traduzioni diverse.",
+    "similarExamQuestion": "Come fa un dispositivo ad apprendere l'indirizzo MAC dato l'indirizzo IP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 149,
+    "id": "hist-149",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "facile",
+    "question": "Indicare a quale categoria appartiene il protocollo RIP.",
+    "options": [
+      "Distance Vector Protocol",
+      "Path Vector Protocol",
+      "Routed protocol",
+      "Link State"
+    ],
+    "correctAnswer": "Distance Vector Protocol",
+    "explanation": "In un protocollo Distance Vector ogni router conosce solo due cose per ogni destinazione: la distanza, che nel caso di RIP è il numero di salti, e il vettore, cioè a quale vicino inviare il pacchetto. I router scambiano periodicamente le loro intere tabelle di routing solo con i vicini diretti, applicando l'algoritmo di Bellman-Ford.",
+    "whyOthersAreWrong": {
+      "Path Vector Protocol": "Il path vector è la categoria di BGP, che memorizza l'intero percorso in termini di sistemi autonomi per evitare cicli.",
+      "Routed protocol": "Un routed protocol è quello che trasporta i dati e viene instradato, come IP: RIP è invece un routing protocol.",
+      "Link State": "Nei link state come OSPF ogni router possiede la mappa completa della topologia, cosa che RIP non ha."
+    },
+    "conceptToReview": "Categoria di appartenenza di RIP e metrica utilizzata.",
+    "miniSummary": "RIP è distance vector, usa l'hop count e si basa su Bellman-Ford.",
+    "memoryTrick": "RIP conta i salti e si fida dei vicini: è distance vector.",
+    "similarExamQuestion": "Quale protocollo di trasporto utilizza RIP per i propri aggiornamenti?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 150,
+    "id": "hist-150",
+    "category": "Internet",
+    "topic": "congestion control",
+    "difficulty": "difficile",
+    "question": "Nell'intestazione (header) TCP non sono mai contenuti?",
+    "options": [
+      "Flag RST",
+      "Riscontro dei pacchetti ricevuti",
+      "Il valore della cwnd, dimensione corrente della finestra di trasmissione",
+      "Checksum"
+    ],
+    "correctAnswer": "Il valore della cwnd, dimensione corrente della finestra di trasmissione",
+    "explanation": "Il campo Window a 16 bit dell'header trasporta la Receive Window, comunicata dal ricevitore per il controllo di flusso. La Congestion Window è invece una variabile calcolata solo localmente dal mittente in base agli ACK ricevuti o persi: il mittente non annuncia mai la propria finestra di congestione, si limita a inviare dati finché i byte non riscontrati restano sotto il minimo tra cwnd e rwnd.",
+    "whyOthersAreWrong": {
+      "Flag RST": "Il flag RST è un campo standard dell'intestazione TCP, usato per abbattere immediatamente la connessione.",
+      "Riscontro dei pacchetti ricevuti": "Il numero di acknowledgment è un campo obbligatorio dell'intestazione TCP.",
+      "Checksum": "Il checksum a 16 bit è un campo standard e obbligatorio dell'intestazione TCP."
+    },
+    "conceptToReview": "Distinzione tra receive window annunciata e congestion window locale.",
+    "miniSummary": "rwnd viaggia nell'header, cwnd resta una variabile interna del mittente.",
+    "memoryTrick": "La congestione la stima chi invia, quindi non ha bisogno di comunicarla.",
+    "similarExamQuestion": "Quale campo dell'header TCP implementa il controllo di flusso?",
+    "figureRewritten": false
+  }
+]

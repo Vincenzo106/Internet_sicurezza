@@ -1,0 +1,367 @@
+[
+  {
+    "originalNumber": 46,
+    "id": "hist-046",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "media",
+    "question": "Nel formato generale dei messaggi di richiesta HTTP, i tre campi della prima riga sono evidenziati nell'ordine con i colori rosso, verde e giallo. Indicare la corretta corrispondenza tra colore e contenuto.",
+    "options": [
+      "Rosso = URL, verde = metodo, giallo = protocollo",
+      "Rosso = GET, verde = URL, giallo = versione",
+      "Rosso = metodo, verde = URL, giallo = versione",
+      "Rosso = protocollo, verde = URL, giallo = versione"
+    ],
+    "correctAnswer": "Rosso = metodo, verde = URL, giallo = versione",
+    "explanation": "La prima riga di una richiesta HTTP è la request line e segue una sintassi rigida con i campi separati da spazi: metodo, URL e versione, seguiti da CRLF. Il primo campo è il metodo, come GET, POST o HEAD, che indica l'azione da eseguire sulla risorsa; il secondo è l'URL, spesso relativo come /index.html, che identifica la risorsa richiesta; il terzo è la versione del protocollo, ad esempio HTTP/1.1, necessaria affinché client e server si capiscano.",
+    "whyOthersAreWrong": {
+      "Rosso = URL, verde = metodo, giallo = protocollo": "Inverte i primi due campi: il metodo precede sempre l'URL nella request line.",
+      "Rosso = GET, verde = URL, giallo = versione": "GET è solo uno dei metodi possibili, non il nome del campo: il primo campo si chiama genericamente metodo.",
+      "Rosso = protocollo, verde = URL, giallo = versione": "Il protocollo non è un campo autonomo della request line: compare come versione nel terzo campo."
+    },
+    "conceptToReview": "Ordine dei campi nella request line HTTP.",
+    "miniSummary": "Metodo, URL e versione, in quest'ordine, separati da spazi.",
+    "memoryTrick": "Leggi come una frase: cosa faccio, su cosa, con quale versione.",
+    "similarExamQuestion": "Quali sono i tre campi che compongono la request line di un messaggio HTTP?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 47,
+    "id": "hist-047",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "difficile",
+    "question": "Indicare, in relazione al protocollo ARP, quale delle seguenti affermazioni relative alla request NON è corretta.",
+    "options": [
+      "L'indirizzo IP del destinatario è posto uguale a 255.255.255.255",
+      "ARP request contiene l'indirizzo fisico del mittente",
+      "ARP request contiene l'indirizzo IP del mittente",
+      "L'indirizzo fisico del destinatario è posto uguale a FF:FF:FF:FF:FF:FF"
+    ],
+    "correctAnswer": "L'indirizzo IP del destinatario è posto uguale a 255.255.255.255",
+    "explanation": "Lo scopo di una ARP request è trovare il MAC address associato a uno specifico indirizzo IP, quindi nel campo Target Protocol Address del pacchetto ARP deve esserci scritto l'indirizzo IP specifico del nodo cercato, non l'indirizzo di broadcast IP. La distinzione è fondamentale: a livello Ethernet il frame viene inviato all'indirizzo MAC di broadcast affinché tutti lo ricevano, ma nel payload ARP l'IP di destinazione è quello puntuale che si vuole risolvere.",
+    "whyOthersAreWrong": {
+      "ARP request contiene l'indirizzo fisico del mittente": "È vera: il mittente include il proprio MAC per permettere al destinatario di rispondere in unicast.",
+      "ARP request contiene l'indirizzo IP del mittente": "È vera: il mittente include anche il proprio IP, così il destinatario può aggiornare la propria cache ARP.",
+      "L'indirizzo fisico del destinatario è posto uguale a FF:FF:FF:FF:FF:FF": "È vera: a livello data link il frame viaggia in broadcast proprio perché il MAC cercato non è ancora noto."
+    },
+    "conceptToReview": "Contenuto di una ARP request e differenza tra broadcast di livello 2 e livello 3.",
+    "miniSummary": "Broadcast sul MAC di destinazione, ma IP di destinazione puntuale nel payload ARP.",
+    "memoryTrick": "Il broadcast serve per farsi sentire da tutti, non per indicare chi si sta cercando.",
+    "similarExamQuestion": "Quale componente è l'unico sconosciuto al mittente in un pacchetto di ARP request?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 48,
+    "id": "hist-048",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "media",
+    "question": "Selezionare la risposta in cui sono elencati tutti e soli i servizi fra DHCP, SMTP, HTTP, ICMP che utilizzano TCP.",
+    "options": ["HTTP", "ICMP, SMTP, HTTP", "SMTP, HTTP", "DHCP, SMTP, HTTP"],
+    "correctAnswer": "SMTP, HTTP",
+    "explanation": "SMTP e HTTP sono protocolli applicativi che richiedono un trasferimento dati affidabile, senza perdite e in ordine, quindi si appoggiano a TCP che stabilisce una connessione e garantisce la consegna. DHCP invece usa UDP, perché si basa su messaggi di broadcast in una fase in cui l'host potrebbe non avere ancora un indirizzo IP valido. ICMP infine non usa né TCP né UDP: opera direttamente al livello di rete, incapsulato dentro i pacchetti IP.",
+    "whyOthersAreWrong": {
+      "HTTP": "L'elenco è incompleto: anche SMTP richiede affidabilità e si appoggia a TCP.",
+      "ICMP, SMTP, HTTP": "ICMP non è trasportato da TCP: viaggia direttamente dentro IP come protocollo di controllo.",
+      "DHCP, SMTP, HTTP": "DHCP utilizza UDP sulle porte 67 e 68, non TCP."
+    },
+    "conceptToReview": "Scelta del protocollo di trasporto da parte dei protocolli applicativi.",
+    "miniSummary": "SMTP e HTTP su TCP, DHCP su UDP, ICMP direttamente su IP.",
+    "memoryTrick": "Chi non può perdere niente usa TCP; chi deve essere veloce o parlare prima di avere un IP usa UDP.",
+    "similarExamQuestion": "Perché DHCP non può appoggiarsi a TCP nella fase iniziale di configurazione?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 49,
+    "id": "hist-049",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Quali livelli dello stack protocollare devono essere supportati in un router?",
+    "options": [
+      "Fisico, datalink, rete, trasporto",
+      "Rete",
+      "Fisico, datalink, rete",
+      "Fisico, datalink, rete, trasporto, applicativo"
+    ],
+    "correctAnswer": "Fisico, datalink, rete",
+    "explanation": "Un router è per definizione un dispositivo che opera al livello di rete, ma per accedere alle informazioni di quel livello deve necessariamente implementare anche i livelli sottostanti: il livello fisico per ricevere i segnali dai cavi, il livello data link per elaborare il frame e rimuovere l'intestazione di livello 2, e il livello rete per leggere l'indirizzo IP di destinazione e determinare il percorso. I livelli trasporto e applicativo sono implementati solo negli host finali.",
+    "whyOthersAreWrong": {
+      "Fisico, datalink, rete, trasporto": "Il livello di trasporto è end-to-end e vive solo sugli host terminali: il router non lo elabora.",
+      "Rete": "Il solo livello di rete non basterebbe: senza fisico e data link il router non potrebbe nemmeno ricevere il frame dal cavo.",
+      "Fisico, datalink, rete, trasporto, applicativo": "Descrive lo stack completo di un host terminale, non quello di un nodo intermedio di instradamento."
+    },
+    "conceptToReview": "Stack protocollare implementato nei nodi intermedi rispetto agli host.",
+    "miniSummary": "Il router si ferma al livello 3; trasporto e applicazione sono affari degli estremi.",
+    "memoryTrick": "Per leggere l'IP devi prima aprire la busta del frame, ma non devi aprire la lettera.",
+    "similarExamQuestion": "Perché i livelli di trasporto e applicativo sono definiti end-to-end?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 50,
+    "id": "hist-050",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "media",
+    "question": "L'uso dei cookies nel protocollo http permette di?",
+    "options": [
+      "Poter associare fra loro più richieste fatte da uno stesso browser o utente",
+      "Inviare comandi al server",
+      "Gestire l'autenticazione di un utente",
+      "Evitare di essere tracciati"
+    ],
+    "correctAnswer": "Poter associare fra loro più richieste fatte da uno stesso browser o utente",
+    "explanation": "HTTP è nativamente stateless: il server tratta ogni richiesta in modo indipendente, senza conservare memoria di quelle precedenti. I cookie sono piccoli file di testo che il server invia al client e che il client rispedisce a ogni richiesta successiva, fungendo da identificativo e permettendo al server di capire che due richieste provengono dallo stesso utente. Su questa capacità si costruiscono poi sessioni, carrelli e personalizzazione.",
+    "whyOthersAreWrong": {
+      "Inviare comandi al server": "I comandi al server si esprimono con i metodi HTTP e il corpo della richiesta, non tramite i cookie.",
+      "Gestire l'autenticazione di un utente": "Il mantenimento del login è una conseguenza possibile dell'associazione tra richieste, non la funzione primaria del meccanismo.",
+      "Evitare di essere tracciati": "È l'opposto: i cookie sono proprio lo strumento che rende possibile il tracciamento della navigazione."
+    },
+    "conceptToReview": "Natura stateless di HTTP e ruolo dei cookie.",
+    "miniSummary": "Il cookie è un identificativo che il client ripresenta ogni volta, ricucendo richieste separate.",
+    "memoryTrick": "HTTP dimentica tutto; il cookie è il biglietto che ti fa riconoscere all'ingresso.",
+    "similarExamQuestion": "Quali funzionalità applicative diventano possibili grazie ai cookie?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 51,
+    "id": "hist-051",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Il protocollo BGP si compone di?",
+    "options": [
+      "Un insieme di AS",
+      "Un insieme di reti private",
+      "Nessuna delle precedenti",
+      "Un insieme di ISP"
+    ],
+    "correctAnswer": "Un insieme di AS",
+    "explanation": "BGP è il protocollo di routing inter-dominio che fa funzionare Internet e, dal suo punto di vista, Internet non è una rete di singoli computer ma una rete di reti chiamate Sistemi Autonomi. Un AS è un gruppo di router e reti sotto il controllo di una singola autorità amministrativa, ad esempio un ISP, un'università o una grande azienda, che definisce una politica di routing unitaria.",
+    "whyOthersAreWrong": {
+      "Un insieme di reti private": "Le reti private sono un concetto di indirizzamento interno e non hanno alcun ruolo nella struttura logica del routing inter-dominio.",
+      "Nessuna delle precedenti": "Una delle opzioni descrive correttamente la struttura su cui opera BGP, quindi questa alternativa non è valida.",
+      "Un insieme di ISP": "È riduttivo: tutti gli ISP sono AS, ma esistono AS che non sono Internet Service Provider, come università e grandi aziende."
+    },
+    "conceptToReview": "Concetto di Sistema Autonomo e routing inter-dominio.",
+    "miniSummary": "BGP vede Internet come una rete di AS, ciascuno con la propria politica di routing.",
+    "memoryTrick": "AS non significa provider: significa autorità amministrativa unica.",
+    "similarExamQuestion": "Qual è la differenza tra eBGP e iBGP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 52,
+    "id": "hist-052",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "facile",
+    "question": "Quale tecnica di accesso al canale trasmissivo è usata da Ethernet?",
+    "options": ["Token passing", "CSMA/CA", "CSMA/CD", "Turn taking"],
+    "correctAnswer": "CSMA/CD",
+    "explanation": "CSMA/CD è il protocollo MAC utilizzato nelle reti Ethernet cablate. Prima di trasmettere la stazione ascolta il canale e, se è libero, trasmette; durante la trasmissione continua ad ascoltare e, se rileva una collisione, interrompe subito l'invio e lancia un segnale di jamming; infine attende un tempo casuale calcolato con il backoff esponenziale prima di riprovare.",
+    "whyOthersAreWrong": {
+      "Token passing": "Il passaggio del gettone è la tecnica di Token Ring (802.5), che elimina alla radice le collisioni invece di rilevarle.",
+      "CSMA/CA": "Il collision avoidance è usato dalle reti wireless 802.11, che non possono rilevare le collisioni mentre trasmettono.",
+      "Turn taking": "L'accesso a turni è una famiglia di protocolli diversa, in cui le stazioni si alternano secondo uno schema prestabilito."
+    },
+    "conceptToReview": "Protocolli di accesso al mezzo condiviso e loro classificazione.",
+    "miniSummary": "Ethernet ascolta, trasmette, rileva la collisione e riprova dopo un backoff casuale.",
+    "memoryTrick": "Sul cavo puoi accorgerti dello scontro mentre parli: CD, Collision Detection.",
+    "similarExamQuestion": "Perché il Wi-Fi non può usare CSMA/CD e ricorre a CSMA/CA?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 53,
+    "id": "hist-053",
+    "category": "Internet",
+    "topic": "congestion control",
+    "difficulty": "difficile",
+    "question": "In un grafico che confronta due versioni di TCP, al round di trasmissione 8 si verifica una perdita: la curva blu scende verticalmente da 12 a 1, mentre la curva nera scende a circa 9. Quale delle curve rappresentate è relativa alla versione TCP-Tahoe?",
+    "options": [
+      "Tutta la curva blu",
+      "La curva nera",
+      "Non è rappresentata in figura",
+      "Sia la curva nera che quella blu"
+    ],
+    "correctAnswer": "Tutta la curva blu",
+    "explanation": "TCP Tahoe non implementa il meccanismo di Fast Recovery, quindi ogni volta che rileva una perdita, sia per timeout sia per tre ACK duplicati, si comporta nello stesso modo drastico: imposta la soglia ssthresh a metà della finestra corrente, resetta la finestra di congestione a 1 MSS e ricomincia dalla fase di Slow Start. La discesa verticale da 12 a 1 è esattamente questo comportamento, mentre la curva nera che scende a circa 9 rappresenta il Fast Recovery tipico di TCP Reno.",
+    "whyOthersAreWrong": {
+      "La curva nera": "La discesa a metà finestra invece che a 1 è la firma del Fast Recovery, quindi di TCP Reno e non di Tahoe.",
+      "Non è rappresentata in figura": "Il comportamento di Tahoe è chiaramente visibile nel crollo verticale della finestra fino a 1 MSS.",
+      "Sia la curva nera che quella blu": "Le due curve mostrano reazioni diverse alla stessa perdita, quindi non possono rappresentare entrambe Tahoe."
+    },
+    "conceptToReview": "Differenza di reazione alla perdita tra TCP Tahoe e TCP Reno.",
+    "miniSummary": "Tahoe torna sempre a 1 MSS; Reno dimezza la finestra ed entra in Fast Recovery.",
+    "memoryTrick": "Se la curva precipita fino in fondo è Tahoe; se si ferma a metà è Reno.",
+    "similarExamQuestion": "Quale affermazione è vera per TCP Tahoe e non per TCP Reno?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 54,
+    "id": "hist-054",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "La formula di Bellman-Ford è utilizzata?",
+    "options": [
+      "Dall'algoritmo di Dijkstra per calcolare i campi minimi",
+      "Dall'algoritmo distance vector per determinare i percorsi di costo minimo",
+      "Dall'algoritmo distance vector per evitare il conteggio all'infinito",
+      "Dall'algoritmo OSPF per diminuire la complessità legata allo scambio dei messaggi"
+    ],
+    "correctAnswer": "Dall'algoritmo distance vector per determinare i percorsi di costo minimo",
+    "explanation": "Gli algoritmi di routing di tipo Distance Vector, come il protocollo RIP, si basano iterativamente sull'equazione di Bellman-Ford, secondo cui il costo del percorso minimo dal nodo x al nodo y è il minimo, calcolato su tutti i vicini v, della somma tra il costo per raggiungere il vicino e il costo che il vicino impiega per raggiungere la destinazione.",
+    "whyOthersAreWrong": {
+      "Dall'algoritmo di Dijkstra per calcolare i campi minimi": "Dijkstra è un algoritmo greedy di tipo Link State e non utilizza l'equazione di Bellman-Ford.",
+      "Dall'algoritmo distance vector per evitare il conteggio all'infinito": "Il conteggio all'infinito è un difetto intrinseco degli algoritmi basati su Bellman-Ford, non un problema che l'equazione risolve: servono tecniche extra come il Poison Reverse.",
+      "Dall'algoritmo OSPF per diminuire la complessità legata allo scambio dei messaggi": "OSPF è un protocollo Link State e usa Dijkstra, non Bellman-Ford."
+    },
+    "conceptToReview": "Equazione di Bellman-Ford alla base del distance vector.",
+    "miniSummary": "Il costo minimo verso y è il minimo, sui vicini, di costo(x,v) più costo(v,y).",
+    "memoryTrick": "Bellman-Ford va con distance vector, Dijkstra con link state: sono coppie fisse.",
+    "similarExamQuestion": "A cosa serve la tecnica del Poisoned Reverse nell'algoritmo distance vector?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 55,
+    "id": "hist-055",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "facile",
+    "question": "Qual è l'indirizzo di destinazione usato in un frame ARP request?",
+    "options": ["255.255.255.255", "FFFF.FFFF.FFFF", "0.0.0.0", "127.0.0.1"],
+    "correctAnswer": "FFFF.FFFF.FFFF",
+    "explanation": "ARP non è trasportato da IP ma viaggia direttamente dentro i frame Ethernet, quindi l'indirizzo di destinazione del frame deve essere un indirizzo MAC. Poiché il mittente non conosce ancora il MAC del destinatario, che è proprio ciò che vuole scoprire, deve inviare il messaggio a tutti i dispositivi della rete locale usando l'indirizzo MAC di broadcast, costituito da 48 bit tutti a uno.",
+    "whyOthersAreWrong": {
+      "255.255.255.255": "È l'indirizzo di broadcast di livello 3, usato in ambito IP, ma non compare nell'intestazione del frame Ethernet di una ARP request.",
+      "0.0.0.0": "Indica un indirizzo IP non specificato, tipicamente usato da un host non ancora configurato, e non è un indirizzo di destinazione di livello 2.",
+      "127.0.0.1": "È l'indirizzo di loopback, riservato al traffico interno all'host stesso, e non ha alcun senso come destinazione di un broadcast locale."
+    },
+    "conceptToReview": "Livello di incapsulamento di ARP e indirizzo di broadcast di livello 2.",
+    "miniSummary": "ARP viaggia dentro Ethernet, quindi il broadcast è FF:FF:FF:FF:FF:FF, non 255.255.255.255.",
+    "memoryTrick": "Se il campo è del frame, l'indirizzo è MAC; le quaterne puntate sono di livello 3.",
+    "similarExamQuestion": "In quale modalità viene inviata una ARP reply e perché?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 56,
+    "id": "hist-056",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "facile",
+    "question": "Se si considera il protocollo UDP, indicare quale delle seguenti affermazioni è vera.",
+    "options": [
+      "È un protocollo principalmente utilizzato per il trasferimento dei messaggi di posta elettronica",
+      "È un protocollo connectionless affidabile",
+      "È un protocollo connectionless inaffidabile",
+      "È un protocollo che garantisce un canale affidabile"
+    ],
+    "correctAnswer": "È un protocollo connectionless inaffidabile",
+    "explanation": "A differenza di TCP, UDP non esegue alcuna procedura di handshaking prima di inviare i dati: il mittente inizia semplicemente a trasmettere. Offre inoltre un servizio best effort, senza garantire che i pacchetti arrivino a destinazione né che arrivino in ordine, e senza prevedere riscontri o ritrasmissioni. Proprio per la sua leggerezza è ideale per applicazioni sensibili al ritardo come streaming, gaming online e VoIP.",
+    "whyOthersAreWrong": {
+      "È un protocollo principalmente utilizzato per il trasferimento dei messaggi di posta elettronica": "La posta elettronica usa SMTP appoggiato a TCP, perché richiede affidabilità totale.",
+      "È un protocollo connectionless affidabile": "Connectionless è corretto, ma affidabile no: UDP non offre alcuna garanzia di consegna.",
+      "È un protocollo che garantisce un canale affidabile": "Descrive TCP: UDP non garantisce nulla sul canale."
+    },
+    "conceptToReview": "Caratteristiche del servizio offerto da UDP.",
+    "miniSummary": "UDP: nessun handshake, nessun ACK, nessuna ritrasmissione, massima leggerezza.",
+    "memoryTrick": "UDP spara e non guarda: veloce, ma senza garanzie.",
+    "similarExamQuestion": "Perché si preferisce UDP per lo streaming audio e video?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 57,
+    "id": "hist-057",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "media",
+    "question": "Qual è il ruolo del meccanismo di \"backoff\" nel protocollo CSMA/CA?",
+    "options": [
+      "Assegnare priorità di accesso al canale ai nodi della rete",
+      "Gestire le collisioni tra pacchetti trasmessi contemporaneamente dai nodi",
+      "Regolare l'intervallo di tempo tra le ritrasmissioni dei pacchetti",
+      "Calcolare la larghezza di banda disponibile nel sistema di comunicazione"
+    ],
+    "correctAnswer": "Regolare l'intervallo di tempo tra le ritrasmissioni dei pacchetti",
+    "explanation": "Nelle reti wireless non è possibile rilevare le collisioni mentre avvengono, quindi il protocollo mira a evitarle. Quando un nodo trova il canale occupato o non riceve un ACK non riprova immediatamente appena il canale si libera, altrimenti tutti i nodi in attesa trasmetterebbero insieme causando una collisione certa: il backoff calcola un tempo di attesa casuale, regolando così l'intervallo di ritrasmissione e desincronizzando i nodi.",
+    "whyOthersAreWrong": {
+      "Assegnare priorità di accesso al canale ai nodi della rete": "Il backoff è casuale proprio per non privilegiare nessuno: le priorità si gestiscono con meccanismi diversi come gli spazi interframe.",
+      "Gestire le collisioni tra pacchetti trasmessi contemporaneamente dai nodi": "In CSMA/CA l'obiettivo è prevenire le collisioni, non gestirle dopo che sono avvenute come fa CSMA/CD.",
+      "Calcolare la larghezza di banda disponibile nel sistema di comunicazione": "Il backoff non misura né stima la banda: agisce solo sul momento in cui si ritenta la trasmissione."
+    },
+    "conceptToReview": "Funzione del backoff nella desincronizzazione dei nodi wireless.",
+    "miniSummary": "Il backoff sparpaglia nel tempo i tentativi di trasmissione per evitare collisioni certe.",
+    "memoryTrick": "Se tutti riprovassero nello stesso istante, si scontrerebbero di nuovo: serve il caso.",
+    "similarExamQuestion": "Come si può risolvere il problema del terminale nascosto in una rete 802.11?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 58,
+    "id": "hist-058",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Il protocollo che prevede uno schema di indirizzamento di 128 bit è?",
+    "options": ["NAT", "ARP", "IPv4", "IPv6"],
+    "correctAnswer": "IPv6",
+    "explanation": "Lo standard IPv6 utilizza indirizzi lunghi 128 bit, il che permette uno spazio di indirizzamento enorme, circa 3,4 per 10 alla 38, risolvendo definitivamente il problema dell'esaurimento degli indirizzi. Gli indirizzi sono rappresentati come otto gruppi di quattro cifre esadecimali separati da due punti, mentre IPv4 usa soli 32 bit.",
+    "whyOthersAreWrong": {
+      "NAT": "Il NAT non è uno schema di indirizzamento ma una tecnica di traduzione degli indirizzi, nata proprio per far fronte alla scarsità di indirizzi IPv4.",
+      "ARP": "ARP è un protocollo di risoluzione tra indirizzi logici e fisici, non definisce alcuno spazio di indirizzamento.",
+      "IPv4": "IPv4 utilizza indirizzi a 32 bit, per un totale di circa 4,3 miliardi di indirizzi."
+    },
+    "conceptToReview": "Dimensione degli indirizzi in IPv4 e IPv6.",
+    "miniSummary": "IPv4 = 32 bit in decimale puntato; IPv6 = 128 bit in esadecimale con due punti.",
+    "memoryTrick": "128 è quattro volte 32: IPv6 quadruplica la lunghezza dell'indirizzo.",
+    "similarExamQuestion": "Come vengono rappresentati tipicamente gli indirizzi IPv6?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 59,
+    "id": "hist-059",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Uno schema di rete mostra un router centrale con tre interfacce: alla prima sono collegati gli host 223.1.1.1, 223.1.1.2 e 223.1.1.3 con l'interfaccia 223.1.1.4; alla seconda gli host 223.1.2.1 e 223.1.2.2 con l'interfaccia 223.1.2.9; alla terza gli host 223.1.3.1 e 223.1.3.2 con l'interfaccia 223.1.3.27. Quante sono le sottoreti presenti?",
+    "options": ["1", "3", "6", "2"],
+    "correctAnswer": "3",
+    "explanation": "Una sottorete è costituita da un gruppo di host e dall'interfaccia del router che li connette, in grado di comunicare direttamente tra loro senza attraversare un router. Qui si riconoscono tre gruppi distinti, identificati dai prefissi 223.1.1.x, 223.1.2.x e 223.1.3.x. La regola pratica è contare quante interfacce del router sono connesse a segmenti di rete distinti: in questo caso tre.",
+    "whyOthersAreWrong": {
+      "1": "Gli host appartengono a prefissi di rete diversi e non possono quindi far parte di un'unica sottorete.",
+      "6": "Conterebbe separatamente elementi che appartengono allo stesso segmento: le sottoreti sono i gruppi, non i singoli dispositivi.",
+      "2": "Ignora uno dei tre segmenti collegati alle interfacce del router."
+    },
+    "conceptToReview": "Identificazione delle sottoreti in uno schema di rete.",
+    "miniSummary": "Ogni interfaccia del router connessa a un segmento distinto individua una sottorete.",
+    "memoryTrick": "Conta le isole attaccate al router, non i computer dentro le isole.",
+    "similarExamQuestion": "Come si riconosce che due host appartengono alla stessa sottorete?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 60,
+    "id": "hist-060",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "difficile",
+    "question": "Nel caso dello slotted ALOHA, indicare quale affermazione è falsa.",
+    "options": [
+      "In caso di collisione, il nodo ritrasmette il file con probabilità p",
+      "Qualora ci sia collisione, tutti i nodi la rilevano prima del termine dello slot",
+      "I nodi cominciano la trasmissione solo all'inizio di ogni slot",
+      "Ogni frame può avere dimensioni differente"
+    ],
+    "correctAnswer": "Ogni frame può avere dimensioni differente",
+    "explanation": "Nello slotted ALOHA il tempo è suddiviso in intervalli discreti chiamati slot e la durata di ogni slot è calcolata esattamente per contenere il tempo di trasmissione di un singolo pacchetto. Affinché il meccanismo funzioni e la sincronizzazione sia mantenuta è fondamentale che tutti i frame abbiano la stessa dimensione fissa, quindi affermare che possano avere dimensioni differenti è falso.",
+    "whyOthersAreWrong": {
+      "In caso di collisione, il nodo ritrasmette il file con probabilità p": "È vera: è la strategia di ritrasmissione standard prevista dal protocollo per risolvere le collisioni.",
+      "Qualora ci sia collisione, tutti i nodi la rilevano prima del termine dello slot": "È vera: la durata dello slot include il tempo di propagazione, così il feedback è noto entro la fine dello slot.",
+      "I nodi cominciano la trasmissione solo all'inizio di ogni slot": "È vera: è proprio la caratteristica che distingue lo slotted ALOHA dal Pure ALOHA."
+    },
+    "conceptToReview": "Vincoli di sincronizzazione e dimensione dei frame nello slotted ALOHA.",
+    "miniSummary": "Slot di durata pari alla trasmissione di un frame, quindi frame tutti della stessa dimensione.",
+    "memoryTrick": "Se lo slot è tagliato su misura del pacchetto, i pacchetti devono avere tutti la stessa misura.",
+    "similarExamQuestion": "Qual è l'efficienza massima teorica dello slotted ALOHA?",
+    "figureRewritten": false
+  }
+]
