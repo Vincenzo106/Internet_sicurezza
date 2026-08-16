@@ -1,0 +1,367 @@
+[
+  {
+    "originalNumber": 167,
+    "id": "hist-167",
+    "category": "Internet",
+    "topic": "MAC address",
+    "difficulty": "facile",
+    "question": "Indicare quale delle seguenti descrizioni è corretta per un indirizzo MAC.",
+    "options": [
+      "Permette di identificare univocamente il processo all'interno di un nodo",
+      "È l'indirizzo fisico (hardware) assegnato ad una scheda ethernet dal produttore",
+      "È diviso in due parti: rete e nodo",
+      "La lunghezza è pari a 128 bit"
+    ],
+    "correctAnswer": "È l'indirizzo fisico (hardware) assegnato ad una scheda ethernet dal produttore",
+    "explanation": "L'indirizzo MAC è composto da 48 bit, cioè 6 byte, rappresentati in esadecimale. I primi 24 bit costituiscono l'OUI, che identifica il produttore della scheda, mentre gli ultimi 24 bit sono assegnati univocamente dal produttore alla singola scheda di rete.",
+    "whyOthersAreWrong": {
+      "Permette di identificare univocamente il processo all'interno di un nodo": "L'identificazione del processo è compito delle porte, al livello di trasporto.",
+      "È diviso in due parti: rete e nodo": "La divisione tra parte di rete e parte host è propria dell'indirizzo IP: il MAC si divide invece in OUI e identificativo della scheda.",
+      "La lunghezza è pari a 128 bit": "128 bit è la lunghezza di un indirizzo IPv6: il MAC è lungo 48 bit."
+    },
+    "conceptToReview": "Struttura e natura dell'indirizzo MAC.",
+    "miniSummary": "48 bit divisi in OUI del produttore e identificativo della singola scheda.",
+    "memoryTrick": "Il MAC è fisico e assegnato in fabbrica; l'IP è logico e assegnato dalla rete.",
+    "similarExamQuestion": "Come viene identificato univocamente un dispositivo ethernet a livello data link?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 168,
+    "id": "hist-168",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "facile",
+    "question": "Quale protocollo di trasporto fornisce un trasferimento best-effort senza garanzia di consegna?",
+    "options": ["nessuno di quelli indicati", "TCP", "UDP", "http"],
+    "correctAnswer": "UDP",
+    "explanation": "UDP spedisce i dati senza stabilire prima alcuna connessione e non utilizza riscontri, quindi il mittente non sa se il destinatario ha ricevuto il messaggio. Eliminando l'overhead dei controlli di errore e di flusso risulta molto più veloce ed efficiente per applicazioni che tollerano qualche perdita, come lo streaming video o il DNS, ma non garantisce l'integrità del trasferimento.",
+    "whyOthersAreWrong": {
+      "nessuno di quelli indicati": "Uno dei protocolli elencati offre effettivamente un servizio best effort, quindi l'alternativa non è valida.",
+      "TCP": "TCP è affidabile e orientato alla connessione: garantisce consegna, ordine e integrità dei dati.",
+      "http": "HTTP è un protocollo di livello applicativo, non di trasporto."
+    },
+    "conceptToReview": "Caratteristiche del servizio best effort di UDP.",
+    "miniSummary": "Nessuna connessione, nessun ACK, nessuna garanzia: è UDP.",
+    "memoryTrick": "Best effort significa ci provo: nessuna promessa di riuscita.",
+    "similarExamQuestion": "Perché UDP viene definito connectionless?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 169,
+    "id": "hist-169",
+    "category": "Internet",
+    "topic": "Introduzione a Internet",
+    "difficulty": "media",
+    "question": "Supponendo che il ritardo introdotto dal router sia nullo, che L sia la dimensione di tutti i pacchetti trasmessi in bit e R la velocità del canale in bps, e che la trasmissione sia di tipo store-and-forward, calcolare il ritardo end-to-end fra i due sistemi periferici per trasmettere 1 pacchetto su un percorso di N collegamenti (N − 1 router).",
+    "options": ["3NL/R", "2NL/R", "NL/R", "L/R"],
+    "correctAnswer": "NL/R",
+    "explanation": "Il tempo necessario per mettere un intero pacchetto di lunghezza L su un collegamento con velocità R è L/R. Con la strategia store-and-forward il router deve ricevere tutto il pacchetto prima di poter iniziare a ritrasmetterlo sul collegamento successivo, quindi le trasmissioni sono rigorosamente sequenziali. Poiché i collegamenti sono N, il pacchetto viene trasmesso per intero N volte, per un totale di N per L/R.",
+    "whyOthersAreWrong": {
+      "3NL/R": "Il fattore 3 non ha alcuna giustificazione: ogni collegamento contribuisce esattamente con un L/R.",
+      "2NL/R": "Raddoppierebbe il contributo di ogni collegamento, mentre ciascuno richiede una sola trasmissione completa.",
+      "L/R": "Considera un solo collegamento e ignora che il pacchetto deve attraversarne N in sequenza."
+    },
+    "conceptToReview": "Ritardo end-to-end con store-and-forward su più collegamenti.",
+    "miniSummary": "Ogni collegamento costa L/R e i costi si sommano: totale N per L/R.",
+    "memoryTrick": "Conta i collegamenti, non i router: N link significano N trasmissioni complete.",
+    "similarExamQuestion": "Qual è il ritardo totale con velocità diverse R1 e R2 su due collegamenti?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 170,
+    "id": "hist-170",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Indicare quale dei seguenti attributi non è previsto nel protocollo BGP.",
+    "options": ["AS-PATH", "Nessuno di quelli indicati", "AS-NEXT", "NEXT-HOP"],
+    "correctAnswer": "AS-NEXT",
+    "explanation": "L'attributo AS-NEXT non esiste: è un nome costruito per confondere, simile a termini reali. AS-PATH è l'attributo che elenca la sequenza di sistemi autonomi attraversati per raggiungere la destinazione ed è fondamentale per evitare i loop; NEXT-HOP indica l'indirizzo IP del prossimo router a cui inviare il pacchetto. Esistono inoltre attributi reali come Local Preference, MED e Origin.",
+    "whyOthersAreWrong": {
+      "AS-PATH": "È un attributo reale e obbligatorio, che elenca i sistemi autonomi attraversati dall'annuncio.",
+      "Nessuno di quelli indicati": "Uno degli attributi elencati non esiste realmente, quindi l'alternativa non è valida.",
+      "NEXT-HOP": "È un attributo reale e obbligatorio, che indica il prossimo salto verso la destinazione."
+    },
+    "conceptToReview": "Attributi realmente definiti nel protocollo BGP.",
+    "miniSummary": "AS-PATH e NEXT-HOP esistono e sono obbligatori; AS-NEXT è inventato.",
+    "memoryTrick": "Il percorso è AS-PATH e il salto è NEXT-HOP: non esiste una fusione dei due.",
+    "similarExamQuestion": "Quale insieme di attributi è obbligatorio in eBGP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 171,
+    "id": "hist-171",
+    "category": "Internet",
+    "topic": "switch",
+    "difficulty": "facile",
+    "question": "Per aggiornare la propria tabella, uno switch?",
+    "options": [
+      "Agisce in autonomia ed in modo automatico sulla base dei frame ricevuti",
+      "Chiede esplicitamente agli host di comunicare il proprio indirizzo MAC",
+      "Utilizza il protocollo DHCP",
+      "Utilizza il protocollo ARP"
+    ],
+    "correctAnswer": "Agisce in autonomia ed in modo automatico sulla base dei frame ricevuti",
+    "explanation": "Quando un frame arriva su una porta, lo switch esamina l'indirizzo MAC sorgente contenuto nell'intestazione Ethernet e deduce che l'host proprietario di quel MAC si trova collegato a quella porta, aggiornando di conseguenza la propria tabella di commutazione. Il processo è completamente automatico e non richiede alcuna interrogazione esplicita.",
+    "whyOthersAreWrong": {
+      "Chiede esplicitamente agli host di comunicare il proprio indirizzo MAC": "Lo switch non interroga nessuno: si limita a osservare passivamente i frame che transitano.",
+      "Utilizza il protocollo DHCP": "DHCP assegna configurazioni IP agli host e non ha alcun ruolo nella costruzione della tabella di commutazione.",
+      "Utilizza il protocollo ARP": "ARP serve agli host per trovare un MAC dato un IP: lo switch non ne ha bisogno perché legge direttamente i MAC dai frame."
+    },
+    "conceptToReview": "Apprendimento automatico della tabella di commutazione.",
+    "miniSummary": "Lo switch impara osservando il MAC sorgente e la porta di ingresso dei frame.",
+    "memoryTrick": "Non chiede, ascolta: impara da chi parla.",
+    "similarExamQuestion": "Come funziona l'auto-apprendimento degli switch Ethernet?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 173,
+    "id": "hist-173",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "media",
+    "question": "Oltre alla traduzione degli hostname in indirizzi IP, il DNS mette a disposizione altri servizi. Indicare quale tra i seguenti NON è un servizio offerto dal DNS.",
+    "options": [
+      "Load distribution",
+      "Mail server caching",
+      "Virtual Private Network Management",
+      "Host aliasing"
+    ],
+    "correctAnswer": "Virtual Private Network Management",
+    "explanation": "I servizi aggiuntivi standard del DNS sono l'host aliasing, che permette di avere alias per nomi canonici più complessi tramite i record CNAME; il mail server aliasing, che indirizza la posta verso il server corretto tramite i record MX; e la load distribution, che associa più indirizzi IP a un singolo nome ruotandone l'ordine per distribuire il carico. La gestione di una VPN è invece una tecnologia di tunneling e cifratura gestita da gateway e protocolli dedicati come IPsec, del tutto estranea al DNS.",
+    "whyOthersAreWrong": {
+      "Load distribution": "È un servizio reale del DNS: più indirizzi IP associati a un nome vengono restituiti in ordine variabile per bilanciare il carico.",
+      "Mail server caching": "Fa riferimento alla gestione dei server di posta tramite record MX, che è effettivamente un servizio del DNS.",
+      "Host aliasing": "È un servizio reale del DNS, realizzato tramite i record CNAME."
+    },
+    "conceptToReview": "Servizi aggiuntivi offerti dal DNS oltre alla risoluzione dei nomi.",
+    "miniSummary": "Alias di host, alias di mail server e distribuzione del carico; la VPN non c'entra.",
+    "memoryTrick": "Il DNS traduce e smista nomi: se il servizio riguarda cifratura o tunnel, non è suo.",
+    "similarExamQuestion": "Quale resource record permette di realizzare l'host aliasing?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 174,
+    "id": "hist-174",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "media",
+    "question": "Cosa è possibile usare per risolvere il problema del terminale nascosto?",
+    "options": [
+      "Ridurre la potenza del segnale",
+      "Forzare l'uso di RTS/CTS",
+      "Non è possibile risolvere il problema",
+      "Cambiare i canali di trasmissione degli access point"
+    ],
+    "correctAnswer": "Forzare l'uso di RTS/CTS",
+    "explanation": "Il problema nasce quando due nodi non si sentono a vicenda pur vedendo entrambi lo stesso access point: se trasmettono insieme i segnali collidono. Forzando l'handshake RTS/CTS, quando un nodo vuole trasmettere invia un RTS e l'access point risponde con un CTS; poiché anche il nodo nascosto è nel raggio dell'access point, sente il CTS e capisce di dover restare in silenzio, evitando la collisione.",
+    "whyOthersAreWrong": {
+      "Ridurre la potenza del segnale": "Ridurre la potenza aggraverebbe il problema, rendendo ancora meno probabile che i due nodi si sentano a vicenda.",
+      "Non è possibile risolvere il problema": "Il problema ha una soluzione standard prevista proprio dal protocollo 802.11.",
+      "Cambiare i canali di trasmissione degli access point": "Il cambio di canale mitiga le interferenze tra reti diverse, ma non risolve la mancata visibilità tra nodi della stessa rete."
+    },
+    "conceptToReview": "Terminale nascosto e ruolo della prenotazione del canale.",
+    "miniSummary": "Il CTS dell'access point raggiunge anche chi non sente il mittente, silenziandolo.",
+    "memoryTrick": "Se due non si sentono tra loro, deve parlare qualcuno che sentono entrambi.",
+    "similarExamQuestion": "Qual è il nome del meccanismo previsto da 802.11 per i terminali nascosti?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 175,
+    "id": "hist-175",
+    "category": "Internet",
+    "topic": "porte e socket",
+    "difficulty": "media",
+    "question": "Quali informazioni usa un processo in esecuzione su un host per identificare un processo in un altro host?",
+    "options": [
+      "Porta destinazione, porta sorgente",
+      "Indirizzo sorgente, porta sorgente",
+      "Indirizzo destinazione, porta destinazione, indirizzo sorgente, porta sorgente",
+      "Indirizzo destinazione, porta destinazione"
+    ],
+    "correctAnswer": "Indirizzo destinazione, porta destinazione",
+    "explanation": "L'indirizzo IP è come l'indirizzo civico di un palazzo e identifica la macchina, mentre la porta è come il numero dell'interno e identifica il processo che vi è in esecuzione. Per indicare a quale processo remoto ci si vuole rivolgere bastano quindi indirizzo e porta di destinazione. La quadrupla completa identifica invece univocamente una connessione TCP già stabilita, che è un concetto diverso.",
+    "whyOthersAreWrong": {
+      "Porta destinazione, porta sorgente": "Senza l'indirizzo IP non si saprebbe nemmeno su quale host si trova il processo da raggiungere.",
+      "Indirizzo sorgente, porta sorgente": "Questi identificano il processo mittente, non quello destinatario che si vuole contattare.",
+      "Indirizzo destinazione, porta destinazione, indirizzo sorgente, porta sorgente": "La quadrupla identifica una connessione TCP stabilita, mentre per individuare il processo remoto bastano i due parametri di destinazione."
+    },
+    "conceptToReview": "Identificazione di un processo remoto contro identificazione di una connessione.",
+    "miniSummary": "Per raggiungere un processo servono IP e porta di destinazione.",
+    "memoryTrick": "Palazzo più interno: l'IP dice dove, la porta dice chi.",
+    "similarExamQuestion": "Come viene identificata univocamente una socket TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 176,
+    "id": "hist-176",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "facile",
+    "question": "Quale delle seguenti associazioni livello e nome del pacchetto è scorretta?",
+    "options": [
+      "Frame – datalink",
+      "Datagram – livello di rete",
+      "Segmento – livello di rete",
+      "Segmento – livello di trasporto"
+    ],
+    "correctAnswer": "Segmento – livello di rete",
+    "explanation": "La nomenclatura standard delle PDU associa il messaggio o i dati al livello applicazione, il segmento al livello di trasporto per TCP, il datagramma o pacchetto al livello di rete, il frame al livello data link e il bit al livello fisico. Associare il segmento al livello di rete è quindi scorretto, perché il segmento appartiene al livello di trasporto.",
+    "whyOthersAreWrong": {
+      "Frame – datalink": "È corretta: la PDU del livello di collegamento si chiama frame o trama.",
+      "Datagram – livello di rete": "È corretta: la PDU del livello di rete si chiama datagramma o pacchetto.",
+      "Segmento – livello di trasporto": "È corretta: la PDU del livello di trasporto in TCP si chiama segmento."
+    },
+    "conceptToReview": "Nomenclatura delle PDU per ciascun livello dello stack.",
+    "miniSummary": "Bit, frame, datagramma, segmento e messaggio, dal livello 1 al livello applicativo.",
+    "memoryTrick": "Il segmento è sempre di livello 4: se lo vedi accostato alla rete, è sbagliato.",
+    "similarExamQuestion": "Quale corrispondenza tra protocollo e PDU è scorretta?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 177,
+    "id": "hist-177",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "difficile",
+    "question": "L'algoritmo di routing distance vector è?",
+    "options": ["Statico", "autodeterminante", "Centralizzato", "Utilizzato da OSPF"],
+    "correctAnswer": "autodeterminante",
+    "explanation": "Gli algoritmi Distance Vector sono iterativi, asincroni e distribuiti: ogni router riceve informazioni dai vicini, ricalcola la propria tabella e la ridistribuisce, determinando la rotta autonomamente senza alcun controllore centrale. È in questo senso che si può definire autodeterminante.",
+    "whyOthersAreWrong": {
+      "Statico": "Il distance vector è dinamico e si adatta automaticamente ai cambiamenti della topologia della rete.",
+      "Centralizzato": "L'aggettivo centralizzato descrive piuttosto gli algoritmi link state, che lavorano su una visione globale della rete.",
+      "Utilizzato da OSPF": "OSPF utilizza l'algoritmo link state con Dijkstra, non il distance vector."
+    },
+    "conceptToReview": "Natura distribuita e asincrona degli algoritmi distance vector.",
+    "miniSummary": "Ogni nodo decide da sé, in modo iterativo e senza coordinamento centrale.",
+    "memoryTrick": "Nessuno comanda dall'alto: ogni router si arrangia con quello che sanno i vicini.",
+    "similarExamQuestion": "Quale affermazione non è vera per l'algoritmo di routing distance vector?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 178,
+    "id": "hist-178",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Quale delle seguenti affermazioni è vera per il protocollo ICMP?",
+    "options": [
+      "ICMP sta per Internet Control Mail Protocol",
+      "ICMP non serve per inviare messaggi di eventuali errori di trasmissione",
+      "ICMP usa TCP",
+      "ICMP fornisce all'host l'informazione su eventuali problemi della rete"
+    ],
+    "correctAnswer": "ICMP fornisce all'host l'informazione su eventuali problemi della rete",
+    "explanation": "ICMP è il protocollo di servizio del livello IP: se un router non può inoltrare un pacchetto, usa ICMP per avvisare il mittente del problema, ad esempio con un messaggio Destination Unreachable. È lo strumento con cui la rete comunica agli host le proprie anomalie.",
+    "whyOthersAreWrong": {
+      "ICMP sta per Internet Control Mail Protocol": "L'acronimo corretto è Internet Control Message Protocol: non ha alcun rapporto con la posta elettronica.",
+      "ICMP non serve per inviare messaggi di eventuali errori di trasmissione": "È esattamente l'opposto della sua funzione principale, che è proprio segnalare errori.",
+      "ICMP usa TCP": "ICMP non usa né TCP né UDP: viaggia direttamente incapsulato nel pacchetto IP, con numero di protocollo 1."
+    },
+    "conceptToReview": "Funzione e incapsulamento del protocollo ICMP.",
+    "miniSummary": "ICMP segnala problemi di rete e viaggia dentro IP, non sopra TCP o UDP.",
+    "memoryTrick": "La M sta per Message, non per Mail.",
+    "similarExamQuestion": "A quale livello appartiene il protocollo ICMP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 179,
+    "id": "hist-179",
+    "category": "Internet",
+    "topic": "porte e socket",
+    "difficulty": "media",
+    "question": "Quale parte dell'intestazione del pacchetto TCP permette di identificare univocamente l'applicazione del livello superiore (processo)?",
+    "options": [
+      "Porta sorgente",
+      "Porta sorgente e porta destinazione",
+      "Porta di destinazione",
+      "Il campo Protocol Number"
+    ],
+    "correctAnswer": "Porta sorgente e porta destinazione",
+    "explanation": "Le porte a 16 bit sono l'indirizzo del livello di trasporto. La porta di destinazione dice al ricevente a quale servizio consegnare i dati, ad esempio la 80 per un server web, mentre la porta sorgente indica a quale processo inviare la risposta. A differenza di UDP, in TCP il sistema operativo usa entrambe le porte, insieme agli indirizzi IP, per dirigere il segmento alla socket corretta.",
+    "whyOthersAreWrong": {
+      "Porta sorgente": "Da sola indica solo il mittente e non basta a individuare il servizio destinatario.",
+      "Porta di destinazione": "Da sola basterebbe in UDP, ma in TCP il demultiplexing richiede anche la porta sorgente per distinguere connessioni diverse.",
+      "Il campo Protocol Number": "Il Protocol Number si trova nell'header IP, non in quello TCP, e serve a distinguere TCP da UDP."
+    },
+    "conceptToReview": "Demultiplexing in TCP e ruolo delle due porte.",
+    "miniSummary": "In TCP servono entrambe le porte, in UDP basta quella di destinazione.",
+    "memoryTrick": "Il server deve poter rispondere: senza porta sorgente non saprebbe a chi.",
+    "similarExamQuestion": "Quali quattro parametri identificano univocamente una socket TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 180,
+    "id": "hist-180",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "facile",
+    "question": "Indicare la modalità di invio di una ARP request.",
+    "options": ["Anycast", "Broadcast", "Unicast", "Multicast"],
+    "correctAnswer": "Broadcast",
+    "explanation": "Il mittente chiede chi possiede un determinato indirizzo IP e il messaggio viene incapsulato in un frame Ethernet con indirizzo MAC di destinazione FF:FF:FF:FF:FF:FF. In questo modo gli switch inoltrano il frame su tutte le porte e tutti gli host lo ricevono ed elaborano. L'ARP reply è invece unicast, perché l'host che risponde conosce già il MAC del richiedente.",
+    "whyOthersAreWrong": {
+      "Anycast": "L'anycast consegna a uno qualsiasi di un gruppo di destinatari e non è previsto per la risoluzione ARP.",
+      "Unicast": "L'unicast è la modalità della ARP reply, non della request: il mittente non conosce ancora il destinatario.",
+      "Multicast": "Il multicast consegna a un gruppo specifico, mentre la richiesta ARP deve raggiungere tutti gli host del segmento."
+    },
+    "conceptToReview": "Modalità di invio di request e reply nel protocollo ARP.",
+    "miniSummary": "Request in broadcast a tutti, reply in unicast al solo richiedente.",
+    "memoryTrick": "Non sai chi cerchi, quindi lo chiedi a tutti; chi risponde invece sa già a chi parlare.",
+    "similarExamQuestion": "Qual è l'indirizzo di destinazione usato nel frame di una ARP request?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 181,
+    "id": "hist-181",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "facile",
+    "question": "Indicare l'ordine corretto dei flag relativo al Three-way Handshake.",
+    "options": [
+      "SYN → ACK → FIN",
+      "SYN → ACK → SYN → ACK",
+      "SYN → SYN/ACK → ACK",
+      "FIN → FIN/ACK → ACK"
+    ],
+    "correctAnswer": "SYN → SYN/ACK → ACK",
+    "explanation": "La connessione avviene in tre passi. Il client invia un segmento con il flag SYN per chiedere l'apertura e proporre il proprio numero di sequenza iniziale. Il server risponde con un segmento che ha attivi entrambi i flag SYN e ACK, per sincronizzarsi a sua volta e confermare la ricezione. Infine il client invia un ACK per confermare il SYN del server: da quel momento la connessione è stabilita.",
+    "whyOthersAreWrong": {
+      "SYN → ACK → FIN": "Il flag FIN appartiene alla procedura di chiusura, non a quella di apertura della connessione.",
+      "SYN → ACK → SYN → ACK": "Descrive quattro passi separati, mentre nel three-way handshake il server unisce SYN e ACK in un unico segmento.",
+      "FIN → FIN/ACK → ACK": "Questa è la procedura di chiusura basata sul flag FIN, non l'apertura della connessione."
+    },
+    "conceptToReview": "Sequenza di flag nell'apertura di una connessione TCP.",
+    "miniSummary": "SYN, poi SYN/ACK, poi ACK: tre segmenti e la connessione è stabilita.",
+    "memoryTrick": "Si chiama three-way proprio perché i passi sono tre, non quattro.",
+    "similarExamQuestion": "Quale flag TCP è richiesto in condizioni normali per chiudere una connessione?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 182,
+    "id": "hist-182",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Nello studio dei protocolli che permettono di implementare una trasmissione affidabile (nel testo rdt) perché viene inserito il timer?",
+    "options": [
+      "Per gestire la perdita di un segmento",
+      "Per gestire i segmenti duplicati",
+      "Per gestire l'efficienza di trasmissione",
+      "Per gestire gli errori di trasmissione rilevabili con l'Internet checksum"
+    ],
+    "correctAnswer": "Per gestire la perdita di un segmento",
+    "explanation": "Meccanismi come checksum, ACK e numeri di sequenza gestiscono bene errori di bit e duplicati, ma non possono fare nulla se il pacchetto non arriva affatto. Il timer è l'unico meccanismo che permette al mittente di concludere che è passato troppo tempo senza ricevere l'ACK, quindi il pacchetto si è probabilmente perso, e di rinviarlo.",
+    "whyOthersAreWrong": {
+      "Per gestire i segmenti duplicati": "I duplicati sono gestiti dai numeri di sequenza, che permettono al ricevitore di riconoscere e scartare le copie.",
+      "Per gestire l'efficienza di trasmissione": "L'efficienza si ottiene con il pipelining e le finestre scorrevoli, non con il timer, che anzi introduce attesa.",
+      "Per gestire gli errori di trasmissione rilevabili con l'Internet checksum": "Gli errori sui bit sono già rilevati dal checksum: il timer serve per un problema diverso, l'assenza totale del pacchetto."
+    },
+    "conceptToReview": "Ruolo del timer nella gestione della perdita di pacchetti.",
+    "miniSummary": "Checksum per gli errori, sequenze per i duplicati, timer per le perdite.",
+    "memoryTrick": "Se il pacchetto non arriva non c'è niente da controllare: serve qualcuno che conti il tempo.",
+    "similarExamQuestion": "Quale evento provoca la ritrasmissione nella macchina a stati di RDT 3.0 lato sender?",
+    "figureRewritten": false
+  }
+]

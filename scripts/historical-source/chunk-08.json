@@ -1,0 +1,289 @@
+[
+  {
+    "originalNumber": 107,
+    "id": "hist-107",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Qualora un router (o un host destinazione) riceva un pacchetto IP che incapsula un segmento TCP la cui intestazione ha come destinatario una porta TCP inesistente, cosa avviene?",
+    "options": [
+      "Lo scarta ed invia un pacchetto ICMP alla destinazione",
+      "Lo scarta ed invia un pacchetto ICMP alla sorgente",
+      "Lo passa ad un processo applicativo di default che gestisce tutti i pacchetti TCP",
+      "Ignora il valore della porta TCP ed inoltra il pacchetto"
+    ],
+    "correctAnswer": "Lo scarta ed invia un pacchetto ICMP alla sorgente",
+    "explanation": "Quando il livello di trasporto rileva che la porta di destinazione non è attiva, il pacchetto viene scartato perché non può essere consegnato a nessuna applicazione. Per notificare l'accaduto viene inviato un pacchetto ICMP di tipo 3, Destination Unreachable, con codice 3, Port Unreachable. Il messaggio deve necessariamente essere inviato alla sorgente, cioè al mittente originale, affinché possa gestire l'errore.",
+    "whyOthersAreWrong": {
+      "Lo scarta ed invia un pacchetto ICMP alla destinazione": "La destinazione è proprio il nodo che ha rilevato il problema: avvisare se stesso non avrebbe alcun senso.",
+      "Lo passa ad un processo applicativo di default che gestisce tutti i pacchetti TCP": "Non esiste alcun processo di default che raccolga il traffico destinato a porte chiuse.",
+      "Ignora il valore della porta TCP ed inoltra il pacchetto": "La porta è l'informazione che identifica il processo destinatario: ignorarla renderebbe impossibile la consegna."
+    },
+    "conceptToReview": "Gestione degli errori di consegna e messaggi ICMP Destination Unreachable.",
+    "miniSummary": "Porta chiusa significa scarto del pacchetto e notifica ICMP al mittente.",
+    "memoryTrick": "Le notifiche di errore tornano sempre indietro verso chi ha inviato.",
+    "similarExamQuestion": "Quale flag TCP viene spesso usato in aggiunta per rifiutare una connessione verso una porta chiusa?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 108,
+    "id": "hist-108",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quale campo dell'intestazione IP corrisponde a questa descrizione: \"è un campo di quattro bit che dice la lunghezza dell'intestazione IP in parole da 32 bit\"?",
+    "options": ["Total length", "Type Of Service", "Header length", "Identifier"],
+    "correctAnswer": "Header length",
+    "explanation": "Il valore contenuto in questi 4 bit non indica il numero di byte ma il numero di parole da 32 bit, cioè da 4 byte. Poiché l'intestazione IP standard senza opzioni è lunga 20 byte, il valore minimo del campo è 5, dato che 5 per 4 fa 20. Essendo un campo di 4 bit il valore massimo è 15, il che significa che l'intestazione può arrivare al massimo a 60 byte.",
+    "whyOthersAreWrong": {
+      "Total length": "Il campo Total Length è di 16 bit e indica la lunghezza complessiva dell'intero datagramma, intestazione più dati.",
+      "Type Of Service": "Il campo TOS indica il trattamento desiderato per il pacchetto in termini di priorità e qualità del servizio.",
+      "Identifier": "Il campo Identifier è un identificativo a 16 bit usato per riassemblare i frammenti di uno stesso datagramma."
+    },
+    "conceptToReview": "Campi dell'intestazione IPv4 e unità di misura dell'header length.",
+    "miniSummary": "Header length conta parole da 32 bit: minimo 5 (20 byte), massimo 15 (60 byte).",
+    "memoryTrick": "Se il campo è di soli 4 bit non può contare byte: conta blocchi da 4 byte.",
+    "similarExamQuestion": "Qual è la dimensione massima che può raggiungere l'intestazione di un datagramma IPv4?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 109,
+    "id": "hist-109",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "In IPv4, qualora i pacchetti siano frammentati, dove vengono riassemblati?",
+    "options": [
+      "Router",
+      "Host di destinazione",
+      "Switch",
+      "In base alle caratteristiche sia nei router che nell'host di destinazione"
+    ],
+    "correctAnswer": "Host di destinazione",
+    "explanation": "I router devono essere il più veloci possibile nell'inoltro, e attendere tutti i frammenti per riassemblarli richiederebbe memoria e cicli di calcolo eccessivi. Inoltre, poiché i pacchetti IP possono seguire percorsi diversi, non è garantito che tutti i frammenti passino per lo stesso router intermedio. L'host di destinazione utilizza i campi Identification, Flags e Fragment Offset per rimettere insieme i dati nell'ordine corretto.",
+    "whyOthersAreWrong": {
+      "Router": "Il router può frammentare in IPv4, ma non riassembla: dovrebbe attendere e memorizzare tutti i frammenti, rallentando l'inoltro.",
+      "Switch": "Lo switch opera a livello 2 e non interpreta nemmeno l'intestazione IP, quindi non può occuparsi di frammentazione.",
+      "In base alle caratteristiche sia nei router che nell'host di destinazione": "Il riassemblaggio avviene esclusivamente nell'host finale, mai nei nodi intermedi."
+    },
+    "conceptToReview": "Frammentazione e riassemblaggio dei datagrammi IPv4.",
+    "miniSummary": "Frammentare può farlo anche un router; riassemblare solo la destinazione finale.",
+    "memoryTrick": "Il riassemblaggio richiede di aspettare tutti i pezzi: un router non può permetterselo.",
+    "similarExamQuestion": "Come cambia la gestione della frammentazione in IPv6 rispetto a IPv4?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 110,
+    "id": "hist-110",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "facile",
+    "question": "Qual è lo standard di riferimento per le comunicazioni wireless?",
+    "options": ["802.1", "802.24", "802.3", "802.11"],
+    "correctAnswer": "802.11",
+    "explanation": "Lo standard 802.11 è il set di protocolli che gestisce l'accesso al mezzo tramite onde radio, utilizzando il metodo CSMA/CA per evitare le collisioni. Nel tempo si è evoluto in diverse varianti, come a, b, g, n, ac e ax, che hanno progressivamente aumentato la velocità di trasmissione e l'efficienza nell'uso dello spettro.",
+    "whyOthersAreWrong": {
+      "802.1": "Il gruppo 802.1 si occupa della gestione delle reti, del bridging e di protocolli come lo Spanning Tree.",
+      "802.24": "Non è lo standard di riferimento per le reti locali wireless.",
+      "802.3": "802.3 è lo standard Ethernet per le reti locali cablate e utilizza CSMA/CD."
+    },
+    "conceptToReview": "Numerazione degli standard IEEE 802 e relativi ambiti.",
+    "miniSummary": "802.3 è il cavo, 802.11 è il wireless, 802.1 è la gestione della rete.",
+    "memoryTrick": "Undici come le onde: 802.11 è il Wi-Fi.",
+    "similarExamQuestion": "Quale metodo di accesso al mezzo adotta lo standard 802.11?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 111,
+    "id": "hist-111",
+    "category": "Internet",
+    "topic": "Introduzione a Internet",
+    "difficulty": "facile",
+    "question": "Quale fra i seguenti servizi è sensibile al tempo (esempio ritardo costante)?",
+    "options": [
+      "Posta elettronica",
+      "Trasferimento dati",
+      "Video conferenza",
+      "E-commerce"
+    ],
+    "correctAnswer": "Video conferenza",
+    "explanation": "I servizi real-time come la videoconferenza richiedono una consegna dei pacchetti tempestiva e con ritardo costante: un ritardo eccessivo o variabile impedisce la comunicazione interattiva e causa artefatti nel video o interruzioni nell'audio. Per questo utilizzano spesso UDP, evitando i ritardi dovuti alle ritrasmissioni di TCP. Gli altri servizi sono invece elastici e tollerano ritardi anche significativi.",
+    "whyOthersAreWrong": {
+      "Posta elettronica": "L'email tollera ritardi di secondi o minuti senza alcun degrado del servizio: conta l'affidabilità, non la tempestività.",
+      "Trasferimento dati": "Un trasferimento file privilegia l'integrità totale dei dati rispetto alla velocità di consegna istantanea.",
+      "E-commerce": "Le transazioni web tollerano ritardi variabili e richiedono soprattutto affidabilità e correttezza dei dati."
+    },
+    "conceptToReview": "Distinzione tra applicazioni real-time ed elastiche.",
+    "miniSummary": "Le applicazioni interattive tollerano perdite ma non ritardi; le elastiche il contrario.",
+    "memoryTrick": "Se il dato scade nel tempo, il servizio è sensibile al ritardo.",
+    "similarExamQuestion": "Perché le applicazioni di streaming preferiscono UDP a TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 112,
+    "id": "hist-112",
+    "category": "Internet",
+    "topic": "porte e socket",
+    "difficulty": "facile",
+    "question": "Quali sono le dimensioni del campo che contiene la porta socket nel segmento TCP?",
+    "options": ["4 bit", "8 bit", "32 bit", "16 bit"],
+    "correctAnswer": "16 bit",
+    "explanation": "L'header TCP dedica i primi 32 bit alle porte: i primi 16 alla porta sorgente e i successivi 16 alla porta destinazione. Con 16 bit a disposizione il protocollo può indirizzare fino a 65536 porte diverse per ogni host, suddivise in well-known ports da 0 a 1023, registered ports da 1024 a 49151 e dynamic ports da 49152 a 65535.",
+    "whyOthersAreWrong": {
+      "4 bit": "Quattro bit permetterebbero appena 16 valori distinti, del tutto insufficienti a identificare i servizi di un host.",
+      "8 bit": "Otto bit darebbero solo 256 porte, molte meno delle sole well-known ports più i servizi registrati.",
+      "32 bit": "32 bit sono lo spazio complessivo occupato dalle due porte insieme, non da una sola."
+    },
+    "conceptToReview": "Dimensione del campo porta e classificazione degli intervalli.",
+    "miniSummary": "16 bit per porta, quindi 65536 valori possibili per host.",
+    "memoryTrick": "65536 è 2^16: il numero di porte ti ricorda la dimensione del campo.",
+    "similarExamQuestion": "Perché il NAT può gestire al più circa 65536 comunicazioni contemporanee per IP pubblico?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 114,
+    "id": "hist-114",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "media",
+    "question": "Indicare lo scopo del preambolo aggiunto ai frame IEEE 802.3.",
+    "options": [
+      "Permette agli switch di ritrasmettere le unità dati alla stessa velocità alla quale sono state inviate",
+      "Permette di mantenere l'intera rete sincrona",
+      "Consente la sincronizzazione del trasmettitore e del ricevitore",
+      "Nessuno dei precedenti"
+    ],
+    "correctAnswer": "Consente la sincronizzazione del trasmettitore e del ricevitore",
+    "explanation": "Nelle reti Ethernet il ricevitore deve agganciare la frequenza dei bit in arrivo, e il pattern alternato di uno e zero del preambolo fornisce le transizioni necessarie a sincronizzare i clock locali. Dopo i sette byte di preambolo, l'ottavo byte, chiamato SFD, indica che i bit immediatamente successivi appartengono all'indirizzo MAC di destinazione.",
+    "whyOthersAreWrong": {
+      "Permette agli switch di ritrasmettere le unità dati alla stessa velocità alla quale sono state inviate": "La velocità di ritrasmissione dipende dalla configurazione della porta, non dal preambolo.",
+      "Permette di mantenere l'intera rete sincrona": "Ethernet è una rete asincrona: il preambolo serve proprio perché non esiste un clock comune a tutta la rete.",
+      "Nessuno dei precedenti": "Una delle opzioni descrive correttamente lo scopo del preambolo."
+    },
+    "conceptToReview": "Funzione del preambolo e dello Start Frame Delimiter.",
+    "miniSummary": "Sette byte alternati per sincronizzare il clock, poi l'SFD che segna l'inizio del frame.",
+    "memoryTrick": "Il preambolo è il conto alla rovescia prima del via: serve a mettersi a tempo.",
+    "similarExamQuestion": "Da quanti byte è composto il preambolo di un frame Ethernet e con quale pattern?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 115,
+    "id": "hist-115",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "facile",
+    "question": "Indicare il nome del protocollo di accesso al mezzo usato nella rete Wi-Fi (802.11).",
+    "options": ["CSMA/CA", "ALOHA", "CSMA/CD", "TDMA"],
+    "correctAnswer": "CSMA/CA",
+    "explanation": "Il protocollo CSMA/CA è progettato per i mezzi wireless perché una stazione Wi-Fi non può ascoltare il canale mentre trasmette, a causa della differenza di potenza tra segnale inviato e ricevuto, e quindi non può rilevare le collisioni. Per questo ascolta prima di trasmettere e attende un tempo casuale di backoff se il canale è occupato. Inoltre, a differenza di Ethernet, ogni frame ricevuto correttamente deve essere confermato con un ACK esplicito.",
+    "whyOthersAreWrong": {
+      "ALOHA": "ALOHA è un protocollo storico ad accesso casuale puro, privo dell'ascolto preventivo del canale.",
+      "CSMA/CD": "CSMA/CD è usato nelle reti cablate Ethernet, dove è possibile interrompere la trasmissione appena si rileva una collisione sul cavo.",
+      "TDMA": "TDMA divide il canale in slot temporali assegnati, un approccio a partizionamento e non a contesa."
+    },
+    "conceptToReview": "Motivazioni del collision avoidance nelle reti radio.",
+    "miniSummary": "Nel wireless non si rilevano collisioni mentre si trasmette, quindi si cerca di evitarle.",
+    "memoryTrick": "CA come Avoidance: prevenire, perché non puoi accorgerti dello scontro.",
+    "similarExamQuestion": "Perché in Wi-Fi ogni frame ricevuto correttamente richiede un ACK esplicito?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 116,
+    "id": "hist-116",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quale delle seguenti affermazioni è scorretta relativamente alla utility traceroute?",
+    "options": [
+      "Usa TTL per determinare i router intermedi",
+      "Mostra il cammino del datagramma IP",
+      "Verifica la connettività IP fra due host",
+      "Usa i segmenti TCP incapsulati in datagrammi IP"
+    ],
+    "correctAnswer": "Usa i segmenti TCP incapsulati in datagrammi IP",
+    "explanation": "Per impostazione predefinita traceroute utilizza datagrammi UDP con porte di destinazione molto alte e poco probabili, oppure messaggi ICMP. Esistono versioni specifiche che possono usare TCP, come tcptraceroute, ma non rappresentano il funzionamento standard descritto nei testi di base.",
+    "whyOthersAreWrong": {
+      "Usa TTL per determinare i router intermedi": "È vera: traceroute invia pacchetti con TTL crescente da 1 e sfrutta i messaggi ICMP Time Exceeded per identificare ogni router.",
+      "Mostra il cammino del datagramma IP": "È vera: raccogliendo gli indirizzi dei router che rispondono, l'utility ricostruisce l'intero percorso.",
+      "Verifica la connettività IP fra due host": "È vera: la raggiungibilità della destinazione viene confermata indirettamente al termine della traccia."
+    },
+    "conceptToReview": "Funzionamento standard di traceroute e protocolli realmente impiegati.",
+    "miniSummary": "TTL crescente più ICMP Time Exceeded; il trasporto standard è UDP o ICMP.",
+    "memoryTrick": "Traceroute non apre connessioni: gli basta far scadere il TTL.",
+    "similarExamQuestion": "Quale utility diagnostica sfrutta i messaggi ICMP Echo Request e Echo Reply?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 117,
+    "id": "hist-117",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "difficile",
+    "question": "Una tabella di forwarding associa i seguenti intervalli di indirizzi alle interfacce: 11001000 00010111 00010*** ******** verso il link 0; 11001000 00010111 00011000 ******** verso il link 1; 11001000 00010111 00011*** ******** verso il link 2; qualsiasi altro indirizzo verso il link 3. Quale link viene scelto per l'indirizzo 11001000 00010111 00011000 10101010?",
+    "options": ["3", "2", "0", "1"],
+    "correctAnswer": "1",
+    "explanation": "Il router confronta l'indirizzo bit a bit con i prefissi disponibili. I primi tre ottetti dell'indirizzo sono 11001000 00010111 00011000: il prefisso del link 2 corrisponde per 21 bit, mentre quello del link 1 corrisponde per 24 bit. Poiché entrambi corrispondono, il router applica la regola del longest prefix match e sceglie la riga con il prefisso più lungo e specifico, cioè l'interfaccia 1.",
+    "whyOthersAreWrong": {
+      "3": "Il link 3 corrisponde alla voce di default, usata solo quando nessun altro prefisso corrisponde all'indirizzo.",
+      "2": "Il prefisso del link 2 corrisponde effettivamente, ma solo per 21 bit: viene battuto dal prefisso più lungo del link 1.",
+      "0": "Il prefisso del link 0 richiede 00010 nel terzo ottetto, mentre l'indirizzo presenta 00011: non c'è corrispondenza."
+    },
+    "conceptToReview": "Applicazione del longest prefix match su prefissi binari.",
+    "miniSummary": "Tra più corrispondenze vince quella che specifica più bit.",
+    "memoryTrick": "Conta i bit fissati: più sono, più la rotta è specifica e prioritaria.",
+    "similarExamQuestion": "Quale interfaccia sceglie il router se un indirizzo corrisponde solo alla rotta di default?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 119,
+    "id": "hist-119",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "Quale delle seguenti notazioni CIDR per un indirizzo IP è corretta?",
+    "options": [
+      "192.168.1.0/24",
+      "192.168.1.0 + 255.255.255.0",
+      "192.168.1.0;24",
+      "192.168.1.0:4"
+    ],
+    "correctAnswer": "192.168.1.0/24",
+    "explanation": "La notazione CIDR è stata introdotta per sostituire il vecchio sistema delle classi e prevede la forma indirizzo seguito da slash e lunghezza del prefisso. Il suffisso /24 indica che i primi 24 bit appartengono alla parte di rete mentre i restanti 8 sono disponibili per gli host, ed equivale esattamente alla maschera decimale puntata 255.255.255.0.",
+    "whyOthersAreWrong": {
+      "192.168.1.0 + 255.255.255.0": "Esprime gli stessi parametri ma non usa la notazione compatta standard con lo slash.",
+      "192.168.1.0;24": "Il punto e virgola non è un separatore previsto dalla sintassi CIDR.",
+      "192.168.1.0:4": "I due punti si usano per indicare una porta o negli indirizzi IPv6, non per definire una maschera CIDR."
+    },
+    "conceptToReview": "Sintassi corretta della notazione CIDR.",
+    "miniSummary": "Indirizzo, slash e numero di bit di rete: qualsiasi altro separatore è errato.",
+    "memoryTrick": "Solo lo slash è ammesso: né punto e virgola né due punti.",
+    "similarExamQuestion": "A quale maschera decimale puntata corrisponde il prefisso /26?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 120,
+    "id": "hist-120",
+    "category": "Internet",
+    "topic": "ARP",
+    "difficulty": "media",
+    "question": "Quale componente non è noto nel pacchetto di richiesta ARP?",
+    "options": [
+      "L'indirizzo di scheda del mittente",
+      "L'indirizzo IP del destinatario",
+      "L'indirizzo IP del mittente",
+      "L'indirizzo della scheda del destinatario"
+    ],
+    "correctAnswer": "L'indirizzo della scheda del destinatario",
+    "explanation": "Nella ARP request il mittente inserisce il proprio indirizzo IP e il proprio indirizzo MAC, insieme all'indirizzo IP del destinatario che vuole raggiungere. L'indirizzo MAC del destinatario è l'unica informazione mancante ed è proprio l'oggetto della richiesta: per questo il pacchetto viene inviato in broadcast a tutti gli host della rete locale, e solo chi possiede quell'IP risponde fornendo il proprio indirizzo di scheda.",
+    "whyOthersAreWrong": {
+      "L'indirizzo di scheda del mittente": "È noto e viene incluso nel pacchetto, così il destinatario può rispondere direttamente in unicast.",
+      "L'indirizzo IP del destinatario": "È noto ed è il dato di partenza della richiesta: è l'IP di cui si cerca il MAC corrispondente.",
+      "L'indirizzo IP del mittente": "È noto e viene incluso, permettendo al destinatario di aggiornare la propria cache ARP."
+    },
+    "conceptToReview": "Informazioni note e incognite in una ARP request.",
+    "miniSummary": "L'unica incognita è il MAC del destinatario: tutto il resto è già noto al mittente.",
+    "memoryTrick": "Si chiede solo ciò che non si sa: l'indirizzo fisico di chi ha quell'IP.",
+    "similarExamQuestion": "In quale modalità viene inviata una ARP request e in quale una ARP reply?",
+    "figureRewritten": false
+  }
+]

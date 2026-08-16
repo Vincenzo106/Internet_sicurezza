@@ -1,0 +1,362 @@
+[
+  {
+    "originalNumber": 61,
+    "id": "hist-061",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Quale parte dell'intestazione del pacchetto TCP è utilizzata per gestire il problema del data overflow?",
+    "options": ["ack", "window size", "numero di sequenza", "porta sorgente"],
+    "correctAnswer": "window size",
+    "explanation": "Se un mittente invia dati troppo velocemente per la capacità di elaborazione del ricevitore, il buffer di ricezione si riempie e i pacchetti successivi vengono scartati. TCP gestisce il problema tramite il controllo di flusso: in ogni segmento il ricevitore inserisce nel campo Window Size, a 16 bit, quanti byte di spazio libero sono rimasti nel proprio buffer, e il mittente limita a quel valore la quantità di dati non ancora riscontrati. Se la finestra scende a zero il mittente smette di trasmettere.",
+    "whyOthersAreWrong": {
+      "ack": "Il numero di riscontro conferma i byte ricevuti e serve all'affidabilità, ma non comunica la capienza residua del buffer.",
+      "numero di sequenza": "Il numero di sequenza ordina i byte nel flusso e permette di rilevare perdite e duplicati, non regola la velocità di invio.",
+      "porta sorgente": "La porta identifica il processo applicativo e non ha alcun ruolo nel controllo di flusso."
+    },
+    "conceptToReview": "Controllo di flusso e prevenzione dell'overflow del buffer di ricezione.",
+    "miniSummary": "Il campo Window Size annuncia lo spazio libero e mette un tetto ai dati in volo.",
+    "memoryTrick": "Overflow del ricevitore significa flow control, quindi finestra di ricezione.",
+    "similarExamQuestion": "Cosa succede quando la finestra di ricezione annunciata vale zero?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 62,
+    "id": "hist-062",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quale delle seguenti non è una funzione del livello di rete?",
+    "options": ["Routing", "Congestion Control", "Nessuna delle tre", "Error control"],
+    "correctAnswer": "Error control",
+    "explanation": "Il livello di rete nel modello Internet fornisce un servizio inaffidabile e best effort. Sebbene IPv4 abbia un checksum, questo controlla solo l'integrità dell'intestazione e non dei dati; inoltre il livello di rete non possiede meccanismi per rilevare la perdita di pacchetti o richiedere ritrasmissioni. Il controllo e il recupero degli errori sono funzioni del livello data link, hop-by-hop, e del livello di trasporto, end-to-end.",
+    "whyOthersAreWrong": {
+      "Routing": "Il routing è la funzione principale del livello 3: determinare il percorso verso la destinazione.",
+      "Congestion Control": "Il livello di rete partecipa alla gestione della congestione scartando pacchetti o segnalandola, quindi rientra tra le sue funzioni.",
+      "Nessuna delle tre": "Una delle opzioni non appartiene effettivamente al livello di rete, quindi questa alternativa non è valida."
+    },
+    "conceptToReview": "Ripartizione delle funzioni tra livello di rete, collegamento e trasporto.",
+    "miniSummary": "IP instrada e può scartare, ma non recupera: il recupero è di data link e trasporto.",
+    "memoryTrick": "IP consegna al meglio e non torna indietro a rimediare.",
+    "similarExamQuestion": "Quale checksum copre anche i dati e non solo l'intestazione?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 63,
+    "id": "hist-063",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "media",
+    "question": "Quale affermazione non è vera per l'algoritmo di routing distance vector?",
+    "options": [
+      "Ogni router ha una mappa completa della rete",
+      "Tutte e tre",
+      "È un tipo di algoritmo di routing dinamico",
+      "È basato sull'algoritmo di Bellman-Ford"
+    ],
+    "correctAnswer": "Ogni router ha una mappa completa della rete",
+    "explanation": "Negli algoritmi Distance Vector il router non conosce la topologia dell'intera rete: sa solo a quale vicino inoltrare il pacchetto per raggiungere una destinazione e quanto costa, una conoscenza limitata spesso definita routing by rumor. L'affermazione sulla mappa completa è invece vera per gli algoritmi Link State come OSPF, dove ogni router costruisce un grafo dell'intera rete prima di calcolare i percorsi con Dijkstra.",
+    "whyOthersAreWrong": {
+      "Tutte e tre": "Due delle affermazioni elencate sono effettivamente vere per il distance vector, quindi non possono essere tutte false.",
+      "È un tipo di algoritmo di routing dinamico": "È vera: l'algoritmo si adatta ai cambiamenti della rete scambiando aggiornamenti con i vicini.",
+      "È basato sull'algoritmo di Bellman-Ford": "È vera: Bellman-Ford è proprio l'equazione su cui si basa il calcolo dei percorsi minimi."
+    },
+    "conceptToReview": "Conoscenza parziale nel distance vector contro visione globale del link state.",
+    "miniSummary": "Distance vector: so solo distanza e direzione. Link state: ho la mappa intera.",
+    "memoryTrick": "Chi ha la mappa completa non è distance vector: quello si fida dei vicini.",
+    "similarExamQuestion": "Quale categoria di algoritmi di routing costruisce un Link State Database?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 64,
+    "id": "hist-064",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "facile",
+    "question": "Quale metodo di richiesta HTTP viene comunemente utilizzato per recuperare risorse specifiche da un server web?",
+    "options": ["POST", "PUT", "DELETE", "GET"],
+    "correctAnswer": "GET",
+    "explanation": "Il metodo GET è lo standard fondamentale del protocollo HTTP per richiedere la rappresentazione di una risorsa specifica identificata da un URL, ad esempio caricare una pagina web o scaricare un'immagine. È definito un metodo safe, cioè la sua esecuzione non deve comportare modifiche allo stato del server: si limita a leggere i dati.",
+    "whyOthersAreWrong": {
+      "POST": "POST serve a inviare dati al server affinché vengano elaborati, ad esempio l'invio di un modulo, non a recuperare risorse.",
+      "PUT": "PUT viene usato per caricare una risorsa o sostituirne integralmente una esistente.",
+      "DELETE": "DELETE richiede la cancellazione della risorsa specificata, l'opposto del recupero."
+    },
+    "conceptToReview": "Semantica dei metodi HTTP principali.",
+    "miniSummary": "GET legge, POST invia, PUT sostituisce, DELETE cancella.",
+    "memoryTrick": "GET è l'unico metodo safe tra quelli elencati: non cambia nulla sul server.",
+    "similarExamQuestion": "Quale dei metodi HTTP non è valido in una richiesta standard?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 65,
+    "id": "hist-065",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "media",
+    "question": "Considerando il protocollo HTTP, indicare come viene indicata la fine dell'intestazione.",
+    "options": [
+      "Con il testo EOH: (End Of Header)",
+      "Non è previsto uno specifico separatore",
+      "Doppio ritorno a capo",
+      "Nell'intestazione è presente un campo che indica il numero di righe presenti nell'intestazione"
+    ],
+    "correctAnswer": "Doppio ritorno a capo",
+    "explanation": "I messaggi HTTP sono divisi in due macro-sezioni, le intestazioni e il corpo del messaggio. Per permettere al software di capire dove finiscono i metadati e dove iniziano i dati, lo standard richiede una riga vuota: ogni riga di intestazione termina con i caratteri CRLF e, per segnalare la fine della sezione header, si invia un ulteriore CRLF. La sequenza risultante CRLF CRLF corrisponde visivamente a premere due volte Invio.",
+    "whyOthersAreWrong": {
+      "Con il testo EOH: (End Of Header)": "Non esiste alcun marcatore testuale di questo tipo nello standard HTTP.",
+      "Non è previsto uno specifico separatore": "Un separatore esiste ed è indispensabile, altrimenti sarebbe impossibile distinguere header e body.",
+      "Nell'intestazione è presente un campo che indica il numero di righe presenti nell'intestazione": "Non esiste un campo che conti le righe di intestazione: la delimitazione è posizionale, tramite riga vuota."
+    },
+    "conceptToReview": "Struttura di un messaggio HTTP e delimitazione tra header e body.",
+    "miniSummary": "Una riga vuota, cioè CRLF CRLF, separa le intestazioni dal corpo.",
+    "memoryTrick": "Due Invio di fila: da lì in poi cominciano i dati veri.",
+    "similarExamQuestion": "Da quali tre campi è composta la prima riga di una richiesta HTTP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 66,
+    "id": "hist-066",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "media",
+    "question": "In quale tipo di risoluzione un server DNS restituisce direttamente l'indirizzo IP del nodo che deve risolvere?",
+    "options": ["Diretta", "Iterativa", "Nessuna di quelle indicate", "Ricorsiva"],
+    "correctAnswer": "Ricorsiva",
+    "explanation": "Nella risoluzione ricorsiva il client delega completamente il compito al server DNS: il messaggio implicito è trovami questo indirizzo IP. Il server contattato si fa carico di tutto il lavoro, interrogando a catena altri server se necessario, e risponde al client solo quando ha ottenuto l'indirizzo IP finale o un errore. Restituisce quindi direttamente il risultato cercato.",
+    "whyOthersAreWrong": {
+      "Diretta": "La risoluzione diretta, o forward lookup, indica la traduzione da nome a IP contrapposta a quella inversa: descrive l'obiettivo, non la modalità di interazione.",
+      "Iterativa": "Nella modalità iterativa il server risponde con il riferimento a un altro server DNS, non con l'indirizzo IP del nodo cercato.",
+      "Nessuna di quelle indicate": "Una delle modalità elencate corrisponde esattamente alla descrizione, quindi l'alternativa non è valida."
+    },
+    "conceptToReview": "Differenza tra query ricorsive e iterative nel DNS.",
+    "miniSummary": "Ricorsiva: il server fa tutto e ti dà l'IP. Iterativa: ti dice a chi chiedere.",
+    "memoryTrick": "Ricorsiva come una delega totale; iterativa come un rimpallo.",
+    "similarExamQuestion": "Quale tipo di risoluzione applica il Local DNS Server verso la gerarchia?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 67,
+    "id": "hist-067",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "media",
+    "question": "UDP è definito connectionless per il seguente motivo.",
+    "options": [
+      "Tutti i segmenti UDP sono trattati indipendentemente dal livello di trasporto",
+      "UDP invia i dati come uno stream di segmenti correlati",
+      "UDP fornisce un controllo dell'integrità dei segmenti mandati",
+      "UDP garantisce che i segmenti siano ricevuti nello stesso ordine in cui vengono spediti"
+    ],
+    "correctAnswer": "Tutti i segmenti UDP sono trattati indipendentemente dal livello di trasporto",
+    "explanation": "UDP non stabilisce alcuna connessione logica prima di inviare i dati: ogni datagramma è un'entità autonoma e il livello di trasporto non mantiene alcuno stato sulla sequenza dei pacchetti. Di conseguenza ogni pacchetto può prendere percorsi diversi ed essere trattato senza relazione con quelli precedenti o successivi. È esattamente questa indipendenza a definire il comportamento connectionless.",
+    "whyOthersAreWrong": {
+      "UDP invia i dati come uno stream di segmenti correlati": "Lo stream di byte correlati e ordinati è la caratteristica di TCP, non di UDP.",
+      "UDP fornisce un controllo dell'integrità dei segmenti mandati": "Il checksum esiste in UDP, ma è presente anche in TCP e non è il motivo per cui UDP è definito connectionless.",
+      "UDP garantisce che i segmenti siano ricevuti nello stesso ordine in cui vengono spediti": "UDP non garantisce alcun ordine di consegna: questa è una proprietà di TCP."
+    },
+    "conceptToReview": "Significato tecnico di connectionless nel livello di trasporto.",
+    "miniSummary": "Nessuno stato di connessione, nessuna relazione tra datagrammi successivi.",
+    "memoryTrick": "Connectionless non significa senza controlli: significa senza memoria tra pacchetti.",
+    "similarExamQuestion": "Quale campo di UDP consente comunque un controllo di integrità?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 68,
+    "id": "hist-068",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "I timer nel TCP vengono impostati ad un valore.",
+    "options": [
+      "In base alle dimensioni della finestra di trasmissione",
+      "Viene fissata all'apertura della connessione TCP",
+      "In base alla velocità di trasmissione del mittente",
+      "Secondo una formula che tiene conto degli RTT dei segmenti inviati in passato"
+    ],
+    "correctAnswer": "Secondo una formula che tiene conto degli RTT dei segmenti inviati in passato",
+    "explanation": "I ritardi su Internet variano costantemente a causa della congestione e dei percorsi di routing, quindi un timer fisso sarebbe inefficiente: troppo breve causerebbe ritrasmissioni inutili, troppo lungo ritarderebbe il recupero degli errori. TCP misura continuamente il Round Trip Time e calcola il timeout di ritrasmissione stimando una media mobile dei ritardi passati e aggiungendo un margine basato sulla loro variabilità.",
+    "whyOthersAreWrong": {
+      "In base alle dimensioni della finestra di trasmissione": "La finestra regola quanti dati inviare, non quanto attendere prima di considerare perso un segmento.",
+      "Viene fissata all'apertura della connessione TCP": "Un valore fissato una volta per tutte non si adatterebbe alle variazioni di ritardo durante la connessione.",
+      "In base alla velocità di trasmissione del mittente": "Il timeout dipende dal tempo di andata e ritorno sulla rete, non dalla velocità con cui il mittente immette i dati."
+    },
+    "conceptToReview": "Calcolo adattivo del Retransmission Timeout in TCP.",
+    "miniSummary": "RTO = media stimata degli RTT più un margine proporzionale alla loro variabilità.",
+    "memoryTrick": "Il timer si adatta alla rete: misura quanto ci mette davvero un ACK a tornare.",
+    "similarExamQuestion": "Qual è la formula corretta per il timer di ritrasmissione RTO?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 69,
+    "id": "hist-069",
+    "category": "Internet",
+    "topic": "congestion control",
+    "difficulty": "media",
+    "question": "Nel caso di perdita di segmenti identificata mediante un Timeout che scade, la dimensione della finestra corrente del trasmettitore TCP.",
+    "options": [
+      "Non viene variata",
+      "Viene portata ad un valore pari al valore della soglia",
+      "Viene riportata al valore iniziale, pari ad un segmento",
+      "Viene portata ad un valore pari a metà della soglia"
+    ],
+    "correctAnswer": "Viene riportata al valore iniziale, pari ad un segmento",
+    "explanation": "Per TCP il timeout è l'evento di congestione più grave, perché significa che la rete è così intasata da non far tornare indietro alcun ACK. Indipendentemente dalla versione, quando scade il timer di ritrasmissione il mittente imposta la soglia ssthresh a metà della finestra corrente e resetta la finestra di congestione a 1 MSS, ripartendo dalla fase di Slow Start. Se invece la perdita fosse rilevata tramite tre ACK duplicati, evento meno grave, la finestra verrebbe dimezzata anziché azzerata.",
+    "whyOthersAreWrong": {
+      "Non viene variata": "Ignorare un timeout significherebbe continuare a immettere traffico in una rete già congestionata, peggiorando la situazione.",
+      "Viene portata ad un valore pari al valore della soglia": "La soglia viene aggiornata a metà finestra, ma la finestra di congestione riparte da 1, non dal valore della soglia.",
+      "Viene portata ad un valore pari a metà della soglia": "Il dimezzamento riguarda la soglia rispetto alla finestra precedente, mentre la finestra torna al valore iniziale di un segmento."
+    },
+    "conceptToReview": "Reazione di TCP al timeout rispetto ai tre ACK duplicati.",
+    "miniSummary": "Timeout: ssthresh a metà e cwnd a 1 con ripartenza in Slow Start.",
+    "memoryTrick": "Silenzio totale sulla rete significa ripartire da zero; tre ACK duplicati significano solo rallentare.",
+    "similarExamQuestion": "Come reagisce TCP Reno alla ricezione di tre ACK duplicati?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 70,
+    "id": "hist-070",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Quale delle seguenti affermazioni descrive il compito del window size in TCP?",
+    "options": [
+      "Comunicare le dimensioni del buffer del mittente",
+      "Serve per il controllo della congestione",
+      "Serve per garantire l'affidabilità del canale",
+      "Comunicare le dimensioni dei buffer del ricevente"
+    ],
+    "correctAnswer": "Comunicare le dimensioni dei buffer del ricevente",
+    "explanation": "Il campo Window Size presente nell'intestazione TCP implementa il controllo di flusso: il valore viene impostato dal ricevitore e inviato al mittente per comunicargli quanto spazio libero è rimasto nel proprio buffer di ricezione. Serve a impedire che un mittente veloce inondi un ricevitore lento causando overflow. La finestra di congestione esiste, ma è una variabile interna del mittente e non viaggia nell'header.",
+    "whyOthersAreWrong": {
+      "Comunicare le dimensioni del buffer del mittente": "Il campo riguarda esclusivamente il buffer del ricevitore: al mittente non serve annunciare la propria capienza.",
+      "Serve per il controllo della congestione": "Il controllo di congestione usa la cwnd, una variabile locale del mittente che non è trasmessa nell'intestazione.",
+      "Serve per garantire l'affidabilità del canale": "L'affidabilità è affidata a numeri di sequenza, ACK e ritrasmissioni, non alla finestra annunciata."
+    },
+    "conceptToReview": "Distinzione tra receive window annunciata e congestion window interna.",
+    "miniSummary": "Nell'header viaggia solo rwnd, la capienza del ricevitore; cwnd resta nel mittente.",
+    "memoryTrick": "Se il valore è scritto nel pacchetto riguarda il ricevitore; la congestione la stima chi invia.",
+    "similarExamQuestion": "Quale valore non è mai contenuto nell'intestazione TCP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 71,
+    "id": "hist-071",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Quale delle seguenti affermazioni è scorretta per l'utility traceroute?",
+    "options": [
+      "Usa il campo TTL per identificare i router intermedi",
+      "Traccia il cammino percorso da un pacchetto IP per raggiungere la destinazione",
+      "Permette di verificare la presenza di connessione fra due nodi",
+      "Usa il protocollo TCP"
+    ],
+    "correctAnswer": "Usa il protocollo TCP",
+    "explanation": "L'implementazione standard di traceroute sui sistemi Unix e Linux utilizza pacchetti UDP inviati a porte alte improbabili, mentre l'implementazione Windows tracert utilizza messaggi ICMP Echo Request. TCP non è usato dall'utility di base: esiste un tool specifico chiamato tcptraceroute per casi particolari, ma non rappresenta il funzionamento standard.",
+    "whyOthersAreWrong": {
+      "Usa il campo TTL per identificare i router intermedi": "È vera: traceroute invia pacchetti con TTL incrementale e sfrutta i messaggi ICMP Time Exceeded per identificare ogni router.",
+      "Traccia il cammino percorso da un pacchetto IP per raggiungere la destinazione": "È vera: raccogliendo gli indirizzi dei router che rispondono, l'utility ricostruisce il percorso.",
+      "Permette di verificare la presenza di connessione fra due nodi": "È vera: la raggiungibilità della destinazione viene verificata indirettamente durante la traccia."
+    },
+    "conceptToReview": "Protocolli realmente utilizzati da traceroute e ruolo del TTL.",
+    "miniSummary": "TTL crescente più ICMP Time Exceeded; il trasporto è UDP o ICMP, non TCP.",
+    "memoryTrick": "Traceroute vive di TTL e ICMP: il TCP non c'entra nella versione standard.",
+    "similarExamQuestion": "Quale messaggio ICMP permette a traceroute di identificare i router intermedi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 72,
+    "id": "hist-072",
+    "category": "Internet",
+    "topic": "Wi-Fi e reti mobili",
+    "difficulty": "difficile",
+    "question": "Indicare quanti sono i campi che possono contenere un indirizzo nell'intestazione di 802.11.",
+    "options": ["1", "3", "4", "2"],
+    "correctAnswer": "4",
+    "explanation": "A differenza del frame Ethernet che ha solo due indirizzi, sorgente e destinazione, l'intestazione del frame MAC 802.11 prevede fisicamente lo spazio per quattro indirizzi. Nella normale comunicazione tra un dispositivo e un access point ne vengono usati solo tre: destinazione, sorgente e BSSID. Il quarto viene utilizzato esclusivamente in modalità Wireless Distribution System, cioè in un ponte radio tra due access point, dove servono mittente originale, destinatario finale, trasmettitore intermedio e ricevitore intermedio.",
+    "whyOthersAreWrong": {
+      "1": "Un solo indirizzo non basterebbe nemmeno a distinguere mittente e destinatario del frame.",
+      "3": "Tre sono gli indirizzi effettivamente compilati nell'uso standard con un access point, ma la domanda chiede quanti campi possono contenerne.",
+      "2": "Due indirizzi sono quelli del frame Ethernet, non del frame 802.11."
+    },
+    "conceptToReview": "Struttura dell'header MAC 802.11 e uso dei bit To DS e From DS.",
+    "miniSummary": "Quattro campi previsti, tre usati di norma, il quarto solo in modalità WDS.",
+    "memoryTrick": "Il wireless ha bisogno di più indirizzi perché il frame può passare da un AP intermedio.",
+    "similarExamQuestion": "In quale scenario vengono effettivamente usati tutti e quattro gli indirizzi 802.11?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 73,
+    "id": "hist-073",
+    "category": "Internet",
+    "topic": "porte e socket",
+    "difficulty": "media",
+    "question": "Come viene identificata univocamente una socket TCP?",
+    "options": [
+      "Indirizzo IP mittente, porta mittente, numero di sequenza, numero di ack",
+      "Indirizzo IP mittente, porta mittente, indirizzo IP destinazione, porta destinatario",
+      "Indirizzo IP mittente, indirizzo IP destinazione",
+      "Porta mittente, porta destinatario"
+    ],
+    "correctAnswer": "Indirizzo IP mittente, porta mittente, indirizzo IP destinazione, porta destinatario",
+    "explanation": "Una socket TCP è definita univocamente dalla combinazione di quattro parametri, la cosiddetta 4-tupla: indirizzo IP e porta del mittente, indirizzo IP e porta del destinatario. A differenza di UDP, dove basta la porta di destinazione per consegnare il pacchetto, TCP è connection-oriented: un server web sulla porta 80 può gestire migliaia di connessioni simultanee e deve poterle distinguere, cosa possibile solo controllando l'intera quaterna.",
+    "whyOthersAreWrong": {
+      "Indirizzo IP mittente, porta mittente, numero di sequenza, numero di ack": "Numeri di sequenza e riscontro servono all'affidabilità del flusso, non a identificare la connessione.",
+      "Indirizzo IP mittente, indirizzo IP destinazione": "Senza le porte non si potrebbero distinguere connessioni diverse tra gli stessi due host.",
+      "Porta mittente, porta destinatario": "Senza gli indirizzi IP non si potrebbero distinguere client diversi che usano lo stesso numero di porta."
+    },
+    "conceptToReview": "Identificazione di una connessione TCP tramite 4-tupla.",
+    "miniSummary": "Due indirizzi IP più due porte: solo insieme identificano la connessione.",
+    "memoryTrick": "Il server distingue mille client sulla stessa porta 80 grazie a IP e porta sorgente.",
+    "similarExamQuestion": "Quale differenza c'è tra il demultiplexing di TCP e quello di UDP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 74,
+    "id": "hist-074",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "facile",
+    "question": "Quale tipo di resource record è usato dal DNS per configurare un alias?",
+    "options": ["CNAME", "NS", "ALIAS", "MX"],
+    "correctAnswer": "CNAME",
+    "explanation": "Il record CNAME, cioè Canonical Name, viene utilizzato per creare un alias di un nome di dominio esistente. Se un server ha nome reale server1.esempio.it si può creare un record CNAME www.esempio.it che punta a esso: in questo modo, se l'indirizzo IP del server cambia, basta aggiornare il record A del nome canonico.",
+    "whyOthersAreWrong": {
+      "NS": "Il record NS indica quali sono i server DNS autorevoli per una specifica zona o dominio.",
+      "ALIAS": "Non è un record standard definito nelle RFC originali del DNS, sebbene alcuni provider lo offrano come funzionalità interna.",
+      "MX": "Il record MX specifica i server responsabili della ricezione della posta elettronica per quel dominio."
+    },
+    "conceptToReview": "Tipi principali di resource record DNS e loro scopo.",
+    "miniSummary": "CNAME per gli alias, A per gli indirizzi, NS per i server di zona, MX per la posta.",
+    "memoryTrick": "CNAME sta per Canonical Name: punta a un altro nome, non a un indirizzo.",
+    "similarExamQuestion": "Quali servizi aggiuntivi oltre alla traduzione nome-IP offre il DNS?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 75,
+    "id": "hist-075",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "media",
+    "question": "Un router IP dopo aver calcolato l'instradamento:",
+    "options": [
+      "Modifica gli indirizzi IP sorgente e destinazione del datagramma",
+      "Modifica esclusivamente il campo Time To Live nell'intestazione del datagramma",
+      "Modifica i campi Time To Live e Header Checksum nell'intestazione del datagramma",
+      "Modifica il campo Header Checksum nell'intestazione del datagramma"
+    ],
+    "correctAnswer": "Modifica i campi Time To Live e Header Checksum nell'intestazione del datagramma",
+    "explanation": "Ogni router che riceve un pacchetto deve decrementare di uno il valore del campo TTL per evitare che i pacchetti circolino all'infinito in caso di loop di routing. Poiché il TTL cambia a ogni salto, l'intestazione IP viene modificata e di conseguenza il checksum calcolato in precedenza non è più valido: deve essere ricalcolato dal router prima dell'inoltro. Gli indirizzi IP invece rimangono invariati, salvo operazioni di NAT.",
+    "whyOthersAreWrong": {
+      "Modifica gli indirizzi IP sorgente e destinazione del datagramma": "Gli indirizzi IP identificano i capolinea della comunicazione e restano invariati nel normale routing.",
+      "Modifica esclusivamente il campo Time To Live nell'intestazione del datagramma": "È incompleta: cambiando il TTL diventa obbligatorio ricalcolare anche l'header checksum.",
+      "Modifica il campo Header Checksum nell'intestazione del datagramma": "È incompleta nel senso opposto: il checksum cambia proprio perché è stato modificato il TTL."
+    },
+    "conceptToReview": "Campi dell'header IP modificati durante l'inoltro.",
+    "miniSummary": "Il router tocca TTL e header checksum; gli indirizzi IP restano quelli originali.",
+    "memoryTrick": "Se cambi un campo dell'intestazione devi rifare il conto che la protegge.",
+    "similarExamQuestion": "In quale caso un router modifica anche gli indirizzi IP di un datagramma?",
+    "figureRewritten": false
+  }
+]

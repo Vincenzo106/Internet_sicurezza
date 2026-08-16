@@ -1,0 +1,357 @@
+[
+  {
+    "originalNumber": 91,
+    "id": "hist-091",
+    "category": "Internet",
+    "topic": "affidabilità TCP",
+    "difficulty": "media",
+    "question": "Indicare cosa permette la tecnica detta \"piggyback\".",
+    "options": [
+      "Rimandare al trasmettitore eventuali unità dati che hanno subito errori di trasmissione",
+      "Far sì che il ricevitore segnali esplicitamente al trasmettitore eventuali perdite di unità dati",
+      "Concatenare più riscontri in un'unica unità di dati",
+      "Trasportare informazioni di riscontro e dati utente nella stessa unità di dati"
+    ],
+    "correctAnswer": "Trasportare informazioni di riscontro e dati utente nella stessa unità di dati",
+    "explanation": "Quando un nodo riceve dati e deve inviare sia un riscontro sia dei propri dati verso il mittente, invece di spedire due pacchetti separati inserisce il numero di ACK nell'intestazione del pacchetto che contiene i dati. Un esempio tipico è una sessione SSH o Telnet, dove il server risponde con un segmento che contiene sia l'ACK del carattere ricevuto sia il carattere di eco. Il vantaggio è la riduzione del numero di pacchetti piccoli in rete.",
+    "whyOthersAreWrong": {
+      "Rimandare al trasmettitore eventuali unità dati che hanno subito errori di trasmissione": "Questa è la ritrasmissione, un meccanismo di recupero degli errori, non un'ottimizzazione dei riscontri.",
+      "Far sì che il ricevitore segnali esplicitamente al trasmettitore eventuali perdite di unità dati": "Questo descrive i riscontri negativi o gli ACK duplicati, non il piggybacking.",
+      "Concatenare più riscontri in un'unica unità di dati": "Questo si avvicina al concetto di ACK cumulativo, ma il piggyback riguarda l'unione di riscontro e dati, non di più riscontri tra loro."
+    },
+    "conceptToReview": "Ottimizzazione del traffico tramite riscontri trasportati insieme ai dati.",
+    "miniSummary": "Un solo pacchetto porta sia i dati sia l'ACK, riducendo overhead e numero di invii.",
+    "memoryTrick": "Piggyback significa a cavalluccio: l'ACK viaggia sulle spalle dei dati.",
+    "similarExamQuestion": "Quali vantaggi concreti porta il piggybacking in termini di efficienza del canale?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 92,
+    "id": "hist-092",
+    "category": "Internet",
+    "topic": "Introduzione a Internet",
+    "difficulty": "facile",
+    "question": "In che periodo Tim Berners-Lee propose HTML e HTTP?",
+    "options": ["Anni 90", "Anni 70", "Anni 60", "Anni 80"],
+    "correctAnswer": "Anni 80",
+    "explanation": "Tim Berners-Lee scrisse la sua prima proposta per un sistema di gestione delle informazioni distribuito, che sarebbe diventato il World Wide Web, nel marzo del 1989 mentre lavorava al CERN di Ginevra. Tra la fine del 1989 e il 1990 vennero definiti i concetti base: il linguaggio HTML, il protocollo HTTP, il primo server web e il primo browser.",
+    "whyOthersAreWrong": {
+      "Anni 90": "È l'errore più comune: negli anni 90 il Web è stato reso pubblico e diffuso, ma la proposta e l'invenzione dei protocolli appartengono al decennio precedente.",
+      "Anni 70": "Negli anni 70 si sviluppava ARPANET e la commutazione di pacchetto, ma il Web non esisteva ancora nemmeno come idea.",
+      "Anni 60": "Negli anni 60 si ponevano le basi teoriche delle reti a commutazione di pacchetto, molto prima del Web."
+    },
+    "conceptToReview": "Cronologia della nascita del World Wide Web.",
+    "miniSummary": "Proposta nel 1989 al CERN, quindi anni 80; diffusione pubblica negli anni 90.",
+    "memoryTrick": "1989 è ancora anni 80: la data di nascita non coincide con quella di popolarità.",
+    "similarExamQuestion": "In quale anno il CERN rilasciò il codice del Web nel pubblico dominio?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 93,
+    "id": "hist-093",
+    "category": "Internet",
+    "topic": "IP, indirizzamento, subnet, CIDR",
+    "difficulty": "facile",
+    "question": "La subnet mask (maschera di sotto rete) serve a identificare?",
+    "options": [
+      "Quale porzione di un indirizzo IP indica l'ID di rete e quale invece l'ID dell'host",
+      "L'indirizzo MAC di un host",
+      "Quale porzione di un indirizzo IP indica l'ID sorgente e quale invece l'ID broadcast",
+      "Quanti indirizzi IP posso usare"
+    ],
+    "correctAnswer": "Quale porzione di un indirizzo IP indica l'ID di rete e quale invece l'ID dell'host",
+    "explanation": "La subnet mask funziona tramite un'operazione di AND logico bit a bit con l'indirizzo IP: i bit impostati a 1 indicano che i corrispondenti bit dell'indirizzo appartengono all'ID di rete, mentre i bit a 0 indicano la parte assegnata ai singoli dispositivi. Con 192.168.1.10 e maschera 255.255.255.0 i primi 24 bit sono la rete e gli ultimi 8 identificano l'host.",
+    "whyOthersAreWrong": {
+      "L'indirizzo MAC di un host": "Il MAC è un indirizzo fisico di livello 2 e non ha alcuna relazione con la maschera di sottorete.",
+      "Quale porzione di un indirizzo IP indica l'ID sorgente e quale invece l'ID broadcast": "Sorgente e broadcast non sono porzioni di un indirizzo: sono indirizzi distinti e completi.",
+      "Quanti indirizzi IP posso usare": "La maschera permette indirettamente di calcolare il numero di indirizzi disponibili, ma la sua funzione primaria è separare prefisso di rete e parte host."
+    },
+    "conceptToReview": "Funzione della subnet mask e operazione di AND logico.",
+    "miniSummary": "Bit a 1 indicano la rete, bit a 0 indicano l'host.",
+    "memoryTrick": "La maschera copre la parte di rete e lascia scoperta quella degli host.",
+    "similarExamQuestion": "Come si determina se due host appartengono alla stessa sottorete?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 94,
+    "id": "hist-094",
+    "category": "Internet",
+    "topic": "DNS",
+    "difficulty": "media",
+    "question": "Quale tipo di risoluzione applica il Local Domain Name Server per trovare l'indirizzo IP corrispondente ad un nome logico?",
+    "options": ["Iterativa", "Nessuna delle precedenti", "Diretta", "Ricorsiva"],
+    "correctAnswer": "Iterativa",
+    "explanation": "Bisogna distinguere due tipi di interrogazione. Il client invia una query ricorsiva al Local DNS, delegandogli l'intera ricerca e aspettandosi una risposta definitiva. Il Local DNS, per non sovraccaricare i server Root e TLD mondiali, effettua invece ricerche iterative: chiede al Root, che rimanda al TLD, chiede al TLD, che rimanda al server autoritativo, e infine chiede a quest'ultimo, che fornisce l'indirizzo IP.",
+    "whyOthersAreWrong": {
+      "Nessuna delle precedenti": "Una delle modalità elencate descrive correttamente il comportamento del Local DNS verso la gerarchia.",
+      "Diretta": "La risoluzione diretta indica la traduzione da nome a IP contrapposta a quella inversa: descrive l'obiettivo, non la modalità di interazione tra server.",
+      "Ricorsiva": "La query ricorsiva è quella che il client invia al Local DNS, non quella che il Local DNS usa verso la gerarchia."
+    },
+    "conceptToReview": "Ruolo del Local DNS tra query ricorsive e iterative.",
+    "miniSummary": "Client verso Local DNS: ricorsiva. Local DNS verso la gerarchia: iterativa.",
+    "memoryTrick": "Il Local DNS accetta una delega, ma poi lavora a rimbalzi tra i server.",
+    "similarExamQuestion": "In quale tipo di risoluzione un server DNS restituisce direttamente l'indirizzo IP cercato?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 95,
+    "id": "hist-095",
+    "category": "Internet",
+    "topic": "SMTP, POP3, IMAP",
+    "difficulty": "facile",
+    "question": "Quale protocollo applicativo è usato per scambiare i contenuti fra i server mail?",
+    "options": ["IMAP", "http", "SMTP", "POP3"],
+    "correctAnswer": "SMTP",
+    "explanation": "SMTP è un protocollo di tipo push il cui compito è spingere il messaggio dal mittente verso il destinatario. Viene usato sia dal client verso il proprio server di posta, sia soprattutto tra server di posta: quando un server deve consegnare un'email a un altro server utilizza esclusivamente SMTP, tipicamente sulla porta TCP 25.",
+    "whyOthersAreWrong": {
+      "IMAP": "IMAP è un protocollo di accesso usato dall'utente finale per consultare la posta già consegnata, mai per lo scambio diretto tra server.",
+      "http": "HTTP viene usato per accedere alle webmail dal browser, ma non è il protocollo con cui i server si scambiano i messaggi.",
+      "POP3": "POP3 serve a scaricare i messaggi dal proprio server sul dispositivo locale, non a trasferirli tra server."
+    },
+    "conceptToReview": "Protocolli di trasferimento contro protocolli di accesso alla posta.",
+    "miniSummary": "Tra server si usa sempre SMTP; IMAP e POP3 servono solo all'utente finale.",
+    "memoryTrick": "SMTP è l'unico che consegna; gli altri due si limitano a farti leggere.",
+    "similarExamQuestion": "Su quale porta TCP avviene tipicamente lo scambio SMTP tra server?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 96,
+    "id": "hist-096",
+    "category": "Internet",
+    "topic": "sliding window",
+    "difficulty": "media",
+    "question": "Quale meccanismo viene utilizzato in TCP per evitare che alcuni segmenti vengano scartati perché uno dei due host è molto più veloce dell'altro?",
+    "options": ["Ritrasmissione", "Congestion control", "Flow control", "Handshake a tre vie"],
+    "correctAnswer": "Flow control",
+    "explanation": "Il controllo di flusso garantisce che un mittente veloce non affoghi un ricevitore lento inviando dati a una velocità superiore a quella con cui il destinatario può processarli e liberare il proprio buffer. Il ricevitore comunica lo spazio libero rimasto tramite il campo Receive Window nell'header TCP, e il mittente è obbligato a non inviare più dati di quanti indicati.",
+    "whyOthersAreWrong": {
+      "Ritrasmissione": "La ritrasmissione interviene dopo che un pacchetto è già andato perduto, non previene la saturazione del buffer.",
+      "Congestion control": "Il controllo di congestione protegge la rete e i router intermedi dal collasso, mentre qui il problema è la differenza di velocità tra i due host.",
+      "Handshake a tre vie": "L'handshake serve soltanto a instaurare la connessione, non a regolarne la velocità durante il trasferimento."
+    },
+    "conceptToReview": "Differenza tra controllo di flusso e controllo di congestione.",
+    "miniSummary": "Flow control protegge il ricevitore, congestion control protegge la rete.",
+    "memoryTrick": "Se il problema è il destinatario lento è flusso; se è la rete intasata è congestione.",
+    "similarExamQuestion": "Quale campo dell'header TCP implementa concretamente il controllo di flusso?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 97,
+    "id": "hist-097",
+    "category": "Internet",
+    "topic": "TCP e UDP",
+    "difficulty": "media",
+    "question": "Indicare quale affermazione è falsa in relazione al protocollo UDP.",
+    "options": [
+      "La consegna dei dati non è garantita",
+      "Supporta il meccanismo di correzione degli errori elementare",
+      "La lunghezza dell'header non è variabile",
+      "È possibile la ritrasmissione dei pacchetti"
+    ],
+    "correctAnswer": "È possibile la ritrasmissione dei pacchetti",
+    "explanation": "UDP non mantiene traccia dei segmenti inviati e non attende riscontri, quindi non può sapere se un pacchetto è arrivato e non può ritrasmetterlo in caso di perdita. Le altre affermazioni sono vere: la consegna non è garantita perché il servizio è best effort, il checksum permette un rilevamento elementare degli errori, e l'header ha lunghezza fissa di 8 byte a differenza di quello TCP che varia per via delle opzioni.",
+    "whyOthersAreWrong": {
+      "La consegna dei dati non è garantita": "È vera: UDP è best effort e se la rete è congestionata il pacchetto viene scartato senza recupero.",
+      "Supporta il meccanismo di correzione degli errori elementare": "È vera nel senso del rilevamento: il checksum permette di accorgersi di un errore e scartare il pacchetto.",
+      "La lunghezza dell'header non è variabile": "È vera: l'header UDP è fisso a 8 byte, con quattro campi da 2 byte ciascuno."
+    },
+    "conceptToReview": "Limiti del servizio UDP e struttura del suo header.",
+    "miniSummary": "UDP rileva errori ma non li recupera, e non ritrasmette mai nulla.",
+    "memoryTrick": "Senza ACK non puoi sapere cosa manca, quindi non puoi rispedirlo.",
+    "similarExamQuestion": "Quanti byte aggiunge al messaggio un'intestazione UDP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 98,
+    "id": "hist-098",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "facile",
+    "question": "L'algoritmo di Dijkstra in quale categoria rientra?",
+    "options": [
+      "Link state",
+      "Distance vector",
+      "È utilizzabile in quelli indicati",
+      "Path oriented"
+    ],
+    "correctAnswer": "Link state",
+    "explanation": "Gli algoritmi Link State si basano sulla diffusione a tutti i router delle informazioni relative allo stato dei collegamenti, così che ogni router costruisca una mappa completa della topologia. Una volta ottenuta la mappa, il router applica l'algoritmo di Dijkstra per calcolare l'albero dei cammini minimi ponendo se stesso come radice.",
+    "whyOthersAreWrong": {
+      "Distance vector": "Gli algoritmi distance vector come RIP utilizzano Bellman-Ford, basato su scambi periodici con i soli vicini immediati.",
+      "È utilizzabile in quelli indicati": "Dijkstra richiede la conoscenza globale della topologia, che il distance vector per definizione non possiede.",
+      "Path oriented": "Non è una delle due categorie classiche di algoritmi di routing: la classificazione standard distingue link state e distance vector."
+    },
+    "conceptToReview": "Abbinamento tra algoritmi matematici e categorie di routing.",
+    "miniSummary": "Dijkstra con link state, Bellman-Ford con distance vector.",
+    "memoryTrick": "Dijkstra ha bisogno del grafo intero: solo il link state glielo fornisce.",
+    "similarExamQuestion": "Quale protocollo di routing concreto implementa l'algoritmo di Dijkstra?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 99,
+    "id": "hist-099",
+    "category": "Internet",
+    "topic": "HTTP/HTTPS",
+    "difficulty": "facile",
+    "question": "Quale dei seguenti metodi non è valido in una http request?",
+    "options": ["REMOVE", "DELETE", "GET", "POST"],
+    "correctAnswer": "REMOVE",
+    "explanation": "I metodi standard del protocollo HTTP più utilizzati sono GET per richiedere una risorsa, POST per inviare dati al server, PUT per aggiornare completamente una risorsa e DELETE per eliminarla, oltre a HEAD, OPTIONS e PATCH per scopi specifici. REMOVE non fa parte del set di istruzioni riconosciute e causerebbe un errore 405 Method Not Allowed o 400 Bad Request nella maggior parte dei server.",
+    "whyOthersAreWrong": {
+      "DELETE": "È un metodo standard, usato per richiedere la cancellazione della risorsa specificata.",
+      "GET": "È il metodo fondamentale del protocollo, usato per recuperare la rappresentazione di una risorsa.",
+      "POST": "È un metodo standard, usato per inviare dati al server affinché vengano elaborati."
+    },
+    "conceptToReview": "Insieme dei metodi HTTP standard.",
+    "miniSummary": "GET, POST, PUT, DELETE, HEAD, OPTIONS e PATCH sono validi; REMOVE non esiste.",
+    "memoryTrick": "Per cancellare si dice DELETE, non REMOVE: è un falso amico.",
+    "similarExamQuestion": "Quale metodo HTTP viene comunemente usato per recuperare risorse da un server web?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 100,
+    "id": "hist-100",
+    "category": "Internet",
+    "topic": "Ethernet",
+    "difficulty": "facile",
+    "question": "Un cavo di rete presenta otto fili di rame intrecciati a due a due in quattro coppie, senza alcuna pellicola metallica o treccia di schermatura attorno alle coppie o sotto la guaina. Di che tipo di cavo si tratta?",
+    "options": ["Altro", "Fibra ottica", "UTP", "Coassiale"],
+    "correctAnswer": "UTP",
+    "explanation": "Le caratteristiche descritte identificano un cavo UTP, cioè Unshielded Twisted Pair. La struttura a otto fili intrecciati in quattro coppie serve ad annullare le interferenze elettromagnetiche tramite il principio della cancellazione, mentre l'assenza di schermatura è proprio ciò che distingue l'UTP dalle varianti schermate come STP o FTP. L'eventuale spline centrale a croce che separa le coppie è tipica dei cavi di Categoria 6.",
+    "whyOthersAreWrong": {
+      "Altro": "Le caratteristiche descritte corrispondono precisamente a una tipologia standard ben identificabile.",
+      "Fibra ottica": "La fibra trasporta segnali luminosi in filamenti di vetro o plastica e non contiene coppie di fili di rame intrecciati.",
+      "Coassiale": "Il cavo coassiale ha un singolo conduttore centrale circondato da un isolante e da una schermatura, non quattro coppie intrecciate."
+    },
+    "conceptToReview": "Riconoscimento dei mezzi trasmissivi e significato della sigla UTP.",
+    "miniSummary": "Quattro coppie intrecciate e nessuna schermatura significano UTP.",
+    "memoryTrick": "La U di UTP sta per Unshielded: se non c'è schermatura, è UTP.",
+    "similarExamQuestion": "Quante coppie di fili in rame sono presenti in un cavo UTP?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 101,
+    "id": "hist-101",
+    "category": "Internet",
+    "topic": "SMTP, POP3, IMAP",
+    "difficulty": "facile",
+    "question": "Il protocollo POP3:",
+    "options": [
+      "Può essere usato per inviare email da un client su PC a un server email",
+      "Utilizza come protocollo UDP",
+      "Può essere usato per vedere le immagini",
+      "Può essere usato per trasferire email da un server ad un client email installato su un PC"
+    ],
+    "correctAnswer": "Può essere usato per trasferire email da un server ad un client email installato su un PC",
+    "explanation": "POP3 segue un modello pull: serve a scaricare le email dal server al dispositivo locale. Utilizza TCP sulla porta 110 per garantire che i messaggi non vadano persi durante il download. Tradizionalmente cancella i messaggi dal server dopo averli scaricati, anche se le configurazioni moderne permettono di mantenerne copia.",
+    "whyOthersAreWrong": {
+      "Può essere usato per inviare email da un client su PC a un server email": "L'invio è gestito da SMTP: POP3 è un protocollo di sola consultazione e scaricamento.",
+      "Utilizza come protocollo UDP": "POP3 si appoggia a TCP, perché il download della posta richiede affidabilità totale.",
+      "Può essere usato per vedere le immagini": "La visualizzazione degli allegati è compito del client di posta, non una funzione del protocollo POP3."
+    },
+    "conceptToReview": "Modello pull di POP3 e porta di trasporto utilizzata.",
+    "miniSummary": "POP3 scarica la posta dal server via TCP sulla porta 110.",
+    "memoryTrick": "POP tira giù, SMTP spinge su.",
+    "similarExamQuestion": "Quale differenza principale c'è tra POP3 e IMAP nella gestione dei messaggi?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 102,
+    "id": "hist-102",
+    "category": "Internet",
+    "topic": "DHCP",
+    "difficulty": "media",
+    "question": "Quale protocollo permette di automatizzare la configurazione del livello di rete DNS?",
+    "options": ["RIP", "SMTP", "ARP", "DHCP"],
+    "correctAnswer": "DHCP",
+    "explanation": "All'interno dei messaggi di risposta del server, DHCP Offer e DHCP ACK, sono presenti delle opzioni, in particolare l'Opzione 6, che comunicano al client l'indirizzo IP di uno o più server DNS da interrogare. Senza DHCP l'utente dovrebbe inserire manualmente l'indirizzo del server DNS nelle impostazioni di rete a ogni nuova connessione.",
+    "whyOthersAreWrong": {
+      "RIP": "RIP è un protocollo di routing di livello 3 e non distribuisce parametri di configurazione agli host.",
+      "SMTP": "SMTP è un protocollo applicativo per il trasferimento della posta elettronica.",
+      "ARP": "ARP serve a mappare indirizzi IP su indirizzi MAC nella rete locale, non a fornire la configurazione DNS."
+    },
+    "conceptToReview": "Parametri di configurazione distribuiti tramite le opzioni DHCP.",
+    "miniSummary": "DHCP fornisce IP, maschera, gateway e anche gli indirizzi dei server DNS.",
+    "memoryTrick": "Tutto ciò che ti arriva automaticamente all'accensione passa da DHCP.",
+    "similarExamQuestion": "Quale protocollo è usato per ottenere dinamicamente un indirizzo IP in una rete locale?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 103,
+    "id": "hist-103",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "difficile",
+    "question": "Una tabella di forwarding contiene le seguenti righe: 0.0.0.0/0 verso Eth0; 192.168.10.0/24 verso Eth0; 192.168.11.1/24 verso Eth1; 209.165.200.0/16 verso Eth2. Quale azione intraprende il router all'arrivo di un datagramma il cui indirizzo di destinazione è 209.165.201.16?",
+    "options": [
+      "Instrada il datagramma su Eth2",
+      "Instrada il datagramma su Eth0",
+      "Restituisce il datagramma al mittente",
+      "Instrada il datagramma su Eth1"
+    ],
+    "correctAnswer": "Instrada il datagramma su Eth2",
+    "explanation": "Il processo di decisione del router segue la regola del longest prefix match, cioè la corrispondenza del prefisso più lungo. La riga 209.165.200.0/16 indica che tutti gli indirizzi che iniziano con 209.165 devono essere inviati a Eth2, e l'indirizzo di destinazione inizia esattamente con 209.165. Sebbene corrisponda anche alla rotta di default 0.0.0.0/0, il router sceglie sempre la riga con la maschera più specifica.",
+    "whyOthersAreWrong": {
+      "Instrada il datagramma su Eth0": "Eth0 corrisponde alla rotta di default e alla rete 192.168.10.0/24: la default viene usata solo se nessuna rotta più specifica corrisponde.",
+      "Restituisce il datagramma al mittente": "Esiste una rotta valida per la destinazione, quindi non c'è motivo di generare un errore di irraggiungibilità.",
+      "Instrada il datagramma su Eth1": "Eth1 serve la rete 192.168.11.0/24, che non ha alcuna corrispondenza con l'indirizzo 209.165.201.16."
+    },
+    "conceptToReview": "Regola del longest prefix match nella consultazione della tabella di forwarding.",
+    "miniSummary": "Tra più rotte corrispondenti vince sempre quella con il prefisso più lungo.",
+    "memoryTrick": "La rotta di default è l'ultima spiaggia: si usa solo se nient'altro corrisponde.",
+    "similarExamQuestion": "Quale interfaccia viene scelta se un indirizzo corrisponde sia a un prefisso /21 sia a uno /24?",
+    "figureRewritten": true
+  },
+  {
+    "originalNumber": 104,
+    "id": "hist-104",
+    "category": "Internet",
+    "topic": "livello collegamento",
+    "difficulty": "media",
+    "question": "Indicare quale delle seguenti corrispondenze tra livello e PDU è scorretta.",
+    "options": [
+      "IP - Datagram",
+      "IP - Frame",
+      "Nessuna corrispondenza è scorretta",
+      "TCP - Segmento"
+    ],
+    "correctAnswer": "IP - Frame",
+    "explanation": "Ogni livello dello stack ha la propria PDU: al livello di trasporto TCP corrisponde il segmento, al livello di rete IP corrisponde il datagramma o pacchetto, al livello data link corrisponde il frame e al livello fisico il bit. Associare IP al frame è quindi scorretto, perché il frame appartiene al livello di collegamento, dove il datagramma viene incapsulato con header e trailer contenenti gli indirizzi MAC.",
+    "whyOthersAreWrong": {
+      "IP - Datagram": "È corretta: la PDU del livello di rete si chiama datagramma, o equivalentemente pacchetto.",
+      "Nessuna corrispondenza è scorretta": "Una delle corrispondenze elencate è effettivamente errata, quindi l'alternativa non è valida.",
+      "TCP - Segmento": "È corretta: la PDU del livello di trasporto in TCP si chiama segmento."
+    },
+    "conceptToReview": "Nomenclatura delle PDU nei vari livelli dello stack.",
+    "miniSummary": "Bit, frame, datagramma, segmento, messaggio: dal livello 1 al livello applicativo.",
+    "memoryTrick": "Il frame è sempre di livello 2: se lo vedi accostato a IP, è sbagliato.",
+    "similarExamQuestion": "Quale nome assume la PDU del livello di trasporto quando si usa UDP?",
+    "figureRewritten": false
+  },
+  {
+    "originalNumber": 105,
+    "id": "hist-105",
+    "category": "Internet",
+    "topic": "forwarding e routing",
+    "difficulty": "facile",
+    "question": "Il protocollo OSPF per determinare le tabelle di forwarding utilizza:",
+    "options": [
+      "L'algoritmo Distance Vector",
+      "BGP",
+      "Algoritmo Link State",
+      "RIP"
+    ],
+    "correctAnswer": "Algoritmo Link State",
+    "explanation": "Il funzionamento di OSPF si basa su tre fasi: i router scoprono i vicini e scambiano i Link State Advertisement contenenti informazioni sui propri collegamenti diretti; ogni router raccoglie gli LSA di tutti gli altri costruendo un database topologico completo dell'area; infine su questa mappa esegue l'algoritmo SPF di Dijkstra per determinare i cammini minimi e popolare la tabella di forwarding.",
+    "whyOthersAreWrong": {
+      "L'algoritmo Distance Vector": "Il distance vector è usato da RIP e si basa su Bellman-Ford e sullo scambio di tabelle con i soli vicini.",
+      "BGP": "BGP è un altro protocollo di routing, di tipo path vector e usato tra sistemi autonomi diversi, non un algoritmo impiegato da OSPF.",
+      "RIP": "RIP è un protocollo distinto e alternativo a OSPF, non un algoritmo che OSPF utilizza al suo interno."
+    },
+    "conceptToReview": "Fasi di funzionamento di OSPF e ruolo del Link State Database.",
+    "miniSummary": "LSA in flooding, database topologico sincronizzato, poi Dijkstra in locale.",
+    "memoryTrick": "OSPF significa Open Shortest Path First: il cammino minimo è calcolato da Dijkstra.",
+    "similarExamQuestion": "A quale categoria di protocolli di routing appartiene OSPF?",
+    "figureRewritten": false
+  }
+]
